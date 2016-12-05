@@ -1,0 +1,14 @@
+{
+  "author": "Testing Only",
+  "name": "Slack-Test",
+  "description": "Slack test",
+  "version": "0.0.1",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "engines": {
+    "node": "0.12.7"
+  }
+}
