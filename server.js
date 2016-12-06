@@ -16,7 +16,13 @@ app.get('/', function (req, res) {
 
 app.post('/slackevent', function (req, res) {
     console.log( req.body );
-    res.send('done');
+    if(req.body.challenge) {
+		res.type('json')
+		res.send({"challenge": req.body.challenge});
+	}
+	else {
+		res.send('done');
+	}
 })
 
 var server = app.listen(port, function () {
