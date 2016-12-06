@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 
 app.post('/slackevent', function (req, res) {
     console.log( req.body );
-    res.status(200);
+    res.send('done');
 })
 
 var server = app.listen(port, function () {
