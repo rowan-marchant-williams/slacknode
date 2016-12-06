@@ -13,7 +13,7 @@ app.post('/slackevent', function (req, res) {
     res.status(200);
 })
 
-var server = app.listen(4005, function () {
+var server = app.listen(80, function () {
 
     var host = server.address().address
     var port = server.address().port
