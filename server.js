@@ -24,7 +24,7 @@ app.post('/slackevent', function (req, res) {
 		
 		if(req.body.event.file && req.body.event.file["initial_comment"]) {
 			console.log("------ initial comment: ");
-			console.log( req.body.event.file["initial_comment"]) );
+			console.log( req.body.event.file["initial_comment"]);
 		}
 		
 		res.send('done');
