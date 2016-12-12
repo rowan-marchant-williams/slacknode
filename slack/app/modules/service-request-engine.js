@@ -7,7 +7,7 @@ var restify = require(common + 'node_modules/restify');
 var async = require('async');
 var fs = require('fs');
 
-function ServiceRequestEngine(logger, cache) {
+function ServiceRequestEngine(logger) {
 
     var Source = 'Service Request Engine';
     var HTTP_BAD_REQUEST = 400;
@@ -68,7 +68,7 @@ function ServiceRequestEngine(logger, cache) {
                     }
                     if (stats.isFile()) {
                         var RequestModule      = require(requestFileName);
-                        var serviceRequest     = new RequestModule(_getConfig(), cache);
+                        var serviceRequest     = new RequestModule(_getConfig());
                         var _onRequestExecuted = function (err, status, result) {
                             if (err) {
                                 cb(err);

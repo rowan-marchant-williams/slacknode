@@ -17,15 +17,14 @@ var AdmZip = require('adm-zip');
 
 var TEN_SECONDS = 10 * 1000; // Anapos uses Milliseconds
 
-function AdminBotRequest(config, cache) {
+function AdminBotRequest(config) {
     var that = this;
     that._config = config;
     that._myGoodResponse = new Request('i2OWater.Anapos.Governance.Admin.Responses.ExecuteResponse');
     that._goodResponseTypeId = that._myGoodResponse.getMessageTypeId();
     that._myFailureResponse = new Request('i2OWater.Anapos.Governance.FailureResponse');
     that._failureResponseTypeId = that._myFailureResponse.getMessageTypeId();
-    that._cache = cache;
-
+    
     return that;
 }
 

@@ -4,8 +4,6 @@ var common  = __dirname + '/../../common/';
 var restify = require(common + 'node_modules/restify');
 var config  = require('konphyg')(common + 'config');
 var Logger  = require(common + 'logging/logger');
-var Cache = require(common + 'cache');
-var redis = require(common + 'node_modules/redis');
 var RequestEngine = require('./modules/request-engine');
 var uuid    = require('node-uuid');
 var util    = require('util');
@@ -23,18 +21,6 @@ var _logger = {
 		console.log(lvl + msg + dtl);
 	}
 };
-
-var cacheClient = redis.createClient(configSettings.cache.port, configSettings.cache.host);
-cacheClient.retry_delay = configSettings.cache.retry_delay;
-cacheClient.retry_backoff = configSettings.cache.retry_backoff;
-
-// Error Handling
-cacheClient.on('error', function (err) {
-    var logMessage = util.format('%s:Cache Client Error', Source);
-    _logger.log('error', logMessage, err);
-});
-
-var _cache = new Cache(cacheClient);
 
 var resourcing = new Resourcing(configSettings);
 
@@ -59,7 +45,7 @@ restServer.on('clientError', function (err) {
     _logger.log('error', msg, err);
 });
 
-var requestEngine = new RequestEngine(restServer, _logger, _cache);
+var requestEngine = new RequestEngine(restServer, _logger);
 
 restServer.use(restify.queryParser());
 restServer.use(restify.bodyParser({ mapParams: false })); // It's important to include this before any custom async middleware (https://github.com/mcavage/node-restify/issues/287)

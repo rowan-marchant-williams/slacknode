@@ -11,7 +11,7 @@ var ServiceRequestEngine = require('./service-request-engine');
 var ExecutionCompleteHandler = require('./execution-complete-handler');
 var AmqpSubscriber = require(common + 'amqp/subscriber');
 
-function RequestEngine(server, logger, cache) {
+function RequestEngine(server, logger) {
 
     var ROUTING_TYPE = 'topic';
     var TOPIC = 'Anapos.Admin.ExecutionInConsoleComplete';
@@ -20,7 +20,6 @@ function RequestEngine(server, logger, cache) {
 
     var that = this;
     that._logger = logger;
-    that._cache = cache;
     var config = helpers.getConfig();
     config = helpers.myConfig(config);
 
@@ -34,7 +33,7 @@ function RequestEngine(server, logger, cache) {
     };
 
     that._adminExecutionCompleteSubscriber = new AmqpSubscriber(config, that._logger, opts);
-    that._serviceRequestEngine = new ServiceRequestEngine(that._logger, that._cache);
+    that._serviceRequestEngine = new ServiceRequestEngine(that._logger);
     that._executionCompleteHandler = new ExecutionCompleteHandler(that._adminExecutionCompleteSubscriber, that._logger, config);
 
     function _onServerClosed() {
