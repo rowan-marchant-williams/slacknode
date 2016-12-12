@@ -1,0 +1,68 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.DataExtraction.Responses;
+
+message DeleteConfigurationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  required string configuration_id = 2;
+  extensions 100 to 120;
+};
+
+message ListConfigurationsResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated Configuration configurations = 2;
+  extensions 100 to 120;
+}
+
+message GetExtractionReportsResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated ExtractionReport extraction_reports = 2;
+  extensions 100 to 120;
+}
+
+message ListExtractionsResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated Extraction extractions = 2;
+  extensions 100 to 120;
+}
+
+message TestConfigurationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  optional string extraction_id = 2;
+  extensions 100 to 120;
+};
+
+message UploadConfigurationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  required string configuration_id = 2;
+  extensions 100 to 120;
+};
+
+// sub messages
+
+message Configuration {
+  required string configuration_id = 1;
+  required string configuration_name = 2;
+  required uint32 configuration_object_compatibility_version = 3;
+  required string configuration_object = 4;
+  required uint32 configuration_script_compatibility_version = 5;
+  required string configuration_script = 6;
+  required sfixed64 when_created = 7;
+  extensions 100 to 120;
+}
+
+message ExtractionReport {
+  required Extraction extraction = 1;
+  required string report_json = 2;
+  extensions 100 to 120;
+}
+
+message Extraction {
+  required string extraction_id = 1;
+  required string configuration_id = 2;
+  required string configuration_name = 3;
+  required sfixed64 when_expected = 4;
+  optional sfixed64 when_delivered = 5;
+  extensions 100 to 120;
+}

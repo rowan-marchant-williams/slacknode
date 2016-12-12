@@ -1,0 +1,121 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.TenantManagement;
+
+// commands //
+
+message InitializeWorkingDaysCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  extensions 100 to 120;
+}
+
+message InitializeTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required Tenant tenant = 2;
+  extensions 100 to 120;
+}
+
+// request/responses //
+
+message AddPublicHolidayRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string date = 2;   // YYYY-MM-DD
+  extensions 100 to 120; 
+}
+
+message AddPublicHolidayResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message RemovePublicHolidayRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string date = 2;
+  extensions 100 to 120; 
+}
+
+message RemovePublicHolidayResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message SetWorkingWeekRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required bool sunday = 2;   //true -> Sunday is a working day
+  required bool monday = 3;
+  required bool tuesday = 4;
+  required bool wednesday = 5;
+  required bool thursday = 6;
+  required bool friday = 7;
+  required bool saturday = 8;
+  extensions 100 to 120; 
+}
+
+message SetWorkingWeekResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message SetUnitsOfMeasureForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required UnitsOfMeasure units_of_measure = 2;
+  extensions 100 to 120;
+}
+
+message AddUnitOfMeasureForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required ChannelUnits unit_of_measure = 2;
+  extensions 100 to 120;
+}
+
+message IdentifyTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string identifier = 2;
+  extensions 100 to 120; 
+}
+
+message IdentifyTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string tenant_tenant_code = 2;
+  required string tenant_short_name = 3;
+  repeated string tenant_references = 4;
+  extensions 100 to 120; 
+}
+
+message IdentifyAllTenantsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  extensions 100 to 120;
+}
+
+message IdentifyAllTenantsResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  repeated string tenant_codes = 2;
+  extensions 100 to 120;
+}
+
+// sub messages 
+
+message Tenant {
+  required string tenant_code = 1; 
+  required string tenant_name = 2;
+  required string address = 3;
+  required string timezone = 4;  
+  repeated string external_references = 5;
+  required string short_name = 6;
+  required UnitsOfMeasure units_of_measure = 7;
+  extensions 100 to 120; 
+}
+
+message UnitsOfMeasure {
+  repeated ChannelUnits channel_units = 1;
+  extensions 100 to 120;
+}
+
+message ChannelUnits {
+  required string channel_type = 1;
+  required string unit = 2;
+  required string label = 3;
+  optional string multiplier = 4;
+  extensions 100 to 120;
+}

@@ -1,0 +1,60 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetConfiguration.Responses;
+
+message AlarmSchedulesEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message AlarmSchedulesEditedForTenant {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message BluetoothSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message CalibrationSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message DialupScheduleEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message GsmSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message LocationSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message LoggingSchedulesEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message MotorSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message ScheduleEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string schedule_reference =  2; 
+  extensions 100 to 120; 
+} 
+
+message SmsSettingsEdited {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 

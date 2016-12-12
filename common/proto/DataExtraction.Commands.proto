@@ -1,0 +1,13 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.DataExtraction.Commands;
+
+message ExtractDataForTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string configuration_object = 2;
+  required uint32 configuration_object_compatibility_version = 3;
+  required sfixed64 extract_at = 4;
+  optional bool is_test_extract = 5;
+  extensions 100 to 120; 
+}

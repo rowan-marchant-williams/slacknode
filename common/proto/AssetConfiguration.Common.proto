@@ -1,0 +1,358 @@
+package i2OWater.Anapos.Governance.AssetConfiguration.Common;
+
+message AlarmThresholds {
+  required string alarm_reference = 1;
+  required ContinuousAlarmEntry p1_min = 2;
+  required ContinuousAlarmEntry p1_max = 3;
+  required ContinuousAlarmEntry p2_min = 4;
+  required ContinuousAlarmEntry p2_max = 5;
+  required ContinuousAlarmEntry p3_max = 6;
+  required ContinuousAlarmEntry f1_min = 7;
+  required ContinuousAlarmEntry f1_max = 8;
+  required ContinuousAlarmEntry f2_min = 9;
+  required ContinuousAlarmEntry f2_max = 10;
+  required ContinuousAlarmEntry battery_min = 11;
+  required DiscreteAlarmEntry manual_override = 12;
+  required DiscreteAlarmEntry motor_fail = 13;
+  required DiscreteAlarmEntry open_end_stop = 14;
+  required DiscreteAlarmEntry close_end_stop = 15;
+  required CurveAlarmEntry fail_curve_alarm = 16;
+  extensions 100 to 120; 
+}
+
+message ApvSettings {
+  required bool apv_enabled = 1;
+  required uint32 apv_pressure_range = 2;
+  extensions 100 to 120;
+}
+
+message AssetConfiguration {
+  required string configuration_id = 1;
+  required Calendar calendar = 2;
+  required Calendar default_calendar = 3;
+  repeated Schedule schedules = 4;
+  repeated AlarmThresholds alarms = 5;
+  repeated LoggingThresholds logging = 6;
+  repeated Control control = 7;
+  repeated Curve curve = 8;
+  required bool modulation_enabled = 9;
+  required bool alarms_enabled = 10;
+  required LocationSettings location_settings = 11;
+  required SmsSettings sms_settings = 12;
+  required BluetoothSettings bluetooth_settings = 13;
+  required MotorSettings motor_settings = 14;
+  required GsmSettings gsm_settings = 15;
+  required CalibrationSettings calibration_settings = 16;
+  optional ApvSettings apv_settings = 17;
+  extensions 100 to 120; 
+}
+
+message Address {
+  required string name = 1;
+  required string line0 = 2;
+  required string line1 = 3;
+  required string line2 = 4;
+  required string line3 = 5;
+  extensions 100 to 120; 
+}
+
+message Average {
+  required bool enabled = 1;
+  required uint32 acquisition_time = 2;
+  required uint32 logging_time = 3;
+  required uint32 prescale = 4;
+  required uint32 divisor = 5;
+  extensions 100 to 120; 
+}
+
+message BluetoothSettings {
+  required int32 pin_number = 1;
+  extensions 100 to 120; 
+}
+
+message Calendar {
+  repeated CalendarEntry entries = 1;
+  extensions 100 to 120; 
+}
+
+message CalendarEntry {
+  required sfixed64 effective_date = 1;
+  required string schedule_reference = 2;
+  required uint32 read_order = 3;
+  extensions 100 to 120; 
+}
+
+message CalibrationSettings {
+  required float elevation = 1;
+  required bool elevation_defined = 2;
+  required float f1_litres_per_pulse = 3;
+  required bool f1_litres_per_pulse_defined = 4;
+  optional PumpCalibrationRange set_point_output = 5;
+  optional bool elevation_overridden_by_migration = 6;
+  optional bool f1_litres_per_pulse_overridden_by_migration = 7;
+  extensions 100 to 120; 
+}
+
+message ContinuousAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float threshold = 3;
+  required float delta = 4;
+  extensions 100 to 120; 
+}
+
+message ContinuousAlarmSchedule {
+  required string logical_channel = 1; 
+  repeated ContinuousAlarmScheduleEntry entries = 2;
+  extensions 100 to 120;
+}
+
+message ContinuousAlarmScheduleEntry {
+  required uint32 start_hour = 1; 
+  required uint32 start_minute = 2; 
+  required ContinuousAlarmThreshold low = 3; 
+  required ContinuousAlarmThreshold high = 4; 
+  required ContinuousAlarmThreshold low_low = 5; 
+  required ContinuousAlarmThreshold high_high = 6; 
+  required float low_delta = 7; 
+  required float high_delta = 8; 
+  optional bool is_night = 9;
+  optional bool is_inactive = 10;
+  extensions 100 to 120;
+}
+
+message ContinuousAlarmThreshold {
+  required float value = 1;
+  required bool software_enabled = 2;
+  required bool sms_enabled = 3;
+  required bool gprs_enabled = 4;
+  required bool email_enabled = 5;
+  extensions 100 to 120;
+}
+
+message Control {
+  required string control_reference = 1;
+  required Average p2_averaging = 2;
+  required Average f1_averaging = 3;
+  required bool motor_settle_valid = 4;
+  required uint32 motor_settle = 5;
+  required bool window_size_valid = 6;
+  required uint32 window_size = 7;
+  required float kp = 8;
+  required float ki = 9;
+  required float kd = 10;
+  required bool headroom_valid = 11;
+  required float headroom = 12;
+  required bool minimum_p2_valid = 13;
+  required float minimum_p2 = 14;
+  extensions 100 to 120; 
+}
+
+message Curve {
+  required string curve_reference = 1;
+  repeated CurveEntry entries = 2;
+  extensions 100 to 120; 
+}
+
+message CurveAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float retry_timeout = 3;
+  required float threshold = 4;
+  extensions 100 to 120; 
+}
+
+message CurveEntry {
+  required float flow = 1;
+  required float lower_deadband = 2;
+  required float target = 3;
+  required float upper_deadband = 4;
+  extensions 100 to 120; 
+}
+
+message CurveAlarmSchedule {
+  repeated CurveAlarmScheduleEntry entries = 1;
+  extensions 100 to 120;
+}
+
+message CurveAlarmScheduleEntry {
+  required uint32 start_hour = 1;
+  required uint32 start_minute = 2;
+  required bool enabled = 3;
+  required bool dial_up = 4;
+  required float retry_timeout = 5;
+  required float threshold = 6;
+  extensions 100 to 120;
+}
+
+message DialupSchedule {
+  repeated DialupScheduleEntry entries = 1; 
+  extensions 100 to 120;
+}
+
+message DialupScheduleEntry {
+  required uint32 start_hour = 1; 
+  required uint32 start_minute = 2; 
+  required bool is_repeated = 3; 
+  optional uint32 repeat_interval = 4; 
+  optional uint32 end_hour = 5; 
+  optional uint32 end_minute = 6; 
+  extensions 100 to 120;
+}
+
+message DeviceTypeCalendar {
+  required string part_number = 1;
+  required string version_number = 2;
+  required string manufacturer = 3;
+  required Calendar calendar = 4;
+  extensions 100 to 120; 
+}
+
+message DiscreteAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float retry_timeout = 3;
+  extensions 100 to 120; 
+}
+
+message DiscreteAlarmSchedule {
+  repeated DiscreteAlarmScheduleEntry entries = 1;
+  extensions 100 to 120; 
+}
+
+message DiscreteAlarmScheduleEntry {
+  required uint32 start_hour = 1;
+  required uint32 start_minute = 2;
+  required bool enabled = 3;
+  required bool dial_up = 4;
+  required float retry_timeout = 5;
+  extensions 100 to 120; 
+}
+
+message GsmSettings {
+  required int32 retry_attempts = 1;
+  required int32 retry_timeout = 2;
+  extensions 100 to 120; 
+}
+
+message LocationAlarmSchedules {
+  required string location_id = 1; 
+  required string area_id = 2; 
+  required bool inhibit_alarms = 3; 
+  optional ContinuousAlarmSchedule p1_schedule = 4; 
+  optional ContinuousAlarmSchedule p2_schedule = 5; 
+  optional ContinuousAlarmSchedule p3_schedule = 6; 
+  optional ContinuousAlarmSchedule azp_schedule = 7;
+  optional ContinuousAlarmSchedule flow_schedule = 8;
+  optional ContinuousAlarmSchedule battery_schedule = 9;
+  optional DiscreteAlarmSchedule manual_override_schedule = 10;
+  optional DiscreteAlarmSchedule motor_fail_schedule = 11;
+  optional DiscreteAlarmSchedule open_end_stop_schedule = 12;
+  optional DiscreteAlarmSchedule close_end_stop_schedule = 13;
+  optional CurveAlarmSchedule fail_curve_alarm_schedule = 14;
+  optional SmsSettings sms_settings = 15;
+  optional string email_address = 16;
+  extensions 100 to 120;
+}
+
+message LocationLoggingSchedules {
+  required string location_id = 1; 
+  required string area_id = 2; 
+  required bool inhibit_logging = 3; 
+  optional LoggingSchedule p1_schedule = 4; 
+  optional LoggingSchedule p2_schedule = 5; 
+  optional LoggingSchedule p3_schedule = 6; 
+  optional LoggingSchedule azp_schedule = 7;
+  optional LoggingSchedule pcs_schedule = 8;
+  optional LoggingSchedule flow_schedule = 9;
+  optional LoggingSchedule a1_schedule = 10;
+  optional LoggingSchedule a2_schedule = 11;
+  optional LoggingSchedule battery_schedule = 12;
+  optional LoggingSchedule bridge_schedule = 13;
+  optional LoggingSchedule ambient_schedule = 14;
+  extensions 100 to 120;
+}
+
+message LocationSettings {
+  required string dma_number = 1;
+  required Address location_address = 2;
+  required string timezone = 3;
+  required Address company_address = 4;
+  required string telephone = 5;
+  required string alternate_telephone = 6;
+  required string email_address = 7;
+  required string website = 8;
+  extensions 100 to 120; 
+}
+
+message LoggingSchedule {
+  required string logical_channel = 1; 
+  repeated LoggingScheduleEntry entries = 2;
+  extensions 100 to 120;
+}
+
+message LoggingScheduleEntry {
+  required uint32 start_hour = 1; 
+  required uint32 start_minute = 2; 
+  required LoggingScheduleThreshold threshold = 3;
+  extensions 100 to 120;
+}
+
+message LoggingScheduleThreshold {
+  required bool enabled = 1;
+  required uint32 acquisition_time = 2;
+  required uint32 logging_time = 3;
+  required uint32 divisor = 4;
+  required uint32 prescale = 5;
+  extensions 100 to 120; 
+}
+
+message LoggingThresholds {
+  required string logging_reference = 1;
+  required Average p1 = 2;
+  required Average p2 = 3;
+  required Average p3 = 4;
+  required Average f1 = 5;
+  required Average f2 = 6;
+  required Average a1 = 7;
+  required Average a2 = 8;
+  required Average battery = 9;
+  required Average ambient = 10;
+  required Average bridge = 11;
+  extensions 100 to 120; 
+}
+
+message MotorSettings {
+  required int32 motor_speed = 1;
+  extensions 100 to 120; 
+}
+
+message PumpCalibrationRange {
+ required float value_at_4ma = 1;
+ required float value_at_20ma = 2;
+ extensions 100 to 120; 
+}
+
+message Schedule {
+  required string schedule_reference = 1;
+  repeated ScheduleEntry entries = 2;
+  extensions 100 to 120; 
+}
+
+message ScheduleEntry {
+  required sfixed64 effective_time = 1;
+  required bool dialup = 2;
+  required float target_p2 = 3;
+  required float target_p3 = 4;
+  optional string alarm_reference = 5;
+  optional string control_reference = 6;
+  optional string curve_reference = 7;
+  optional string logging_reference = 8;
+  extensions 100 to 120; 
+}
+
+message SmsSettings {
+  required string telephone_number = 1;
+  optional string sms_name = 2;
+  extensions 100 to 120; 
+}

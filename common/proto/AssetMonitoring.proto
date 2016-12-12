@@ -1,0 +1,122 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetMonitoring;
+
+// commands //
+
+message CreateLevelOfServiceSettingsFori2OCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required double target_pressure = 2;
+ extensions 100 to 120; 
+}
+
+message CreateP1P2PrvFaultDetectorSettingsFori2OCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required P1P2PrvFaultDetectorSettings settings = 2;
+ extensions 100 to 120; 
+}
+
+message CreateP2FlowPrvFaultDetectorSettingsFori2OCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required P2FlowPrvFaultDetectorSettings settings = 2;
+ extensions 100 to 120; 
+}
+
+message DisablePrvFaultDetectionForLocationCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  extensions 100 to 120; 
+}
+
+message AnalysePrvConditionCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string location_type = 2;
+ required sfixed64 start = 3;
+ required sfixed64 end = 4;
+ extensions 100 to 120; 
+}
+
+// request/responses //
+
+message EditLevelsOfServiceSettingsForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required double target_pressure = 2;
+  extensions 100 to 120; 
+}
+
+message EditLevelsOfServiceSettingsForTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message EditLevelsOfServiceSettingsForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required double target_pressure = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditLevelsOfServiceSettingsForLocationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message EditPrvFaultDetectorSettingsForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required P1P2PrvFaultDetectorSettings p1_p2_detector_settings = 2;
+  required P2FlowPrvFaultDetectorSettings p2_flow_detector_settings = 3;
+  extensions 100 to 120; 
+}
+
+message EditPrvFaultDetectorSettingsForTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message EditPrvFaultDetectorSettingsForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required P1P2PrvFaultDetectorSettings p1_p2_detector_settings = 2;
+  required P2FlowPrvFaultDetectorSettings p2_flow_detector_settings = 3;
+  required string location_id = 4;
+  extensions 100 to 120; 
+}
+
+message EditPrvFaultDetectorSettingsForLocationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message EnablePrvFaultDetectionForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+message EnablePrvFaultDetectionForLocationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message DisablePrvFaultDetectionForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+message DisablePrvFaultDetectionForLocationResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+// sub-messages //
+
+message P1P2PrvFaultDetectorSettings {
+  required double target_minimum_p1_p2_delta = 1;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettings {
+  required double target_maximum_p2_range = 1;
+  required double target_maximum_p2_volatility = 2;
+  extensions 100 to 120; 
+}

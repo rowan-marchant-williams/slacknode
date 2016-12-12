@@ -1,0 +1,14 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Asset.Common;
+
+message Tenant {
+  required string tenant_code = 1; 
+  required string tenant_name = 2;
+  required string address = 3;
+  required string timezone = 4;
+  repeated string external_references = 5; 
+  required string short_name = 6; 
+  extensions 100 to 120; 
+}

@@ -1,0 +1,34 @@
+{
+  "messages":[
+    {
+      "name":"i2OWater.Anapos.Governance.EnterpriseEvents.Development.FirmwareInstallerReleased",
+      "constants":[
+        {
+          "path":"root_event.instruction.type",
+          "value":"f6da60e7-40c5-4897-9f2c-fd8520e01dad"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.Development.FirmwareInstallerReleased"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.EnterpriseEvents.Development.FirmwareReleased",
+      "constants":[
+        {
+          "path":"root_event.instruction.type",
+          "value":"5ce00867-7535-4344-b3af-5aeda74acec0"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.Development.FirmwareReleased"
+        }
+      ]
+    }
+  ]
+}

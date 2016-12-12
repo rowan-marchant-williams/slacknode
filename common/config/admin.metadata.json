@@ -1,0 +1,64 @@
+{
+    "messages": [
+        {
+            "name":"i2OWater.Anapos.Governance.Admin.Requests.ExecuteRequest",
+            "constants":[
+                {
+                    "path":"root_request.instruction.type",
+                    "value":"cc2bfc6d-fa69-49f1-8148-21b16c9cb63c"
+                }
+            ],
+            "metadata":[
+                {
+                    "name":"routingKey",
+                    "value":"admin.req"
+                }
+            ]
+        },
+        {
+            "name":"i2OWater.Anapos.Governance.Admin.Responses.ExecuteResponse",
+            "constants":[
+                {
+                    "path":"root_response.instruction.type",
+                    "value":"2f38a901-49f9-4480-b571-9dafc23dfc84"
+                }
+            ],
+            "metadata":[
+                {
+                    "name":"routingKey",
+                    "value":"admin.resp"
+                }
+            ]
+        },
+        {
+            "name": "i2OWater.Anapos.Governance.Admin.Commands.ExecuteInConsole",
+            "constants": [
+                {
+                    "path": "root_command.instruction.type",
+                    "value": "e66b4265-a624-403b-8d7f-9c498daec3f6"
+                }
+            ],
+            "metadata": [
+                {
+                    "name": "routingKey",
+                    "value": "Anapos.Admin.ExecuteInConsole"
+                }
+            ]
+        }, 
+        {
+            "name":"i2OWater.Anapos.Governance.EnterpriseEvents.Admin.ExecutionInConsoleComplete",
+            "constants": [
+                {
+                    "path":"root_event.instruction.type",
+                    "value":"9726f9da-e625-43ca-8974-45dee3e0f154"
+                }
+            ],
+            "metadata":[
+                {
+                    "name":"routingKey",
+                    "value":"Anapos.Admin.ExecutionInConsoleComplete"
+                }
+            ]
+        }
+    ]
+}

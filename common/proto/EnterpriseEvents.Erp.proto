@@ -1,0 +1,150 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Erp;
+
+message DeviceTypeAdded {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required DeviceType device_type = 2;
+  extensions 100 to 120; 
+}
+
+message DeviceTypePressureChannelsModified {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string part_number = 2;
+  required string version_number = 3;
+  repeated PressureChannel pressure_channels = 4; 
+  extensions 100 to 120; 
+}
+
+message DeviceAllocatedToTenant {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2; 
+  required string serial_number = 3;
+  repeated Battery batteries = 4;
+  required SimCard sim_card = 5; 
+  extensions 100 to 120; 
+}
+
+message DeviceReturnedToi2O {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2; 
+  required string serial_number = 3;
+  extensions 100 to 120;
+}
+
+// Deprecated in favour of DeviceAllocatedToTenant
+message DeviceReturnedToTenant {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2; 
+  required string serial_number = 3;
+  repeated Battery batteries = 4;
+  required SimCard sim_card = 5; 
+  extensions 100 to 120;
+}
+
+message TenantAdded {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required Tenant tenant = 2;
+  extensions 100 to 120; 
+}
+
+message NetworkMonitoringLicenceGranted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2;
+  required string licence_type_id = 3;
+  required string licence_id = 4;
+  optional string target_tenant_code = 5;
+  extensions 100 to 120; 
+}
+
+message RemoteControlLicenceGranted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2;
+  required string licence_type_id = 3;
+  required string licence_id = 4;  
+  extensions 100 to 120; 
+}
+
+message ConditionMonitoringLicenceGranted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2;
+  required string licence_type_id = 3;
+  required string licence_id = 4;  
+  extensions 100 to 120; 
+}
+
+message ApiLicenceGranted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2;
+  required string licence_type_id = 3;
+  required string licence_id = 4;  
+  extensions 100 to 120; 
+}
+
+message PumpRemoteControlLicenceGranted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string tenant_reference = 2;
+  required string licence_type_id = 3;
+  required string licence_id = 4;  
+  extensions 100 to 120; 
+}
+
+// sub messages
+
+message DeviceType {
+  required string part_number = 1;
+  optional string version_number = 2;
+  optional string build = 3; 
+  repeated PressureChannel pressure_channels = 4; 
+  repeated FlowChannel flow_channels = 5; 
+  repeated TemperatureChannel temperature_channels = 6; 
+  optional bool has_control_output = 7; 
+  optional string modem_type = 8; 
+  optional string antenna_type = 9; 
+  optional string power_source = 10; 
+  required string device_classification = 11; 
+  required string manufacturer = 12; 
+  optional string product_family = 13; 
+  extensions 100 to 120; 
+}
+
+message Battery {
+  required string serial_number = 1;
+  optional sfixed64 build_date = 2;
+  optional sfixed64 expiry_date = 3;
+  required string model = 4;  
+  extensions 100 to 120; 
+}
+
+message SimCard {
+  required string imsi = 1;
+  required string carrier = 2;
+  extensions 100 to 120; 
+}
+
+message Tenant {
+  required string tenant_name = 1; 
+  required string address = 2;
+  repeated string references = 3; 
+  required string timezone = 4; 
+  required string short_name = 5; 
+  extensions 100 to 120; 
+}
+
+message PressureChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message FlowChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message TemperatureChannel {
+  required uint32 channel_number = 1;
+  required string focus = 2; 
+  extensions 100 to 120; 
+} 

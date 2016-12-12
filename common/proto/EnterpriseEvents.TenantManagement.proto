@@ -1,0 +1,72 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.TenantManagement;
+
+message PublicHolidayAddedToWorkingDayExceptions {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string date = 2;   // YYYY-MM-DD
+ required WorkingDays working_days = 3;
+ extensions 100 to 120; 
+}
+
+message PublicHolidayRemovedFromWorkingDayExceptions {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string date = 2;
+ required WorkingDays working_days = 3;
+ extensions 100 to 120; 
+}
+
+message TenantRegistered {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Tenant tenant = 2;
+ extensions 100 to 120; 
+}
+
+message WorkingWeekUpdated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required WorkingDays working_days = 2;
+ extensions 100 to 120; 
+}
+
+// sub messages
+
+message Tenant {
+  required string tenant_code = 1; 
+  required string tenant_name = 2;
+  required string address = 3;
+  required string timezone = 4;  
+  repeated string external_references = 5;
+  required string short_name = 6;
+  optional UnitsOfMeasure units_of_measure = 7;
+  extensions 100 to 120; 
+}
+
+message WorkingDays {
+ required WorkingWeek working_week = 1;
+ repeated string exceptions = 2;
+ extensions 100 to 120; 
+}
+
+message WorkingWeek {
+ required bool sunday = 1;   //true -> Sunday is a working day
+ required bool monday = 2;
+ required bool tuesday = 3;
+ required bool wednesday = 4;
+ required bool thursday = 5;
+ required bool friday = 6;
+ required bool saturday = 7;
+ extensions 100 to 120; 
+}
+
+message UnitsOfMeasure {
+  repeated ChannelUnits channel_units = 1;
+  extensions 100 to 120;
+}
+
+message ChannelUnits {
+  required string channel_type = 1;
+  required string unit = 2;
+  required string label = 3;
+  optional string multiplier = 4;
+  extensions 100 to 120;
+}

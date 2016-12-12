@@ -1,0 +1,43 @@
+{
+  "author": "i2O Water Ltd",
+  "name": "WebAssets-Common",
+  "description": "Anapos Web Assets Common",
+  "contributors": [
+    {
+      "name": "Mike Williams",
+      "email": "mike.williams@i2owater.com"
+    },
+    {
+      "name": "David O'Leary",
+      "email": "david.oleary@i2owater.com"
+    }
+  ],
+  "version": "0.0.1",
+  "dependencies": {
+    "amqplib": "0.3.2",
+    "async": "0.1.22",
+    "cheerio": "0.10.1",
+    "elastic.js": "1.1.1",
+    "konphyg": "1.0.5",
+    "mustache": "0.8.2",
+    "negotiator": "0.4.7",
+    "node-uuid": "1.3.3",
+    "pg": "4.4.0",
+    "protobufjs": "4.0.0",
+    "q": "1.4.1",
+    "redis": "0.8.3",
+    "restify": "2.3.5",
+    "should": "1.1.0",
+    "sinon": "1.7.2",
+    "spahql": "0.7.3",
+    "underscore": "1.4.1",
+    "winston": "0.6.2",
+    "winston-papertrail": "1.0.2"
+  },
+  "devDependencies": {
+    "mocha": "1.10.0"
+  },
+  "engines": {
+    "node": "0.12.7"
+  }
+}

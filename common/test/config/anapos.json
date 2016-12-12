@@ -1,0 +1,65 @@
+{
+    "clock" : {
+        "port" : 5050,
+        "tock": 1000
+    },
+    "container" : {
+     "web_assets_port": 4000
+    },
+    "logging" :
+    {
+        "handleExceptions":true,
+        "tenantCode":"i2OGB",
+        "logFile":"anapos.log",
+        "level" :"debug",
+        "colorize" :true
+    },
+    "proxy" : {
+        "web_assets_port": 8001,
+        "locales": {
+            "variants": [
+                {
+                    "method":"GET",
+                    "language":"en",
+                    "quality":1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method":"GET",
+                    "language":"en",
+                    "quality":1.0,
+                    "type": "text/html",
+                    "charset": "utf-8",
+                    "asset": "templates"
+                },
+                {
+                    "method":"GET",
+                    "language":"en",
+                    "quality":1.0,
+                    "type": "text/javascript",
+                    "charset": "utf-8",
+                    "asset": "view-models"
+                }
+            ]
+        },
+        "router": {
+            "localhost/viewapp": "localhost:4001",
+            "localhost/": "localhost:4000",
+            "localhost/queryapp" : "localhost:4002",
+            "localhost/assetapp": "localhost:4003"
+        }
+    },
+    "cache" : {
+        "host" : "127.0.0.1",
+        "port" : 6379,
+        "retry_delay" : 1000,
+        "retry_backoff": 1.7
+    },
+    "i2O_gateway" : {
+        "web_assets_port": 4002,
+        "tenantCode":"i2OGB",
+        "temp_file_path": "/tmp"
+    }
+}

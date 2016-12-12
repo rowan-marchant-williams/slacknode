@@ -1,0 +1,209 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.Common;
+
+// sub messages
+
+message Area {
+  required string area_id = 1; 
+  required string area_name = 2; 
+  required string area_reference = 3; 
+  required bool active = 4;
+  required uint32 level = 5; 
+  optional i2OWater.Anapos.Governance.GeographicCoordinates centrum = 6;
+  optional string boundary_id = 7; 
+  optional string owner_username = 8; 
+  optional AreaParent parent_area = 9; 
+  repeated AreaChild child_areas = 10; 
+  repeated AreaLocation locations = 11; 
+  extensions 100 to 120; 
+}
+
+message AreaParent {
+  required string area_id = 1;
+  required sfixed64 associated_date = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaChild {
+  required string area_id = 1;
+  required sfixed64 associated_date = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaLocation {
+  required string location_id = 1;  
+  required sfixed64 associated_date = 2;
+  required string location_type = 3;
+  extensions 100 to 120; 
+} 
+
+message Asset {
+  required string asset_id = 1; 
+  required string asset_reference = 2; 
+  required string device_type_id = 3;
+  required string owner_tenant_code = 4; 
+  optional sfixed64 when_last_installed = 5; 
+  optional sfixed64 when_last_uninstalled = 6; 
+  optional AssetLocation location = 7; 
+  required bool is_returned_to_manufacturer = 8; 
+  extensions 100 to 120; 
+}
+
+message AssetLocation {
+  required string location_id = 1; 
+  required sfixed64 associated_date = 2; 
+  extensions 100 to 120; 
+} 
+
+message Battery {
+  required string serial_number = 1;
+  optional sfixed64 build_date = 2;
+  optional sfixed64 expiry_date = 3;
+  required string model = 4;  
+  extensions 100 to 120; 
+}
+
+message Change {
+  required string action = 1; 
+  required string path = 2; 
+  required string type_id = 3; 
+  required string value = 4; 
+  extensions 100 to 120; 
+}
+
+message ClassifiedDate {
+  required sfixed64 date=1;
+  required string date_kind=2;
+  optional string timezone_applicable_acronym=3; 
+  extensions 100 to 120; 
+}
+
+message DataGap {
+  required sfixed64 start_time = 1; 
+  required sfixed64 end_time = 2; 
+  extensions 100 to 120; 
+}
+
+message Device {
+  required string device_id = 1; 
+  required string serial_number = 2; 
+  required string device_type_id = 3; 
+  required sfixed64 build_date = 4; 
+  required string firmware_version = 5; 
+  required string hardware_version = 6; 
+  optional sfixed64 upgrade_date = 7; 
+  optional sfixed64 refurbished_date = 8;  
+  repeated Battery batteries = 9;
+  optional SimCard sim_card = 10;
+  optional sfixed64 passed_end_of_line_date = 11; 
+  extensions 100 to 120; 
+}
+
+message DeviceType {
+  required string device_type_id = 1;
+  required string part_number = 2;
+  required string version_number = 3;
+  required string build = 4; 
+  repeated PressureChannel pressure_channels = 5; 
+  repeated FlowChannel flow_channels = 6; 
+  repeated TemperatureChannel temperature_channels = 7; 
+  optional bool has_control_output = 8; 
+  optional string modem_type = 9; 
+  optional string antenna_type = 10; 
+  optional string power_source = 11; 
+  required string device_classification = 12; 
+  required string manufacturer = 13; 
+  extensions 100 to 120; 
+}
+
+message FlowChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message FlowChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+} 
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+ extensions 100 to 120; 
+}
+
+message Pair {
+   required string key = 1;
+   required string value = 2;
+   extensions 100 to 120; 
+}
+
+message MeasurementStats {
+  required double min_value = 1; 
+  required double max_value = 2; 
+  required double mean_value = 3; 
+  required uint32 count = 4; 
+  required double sum = 5; 
+  required double sum_of_squares = 6; 
+  extensions 100 to 120; 
+}  
+
+message PressureChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message PressureChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+} 
+
+message ReadingWithinTargetBand {
+  required float target_reading = 1; 
+  required float minimum_reading = 2;
+  required float maximum_reading = 3; 
+  required sfixed64 start_time = 4;
+  required sfixed64 end_time = 5; 
+  extensions 100 to 120; 
+}
+
+message SimCard {
+  required string imsi = 1;
+  required string carrier = 2;
+  extensions 100 to 120; 
+}
+ 
+message TemperatureChannel {
+  required uint32 channel_number = 1;
+  required string focus = 2; 
+  extensions 100 to 120; 
+} 
+
+message TemperatureChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+} 
+
+message Tenant {
+  required string tenant_name = 1; 
+  required string address = 2;
+  repeated string external_references = 3; 
+  required string timezone = 4; 
+  required string short_name = 5; 
+  extensions 100 to 120; 
+}
+
+message TypedString {
+  required string type_id = 1; 
+  required string value_string = 2; 
+  extensions 100 to 120; 
+}

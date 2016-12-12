@@ -1,0 +1,354 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetConfiguration;
+
+// commands
+
+message CreateTenantConfigurationCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string tenant_name = 2;
+  required string tenant_address = 3;
+  required string tenant_timezone = 4;
+  extensions 100 to 120; 
+}
+
+// requests & responses
+
+message GetAcceptedAutomaticOptimisationCurvesRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string prv_location_id = 2;
+  required float reliability = 3;
+  optional FlowP2CurveParameters flow_p2_curve_parameters = 4;
+  required string critical_point_id = 5;
+  extensions 100 to 120;
+}
+
+message GetLatestAutomaticOptimisationCurvesRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string prv_location_id = 2;
+  required float reliability = 3;
+  optional FlowP2CurveParameters flow_p2_curve_parameters = 4;
+  required string critical_point_id = 5;
+  extensions 100 to 120;
+}
+
+message GetAutomaticOptimisationCurvesRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string prv_location_id = 2;
+  required float reliability = 3;
+  required sfixed64 when_generated = 4;
+  optional FlowP2CurveParameters flow_p2_curve_parameters = 5;
+  required string critical_point_id = 6;
+  extensions 100 to 120;
+}
+
+message GetAutomaticOptimisationCurvesResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated FlowDpCurveEntry flow_dp_curve = 2;
+  repeated FlowP2CurveEntry flow_p2_curve = 3;
+  required sfixed64 when_generated = 4;
+  extensions 100 to 120;
+}
+
+message SaveRemoteControlSettingsForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  optional ConfigureBasicRemoteControlForLocationRequest configure_basic_remote_control_for_location_request = 2;
+  optional SetManualP2CurveForLocationRequest set_manual_p2_curve_for_location_request = 3;
+  optional SetApvControlSpeedForLocationRequest set_apv_control_speed_for_location_request = 4;
+  optional SetApvPressureRangeForLocationRequest set_apv_pressure_range_for_location_request = 5;
+  optional EnableRemoteControlForLocationRequest enable_remote_control_for_location_request = 6;
+  optional DisableRemoteControlForLocationRequest disable_remote_control_for_location_request = 7;
+  repeated CreateRemoteControlProfileForLocationRequest create_remote_control_profile_for_location_requests = 8;
+  repeated UpdateRemoteControlProfileForLocationRequest update_remote_control_profile_for_location_requests = 9;
+  repeated DeleteRemoteControlProfileForLocationRequest delete_remote_control_profile_for_location_requests = 10;
+  optional AutomaticOptimisationParametersForLocation automatic_optimisation_parameters_for_location = 11;
+  optional AutomaticOptimisationRecalculationForLocation automatic_optimisation_recalculation_for_location = 12;
+  repeated ControlProfileForLocation control_profiles_for_location = 13;
+  optional AcceptFlowDpCurveForLocation accept_flow_dp_curve_for_location = 14;
+  repeated SetControlLoopSettingsForLocationRequest set_control_loop_settings_for_location_requests = 15;
+  optional SetHeadroomForLocationRequest set_headroom_for_location_request = 16;
+  extensions 100 to 120;
+}
+
+message SetAutomaticOptimisationParametersForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required float reliability = 2;
+  required float p2_min = 3;
+  required bool apply_p2_min = 4;
+  required float p2_max = 5;
+  required bool apply_p2_max = 6;
+  required bool apply_fail_safe_pressure = 7;
+  required bool apply_daily_reduction_of_p2_min = 8;
+  required float daily_reduction_current_p2_min = 9;
+  required float daily_reduction_step_for_p2_min = 10;
+  required bool daily_reduction_of_p2_min_applies_on_working_days_only = 11;
+  extensions 100 to 120; 
+}
+
+message SetAutomaticOptimisationParametersForTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message SetApvControlSpeedForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required float apv_control_speed = 2;
+  extensions 100 to 120;
+}
+
+message SetApvControlSpeedForTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message SetApvPressureRangeForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required uint32 pressure_range = 2;
+  extensions 100 to 120;
+}
+
+message SetApvPressureRangeForTenantResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message SetLoggingParametersForLocationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;
+  repeated ChannelEnhancedStatisticsLogging enhanced_statistics = 3;
+  extensions 100 to 120;
+}
+
+message SetHeadroomForTenantRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required float headroom = 2;
+  required bool is_headroom_enabled = 3;
+  extensions 100 to 120;
+}
+
+message SetMqttBrokerInformationForAssetRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string device_id = 2;
+  required string fully_qualified_domain_name = 3;
+  required uint32 port = 4;
+  extensions 100 to 120; 
+}
+
+message GetRemoteControlProfileCalendarRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string start_date = 2;
+  required string end_date = 3;
+  repeated RemoteControlProfile profiles = 4;
+  extensions 100 to 120;
+}
+
+message GetRemoteControlProfileCalendarResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  repeated RemoteControlProfileCalendarEntry calendar_entries = 2;
+  extensions 100 to 120;
+}
+
+// sub messages
+
+message FlowP2CurveParameters {
+  required float target_p3 = 1;
+  required float p2_min = 2;
+  required bool apply_p2_min = 3;
+  required float p2_max = 4;
+  required bool apply_p2_max = 5;
+  required float fail_safe_pressure = 6;
+  required bool apply_fail_safe_pressure = 7;
+  extensions 100 to 120;
+}
+
+message ControlProfileForLocation {
+  required string location_id = 1;
+  required string profile_id = 2;
+  repeated ControlProfileEntry entries = 3;
+  extensions 100 to 120;
+}
+
+message ControlProfileEntry {
+  required uint32 start_hour = 1;
+  required uint32 start_minute = 2;
+  required string control_type = 3;  
+  required string control_loop_settings_id = 4;
+  required float single_target = 5;
+  required float target_p2 = 6;
+  required float target_p3 = 7;
+  required float fail_safe_pressure = 8;
+  extensions 100 to 120;
+}
+
+message ManualP2CurvePoint {
+  required float flow = 1;
+  required float target_p2 = 2;
+  extensions 100 to 120;
+}
+
+message AcceptFlowDpCurveForLocation {
+  required string location_id = 2;
+  required sfixed64 when_generated = 3;
+  required string critical_point_id = 4;
+ extensions 100 to 120; 
+}
+
+message AutomaticOptimisationParametersForLocation {
+  required string location_id = 1;
+  required float reliability = 2;
+  required float p2_min = 3;
+  required bool apply_p2_min = 4;
+  required float p2_max = 5;
+  required bool apply_p2_max = 6;
+  required bool apply_fail_safe_pressure = 7;
+  required bool apply_daily_reduction_of_p2_min = 8;
+  required float daily_reduction_current_p2_min = 9;
+  required float daily_reduction_step_for_p2_min = 10;
+  required bool daily_reduction_of_p2_min_applies_on_working_days_only = 11;
+  extensions 100 to 120;
+}
+
+message AutomaticOptimisationRecalculationForLocation {
+  required string location_id = 1;
+  required string mode = 2;
+  extensions 100 to 120;
+}
+
+message EnableRemoteControlForLocationRequest {
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+message DisableRemoteControlForLocationRequest {
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+message CreateRemoteControlProfileForLocationRequest {
+  required string location_id = 1;
+  required RemoteControlProfile profile = 2;
+  extensions 100 to 120;
+}
+
+message DeleteRemoteControlProfileForLocationRequest {
+  required string location_id = 2;
+  required string profile_id = 3;
+  extensions 100 to 120;
+}
+
+message UpdateRemoteControlProfileForLocationRequest {
+  required string location_id = 1;
+  required RemoteControlProfile profile = 2;
+  extensions 100 to 120;
+}
+
+message SetApvPressureRangeForLocationRequest {
+  required string location_id = 2;
+  required uint32 pressure_range = 3;
+  extensions 100 to 120;
+}
+
+message ConfigureBasicRemoteControlForLocationRequest {
+  required string location_id = 1;
+  required float target_p2 = 2;
+  required string control_loop_settings_id = 3;
+  extensions 100 to 120; 
+}
+
+message SetManualP2CurveForLocationRequest {
+  required string location_id = 2;
+  repeated ManualP2CurvePoint curve = 3;
+  extensions 100 to 120; 
+}
+
+message SetApvControlSpeedForLocationRequest {
+  required string location_id = 2;
+  required float apv_control_speed = 3;
+  extensions 100 to 120;
+}
+
+message FlowP2CurveEntry {
+  required float flow = 1;
+  required float p2 = 2;
+  extensions 100 to 120;
+}
+
+message FlowDpCurveEntry {
+  required float flow = 1;
+  required float dp = 2;
+  extensions 100 to 120;
+}
+
+message ChannelEnhancedStatisticsLogging {
+  required string logical_channel = 1;
+  required bool enable_enhanced_statistics = 2;
+  extensions 100 to 120;
+}
+
+message SetControlLoopSettingsForLocationRequest {
+  required string location_id = 1;
+  required string id = 2;
+  required string name = 3;
+  required uint32 prv_settle_time = 4;
+  required uint32 control_loop_interval = 5;
+  required uint32 damping_factor = 6;
+  required float p2_deadband = 7;
+  extensions 100 to 120;
+}
+
+message SetHeadroomForLocationRequest {
+  required string location_id = 1;
+  required float headroom = 2;
+  required bool is_headroom_enabled = 3;
+  extensions 100 to 120;
+}
+
+message RemoteControlProfile {
+  required string profile_id = 1;
+  required string profile_name = 2;
+  required bool is_active = 3;
+  required uint32 priority = 4;
+  required RemoteControlProfileRecurrence recurrence = 5;
+  extensions 100 to 120;
+}
+
+message RemoteControlProfileRecurrence {
+  required string selected_recurrence_pattern = 1;
+  optional WorkWeekDemandRecurrencePattern work_week_demand = 2;
+  optional DaysOfWeekRecurrencePattern days_of_week = 3;
+  optional SpecificDatesRecurrencePattern specific_dates = 4;
+  extensions 100 to 120;
+}
+
+message WorkWeekDemandRecurrencePattern {
+  required string start_date = 1;
+  optional string end_date = 2 [default = "9999-12-31"];
+  required bool every_working_day = 3;
+  required bool every_non_working_day = 4;
+  extensions 100 to 120;
+}
+
+message DaysOfWeekRecurrencePattern {
+  required string start_date = 1;
+  optional string end_date = 2 [default = "9999-12-31"];
+  required bool every_monday = 3;
+  required bool every_tuesday = 4;
+  required bool every_wednesday = 5;
+  required bool every_thursday = 6;
+  required bool every_friday = 7;
+  required bool every_saturday = 8;
+  required bool every_sunday = 9;
+  extensions 100 to 120;
+}
+
+message SpecificDatesRecurrencePattern {
+  repeated string dates = 1;
+  extensions 100 to 120;
+}
+
+message RemoteControlProfileCalendarEntry {
+  required string title = 1;
+  required string date = 2;
+  extensions 100 to 120;
+}

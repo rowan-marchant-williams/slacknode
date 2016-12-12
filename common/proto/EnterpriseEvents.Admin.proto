@@ -1,0 +1,17 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Admin;
+
+message ExecutionInConsoleComplete {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string execution_id = 2;
+  required string user = 3;
+  required string command = 4;
+  required string standard_output = 5;
+  required string warning_output = 6;
+  required string error_output = 7;
+  repeated string file_input_names = 8;
+  repeated i2OWater.Anapos.Governance.Common.Pair file_output = 9;
+  extensions 100 to 120; 
+}

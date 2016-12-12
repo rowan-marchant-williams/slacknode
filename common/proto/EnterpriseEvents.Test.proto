@@ -1,0 +1,34 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Test;
+
+// enterprise events
+
+message TestEvent {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string test_name = 2;
+  repeated KeyValuePair test_data = 3;
+  extensions 100 to 120; 
+}
+
+message TestEventA {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string test_name = 2;
+  repeated KeyValuePair test_data = 3;
+  extensions 100 to 120; 
+}
+
+message TestEventB {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string test_name = 2;
+  repeated KeyValuePair test_data = 3;
+  extensions 100 to 120; 
+}
+
+// sub messages
+
+message KeyValuePair {
+  required string key = 1;
+  required string value = 2;
+  extensions 100 to 120;
+}

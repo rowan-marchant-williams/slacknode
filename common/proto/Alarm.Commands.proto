@@ -1,0 +1,173 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Alarm.Commands;
+
+message CheckBatteryVoltageMeasurements {
+  required CheckAnalysedDataCommand check_command = 1; 
+  required uint32 channel = 2; 
+  repeated i2OWater.Anapos.Governance.Common.FloatMeasurement measurements = 3; 
+  required i2OWater.Anapos.Governance.Common.MeasurementStats voltage_stats = 4; 
+  extensions 100 to 120; 
+}
+
+message CheckFlowMeasurements {
+  required CheckAnalysedDataCommand check_command = 1; 
+  required i2OWater.Anapos.Governance.Common.FlowChannelMap flow_channel_map = 2;
+  repeated i2OWater.Anapos.Governance.Common.FloatMeasurement measurements = 3; 
+  required i2OWater.Anapos.Governance.Common.MeasurementStats flow_stats = 4; 
+  required string location_type = 5; 
+  extensions 100 to 120; 
+}
+
+message CheckPressureMeasurements {
+  required CheckAnalysedDataCommand check_command = 1; 
+  required i2OWater.Anapos.Governance.Common.PressureChannelMap pressure_channel_map = 2; 
+  repeated i2OWater.Anapos.Governance.Common.FloatMeasurement measurements = 3; 
+  required i2OWater.Anapos.Governance.Common.MeasurementStats pressure_stats = 4; 
+  required string location_type = 5; 
+  extensions 100 to 120; 
+}
+
+message CheckTemperatureMeasurements {
+  required CheckAnalysedDataCommand check_command = 1; 
+  required i2OWater.Anapos.Governance.Common.TemperatureChannelMap temperature_channel_map = 2;
+  repeated i2OWater.Anapos.Governance.Common.FloatMeasurement measurements = 3; 
+  required i2OWater.Anapos.Governance.Common.MeasurementStats temperature_stats = 4; 
+  required string location_type = 5; 
+  extensions 100 to 120; 
+}
+
+message RaiseAlarmCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2;
+  required string asset_id = 3;
+  required sfixed64 when_raised = 4;
+  required string alarm_code = 5;
+  required string alarm_severity = 6;
+  extensions 100 to 120;
+}
+
+message RegisterAsset {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_id = 2;
+  required string asset_reference = 3;
+  required string manufacturer = 4;
+  extensions 100 to 120; 
+}
+
+message RegisterLocation {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2; 
+  optional string timezone = 3;
+  extensions 100 to 120; 
+}
+
+message SendAlarmEmail {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required AlarmEmailInfo alarm_email_info = 2;
+  required string tenant_short_name = 3;
+  extensions 100 to 120;
+}
+
+message UpdateLocationAlarmSettings {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required bool inhibit_alarms = 2;
+ repeated LogicalChannelAlarmSet pressure_channel_alarms = 3;
+ repeated LogicalChannelAlarmSet flow_channel_alarms = 4;
+ repeated LogicalChannelAlarmSet temperature_channel_alarms = 5;
+ required sfixed64 changed_time = 6;
+ extensions 100 to 120; 
+}
+
+// base messages //
+
+message CheckAnalysedDataCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string asset_id = 2; 
+  optional string location_id = 3; 
+  required sfixed64 when_logged = 4;  
+  required sfixed64 start_time = 5; 
+  required sfixed64 end_time = 6; 
+  extensions 100 to 120; 
+}
+
+// sub messages //
+
+message AlarmScheduleEntry {
+  required uint32 start_hour = 1;
+  required uint32 start_minute = 2;
+  required float low = 3;
+  required float low_low = 4;
+  required float low_delta = 5;
+  required float high = 6;
+  required float high_high = 7;
+  required float high_delta = 8;
+  extensions 100 to 120; 
+}
+
+message LogicalChannelAlarmEnabling {
+  required bool low = 1;
+  required bool low_low = 2;
+  required bool high = 3;
+  required bool high_high = 4;
+  extensions 100 to 120; 
+}
+
+message LogicalChannelAlarmSet {
+  required string logical_channel = 1;
+  required LogicalChannelAlarmEnabling software_enabling = 2;
+  repeated AlarmScheduleEntry schedule = 3; 
+  extensions 100 to 120; 
+}
+
+message AlarmEmailInfo {
+  required LocationEmailInfo location = 2;
+  required AreaEmailInfo parent_area = 3;
+  required AreaEmailInfo root_area = 4;
+  repeated AssetEmailInfo assets = 5;
+  repeated AlarmEventEmailInfo alarm_events = 6;
+  extensions 100 to 120;
+}
+
+message AreaEmailInfo {
+  required string area_id = 1;
+  required string name = 2;
+  required string reference = 3;
+  extensions 100 to 120;
+}
+
+message LocationEmailInfo {
+  required string location_id = 1;
+  required string name = 2;
+  required string reference = 3;
+  required string timezone = 4;
+  required string location_type = 5;
+  required string email_address = 6;
+  extensions 100 to 120;
+}
+
+message AssetEmailInfo {
+  required string asset_id = 1;
+  required string asset_reference = 2;
+  extensions 100 to 120;
+}
+
+message AlarmEventEmailInfo {
+  required sfixed64 alarm_event_id = 1;
+  required string alarm_id = 2;
+  required string location_id = 3;
+  required string location_type = 4;
+  required string logical_channel = 5;
+  required string asset_id = 6;
+  required string physical_channel = 7;
+  required float measurement = 8;
+  required float threshold = 9;
+  required float threshold_delta = 10;
+  required string threshold_type = 11;
+  required string alarm_state = 12;
+  required string units = 13;
+  required sfixed64 when_measured = 14;
+  required sfixed64 when_checked = 15;
+  extensions 100 to 120;
+}

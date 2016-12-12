@@ -1,0 +1,256 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.NetworkManagement;
+
+message AreaActivated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Area area = 2;
+ extensions 100 to 120; 
+}
+
+message AreaCreated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Area area = 2;
+ extensions 100 to 120; 
+}
+
+message AreaDeactivated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Area area = 2;
+ extensions 100 to 120; 
+}
+
+message AreaRenamed {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Area area = 2;
+ extensions 100 to 120; 
+}
+
+message AreaAssociatedWithArea {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Area child_area = 2; 
+ required Area parent_area = 3; 
+ extensions 100 to 120; 
+}
+
+message AreaDisassociatedFromArea {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Area child_area = 2; 
+ required Area parent_area = 3; 
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message AreaTransferredBetweenAreas {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Area child_area = 2; 
+ required Area from_parent_area = 3; 
+ required Area to_parent_area = 4; 
+ extensions 100 to 120; 
+}
+
+message AssetActivated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message AssetAllocatedToTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message AssetAssociatedWithLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ required Location location = 3;
+ extensions 100 to 120; 
+}
+
+message AssetDisassociatedFromLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ required Location location = 3; 
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message AssetInstalled {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message AssetReturnedToManufacturer {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2; 
+ extensions 100 to 120; 
+}
+
+// Deprecated in favour of AssetAllocatedToTenant
+message AssetReturnedToTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message AssetUninstalled {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message LocationActivated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Location location = 2; 
+ extensions 100 to 120; 
+}
+
+message LocationAssociatedWithArea {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ required Area area = 3;
+ extensions 100 to 120; 
+}
+
+message LocationRenamed {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ extensions 100 to 120; 
+}
+
+message LocationMetaDataChanged {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ extensions 100 to 120; 
+}
+
+message LocationTypeChanged {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2; 
+ extensions 100 to 120; 
+}
+
+message LocationRepositioned {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ extensions 100 to 120; 
+}
+
+message LocationCreated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ extensions 100 to 120; 
+}
+
+message LocationDeactivated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Location location = 2; 
+ extensions 100 to 120; 
+}
+
+message LocationDisassociatedFromArea {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ required Area area = 3;
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message LocationTransferredBetweenAreas {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Location location = 2;
+ required Area from_area = 3;
+ required Area to_area = 4;
+ extensions 100 to 120; 
+}
+
+// sub messages
+
+message Area {
+  required string area_id = 1; 
+  required string area_name = 2; 
+  required string area_reference = 3; 
+  required bool is_active = 4;
+  required uint32 level = 5; 
+  optional i2OWater.Anapos.Governance.GeographicCoordinates centrum = 6;
+  optional string boundary_id = 7; 
+  optional string owner_username = 8; 
+  optional AreaParent parent_area = 9; 
+  repeated AreaChild child_areas = 10; 
+  repeated AreaLocation locations = 11; 
+  extensions 100 to 120; 
+}
+
+message AreaParent {
+  required string area_id = 1;
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaChild {
+  required string area_id = 1;
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaLocation {
+  required string location_id = 1;  
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+} 
+
+message Asset {
+  required string asset_id = 1; 
+  required string asset_reference = 2; 
+  required string device_type_id = 3;
+  required string owner_tenant_code = 4; 
+  optional sfixed64 when_last_installed = 5; 
+  optional sfixed64 when_last_uninstalled = 6; 
+  optional AssetLocation location = 7; 
+  required bool is_returned_to_manufacturer = 8; 
+  extensions 100 to 120; 
+}
+
+message AssetLocation {
+  required string location_id = 1; 
+  required sfixed64 when_associated = 2; 
+  extensions 100 to 120; 
+} 
+
+message Location {
+  required string location_id = 1; 
+  required string location_name = 2;
+  required string location_reference = 3;  
+  required i2OWater.Anapos.Governance.GeographicCoordinates position = 4;
+  optional string address = 5;
+  optional string address_notes = 6;
+  required bool is_active = 7;
+  required string timezone = 8;
+  repeated LocationArea areas = 9; 
+  repeated MetaData meta_data = 10;
+  extensions 100 to 120; 
+} 
+
+message LocationArea {
+  required string area_id = 1; 
+  required sfixed64 when_associated = 2; 
+  required string location_type = 3; 
+  repeated LocationAsset assets = 4; 
+  extensions 100 to 120; 
+} 
+
+message LocationAsset {
+  required string asset_id = 1; 
+  required sfixed64 when_associated = 2;
+  // Do Not Use field number 3 - Was previously channel maps
+  extensions 100 to 120; 
+} 
+
+message MetaData {
+  required string key = 1;
+  required string value = 2;
+  extensions 100 to 120;
+}
+

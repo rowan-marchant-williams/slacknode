@@ -1,0 +1,14 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.NetworkDataInterpretation;
+
+// commands 
+
+message RepublishInterpretedRawDataCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required sfixed64 when_start = 2;
+ required sfixed64 when_end = 3;
+ required string asset_id = 4;
+ required string physical_channel = 5;
+ extensions 100 to 120;
+}

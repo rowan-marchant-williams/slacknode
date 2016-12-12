@@ -1,0 +1,112 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Migration;
+
+message DeviceAllocated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string serial_number = 2;
+  required string part_number = 3;
+  required string version_number = 4;
+  extensions 100 to 120; 
+}
+
+message AreaAssociated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string reference = 2;
+  required string name = 3;
+  required sfixed64 when_associated = 4;
+  extensions 100 to 120;
+}
+
+message LocationAssociated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string reference = 2;
+  required string name = 3;
+  required string address = 4;
+  required string location_type = 5;
+  required sfixed64 when_associated = 6;
+  required string timezone = 7;
+  required string area_id = 8;
+  extensions 100 to 120;
+}
+
+message AssetAssociated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required string serial_number = 3;
+  required sfixed64 when_associated = 4;
+  required string location_id = 5;
+  extensions 100 to 120;
+}
+
+message LocationMigrated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string location_id = 2;
+  required int32 xplat_location_id = 3;
+  required sfixed64 when_location_associated = 4;
+  required sfixed64 when_asset_associated = 5;
+  required string location_timezone = 6;
+  optional bool location_has_pump_association = 7;
+  extensions 100 to 120;
+}
+
+message AssetMigrated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required sfixed64 when_effective_from = 3;
+  extensions 100 to 120;
+}
+
+message AssetSwitchedOver {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  extensions 100 to 120;
+}
+
+// deprecated
+message XplatMigrationInitiated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  repeated Area areas = 2;
+  repeated Device devices = 3;
+  extensions 100 to 120; 
+}
+
+// deprecated
+message Area {
+  required string area_id = 1;
+  required string reference = 2;
+  required string name = 3;
+  required sfixed64 when_associated = 4;
+  repeated Location locations = 5;
+  extensions 100 to 120; 
+}
+
+// deprecated
+message Location {
+  required string location_id = 1;
+  required string reference = 2;
+  required string name = 3;
+  required string address = 4;
+  required string location_type = 5;
+  required sfixed64 when_associated = 6;
+  optional AssetAssociation asset_association = 7;
+  required string timezone = 8;
+  extensions 100 to 120; 
+}
+
+// deprecated
+message Device {
+  required string device_id = 1;
+  required string serial_number = 2;
+  required string part_number = 3;
+  optional string version = 4;
+  extensions 100 to 120; 
+}
+
+// deprecated
+message AssetAssociation {
+  required string asset_id = 1;
+  required string serial_number = 2;
+  required sfixed64 when_associated = 3;
+  extensions 100 to 120; 
+}

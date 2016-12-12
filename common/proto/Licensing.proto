@@ -1,0 +1,78 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.Licensing;
+
+// commands
+
+message RegisterTenantCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string register_tenant_code = 2; 
+ repeated string register_external_references = 3; 
+ extensions 100 to 120; 
+}
+
+message RegisterLicenceCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string tenant_reference = 2; 
+ required string licence_type_id = 3; 
+ required string licence_id = 4; 
+ extensions 100 to 120; 
+}
+
+// req /resp
+
+message ActivateLicenceRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ required string licence_type_id = 2; 
+ required string target_id = 3; 
+ extensions 100 to 120; 
+}
+
+message ActivateLicenceResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+}
+
+message DeactivateLicenceRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ required string licence_type_id = 2; 
+ required string target_id = 3;
+ extensions 100 to 120; 
+}
+
+message DeactivateLicenceResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ extensions 100 to 120; 
+}
+
+message GetLicenceCountsRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ extensions 100 to 120;
+}
+
+message GetLicenceCountsResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated LicenceCounts licence_counts = 2;
+ extensions 100 to 120;
+}
+
+
+// sub messages
+
+message LicenceType {
+ required string licence_type_id = 1;
+ required string licence_type_name = 2;
+ required string product_name = 3;
+ repeated string licence_targets = 4;
+ repeated string dependency_type_ids = 5;
+ extensions 100 to 120;
+}
+
+message LicenceCounts {
+  required LicenceType licence_type = 1;
+  required int32 applied_count = 2;
+  required int32 available_count = 3;
+  required int32 unused_count = 4;
+  required int32 total_count = 5;
+  extensions 100 to 120;
+}

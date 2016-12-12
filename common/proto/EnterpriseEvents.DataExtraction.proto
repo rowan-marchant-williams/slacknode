@@ -1,0 +1,25 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.DataExtraction;
+
+message DataExtractedForTenant {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string extraction_id = 2;
+  required string report = 3;
+  extensions 100 to 120; 
+}
+
+message DataExtractionConfigurationCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string configuration_id = 2;
+  required uint32 configuration_compatibility_version = 3;
+  required string configuration_object = 4;
+  required string name = 5;
+  extensions 100 to 120;
+}
+
+message DataExtractionConfigurationDeleted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string configuration_id = 2;
+  extensions 100 to 120;
+}

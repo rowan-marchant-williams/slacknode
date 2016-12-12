@@ -1,0 +1,73 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.NetworkManagement;
+
+// commands //
+
+message AssociateAssetWithLocationCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string location_id = 2;  
+  required sfixed64 when_associated = 3;  
+  extensions 100 to 120; 
+}
+
+message AllocateAssetToTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required Asset asset = 2;  
+  extensions 100 to 120; 
+}
+
+message CreateRootAreaCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string area_name = 2;
+  required string area_tenant_code = 3;
+  extensions 100 to 120;
+}
+
+message InstallAssetCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string asset_owner_tenant_code = 2;
+  required sfixed64 when_installed = 3;
+  extensions 100 to 120;  
+}
+
+message RegisterTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string register_tenant_code = 2;
+  required string register_tenant_timezone = 3;
+  extensions 100 to 120;
+}
+
+message ReturnAssetToi2OCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string asset_owner_tenant_code = 2;
+  required sfixed64 when_returned = 3;  
+  extensions 100 to 120; 
+}
+
+// req / resp
+
+message TransferLocationBetweenAreasRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2; 
+  required string from_parent_area_id = 3; 
+  required string to_parent_area_id = 4; 
+  required sfixed64 when_transferred = 5;  
+  extensions 100 to 120; 
+}
+
+message TransferLocationBetweenAreasResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+// sub messages //
+
+message Asset {
+  required string asset_id = 1;
+  required string asset_reference = 2;
+  required string device_type_id = 3;
+  required string owner_tenant_code = 4;
+  extensions 100 to 120;
+}

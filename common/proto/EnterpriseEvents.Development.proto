@@ -1,0 +1,21 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Development;
+
+message FirmwareInstallerReleased {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string filename = 2;
+  required bytes binary_data = 3;
+  required fixed32 crc = 4;
+  extensions 100 to 120; 
+}
+
+message FirmwareReleased {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string software_version = 2;
+  required string filename = 3;
+  required bytes binary_data = 4;
+  required fixed32 crc = 5;
+  required string installer_filename = 6;
+  extensions 100 to 120; 
+}

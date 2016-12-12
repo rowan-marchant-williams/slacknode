@@ -1,0 +1,28 @@
+{
+  "messages":[
+    {
+      "name":"i2OWater.Anapos.Governance.AssetGateway.Responses.CurrentAssetConfiguration",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"2d6829f3-6a23-4ee2-8575-2db0f5ef7941"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.AssetGateway.Requests.ObtainAssetConfiguration",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"07f0200b-0c4c-4b54-a1c2-9d456939a73c"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"asset_integration.req"
+        }
+      ]
+    }
+  ]
+}

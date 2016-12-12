@@ -1,0 +1,46 @@
+import "Governance.proto";
+import "Alarm.Service.proto";
+
+package i2OWater.Anapos.Governance.DataExtraction.Requests;
+
+message DeleteConfigurationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  extensions 100 to 120;
+}
+
+message GetExtractionReportsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required sfixed64 from = 2;
+  required sfixed64 until = 3;
+  extensions 100 to 120;
+}
+
+message ListConfigurationsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  extensions 100 to 120;
+}
+
+message ListExtractionsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required sfixed64 from = 2;
+  required sfixed64 until = 3;
+  extensions 100 to 120;
+}
+
+message TestConfigurationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string configuration_source = 2;
+  required uint32 configuration_compatibility_version = 3;
+  required string configuration_object = 4;
+  required sfixed64 extract_at = 5;
+  extensions 100 to 120;
+}
+
+message UploadConfigurationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string configuration_source = 2;
+  required uint32 configuration_compatibility_version = 3;
+  required string configuration_object = 4;
+  required string name = 5;
+  extensions 100 to 120;
+}

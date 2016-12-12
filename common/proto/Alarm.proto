@@ -1,0 +1,22 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Alarm;
+
+// commands
+
+message CheckHitClosedEndStopCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string asset_id = 2; 
+  optional string location_id = 3; 
+  required sfixed64 when_logged = 4;  
+  extensions 100 to 120; 
+}
+
+message CheckHitOpenEndStopCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string asset_id = 2; 
+  optional string location_id = 3; 
+  required sfixed64 when_logged = 4;  
+  extensions 100 to 120; 
+}

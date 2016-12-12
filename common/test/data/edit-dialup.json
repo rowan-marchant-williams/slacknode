@@ -1,0 +1,24 @@
+{
+    "locationId": "80e8c7d6-c484-44fc-8219-d56ae4244ad4",
+    "locationTypeId": "Location",
+    "locationName": "Emsworth PRV",
+    "locationReference": "EmsworthPRV",
+    "isShared": false,
+    "locationType": "Inlet",
+    "areaId": "7dab74a2-3094-400b-92cc-fd0af0e96032",
+    "areaName": "Emsworth",
+    "areaRef": "Emsworth",
+    "dialUpEntries": [
+        {
+            "start": 0
+        },
+        {
+            "start": 60,
+            "repeat": 15,
+            "end": 1440
+        },
+        {
+            "start": 1020
+        }
+    ]
+}

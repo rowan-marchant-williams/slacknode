@@ -1,0 +1,96 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.Migration;
+
+// req /resp
+
+message InitiateXplatMigrationRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string tenant_short_name = 2; 
+  required string password = 3;
+  repeated Area areas = 4;
+  repeated Device devices = 5;
+  extensions 100 to 120; 
+}
+
+message GetShadowedDeviceReportsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string tenant_short_name = 2;
+  required string password = 3;
+  repeated string device_serial_numbers = 4;
+  extensions 100 to 120;
+}
+
+message GetShadowedDeviceReportsResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  required string tenant_short_name = 2;
+  repeated ShadowedDeviceReport shadowed_device_reports = 3;
+  extensions 100 to 120;
+}
+
+message RemoveDevicesFromXplatShadowingRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string tenant_short_name = 2;
+  required string password = 3;
+  repeated string device_serial_numbers = 4;
+  extensions 100 to 120;
+}
+
+message SyncLocationsRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string tenant_short_name = 2; 
+  required string password = 3;
+  repeated Location locations = 4;
+  repeated Device devices = 5;
+  extensions 100 to 120; 
+}
+
+// sub messages
+
+message Area {
+  required string reference = 1;
+  required string name = 2;
+  required sfixed64 when_associated = 3;
+  repeated Location locations = 4;
+  extensions 100 to 120; 
+}
+
+message Location {
+  required string name = 1;
+  required string address = 2;
+  required string location_type = 3;
+  required sfixed64 when_associated = 4;
+  optional AssetAssociation asset_association = 5;
+  required int32 xplat_id = 6;
+  required string timezone = 7;
+  repeated DeviceDeployment device_deployments = 8;
+  required string reference = 9;
+  extensions 100 to 120; 
+}
+
+message Device {
+  required string serial_number = 1;
+  required string part_number = 2;
+  required string version = 3;
+  extensions 100 to 120; 
+}
+
+message AssetAssociation {
+  required string serial_number = 1;
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+}
+
+message DeviceDeployment {
+  required sfixed64 when_started = 1;
+  required sfixed64 when_ended = 2;
+  extensions 100 to 120; 
+}
+
+message ShadowedDeviceReport {
+  required string serial_number = 1;
+  required bool is_shadowed = 2;
+  required bool is_ready_to_switch = 3;
+  required bool is_switched = 4;
+  extensions 100 to 120;
+}

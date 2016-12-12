@@ -1,0 +1,76 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.SystemMonitoring;
+
+// enterprise events
+
+message Logged {
+ required EnterpriseEvent root_event = 1;
+ required GelfLog log_entry = 2; 
+ repeated KeyValuePair additionals = 3; 
+ extensions 100 to 120; 
+}
+
+message MessageCrashed {
+ required EnterpriseEvent root_event = 1;
+ required bytes message = 2; 
+ required string message_type = 3; 
+ required sfixed64 retried_count = 4; 
+ required string reason = 5; 
+ repeated KeyValuePair properties = 6;
+ repeated KeyValuePair headers = 7; 
+ required string transport_name = 8;
+ required string routing_key = 9;
+ optional string target_message_handler = 10;
+ extensions 100 to 120; 
+}
+
+message MessageQuarantined {
+ required EnterpriseEvent root_event = 1;
+ required string record_id = 2; 
+ required bytes message = 3; 
+ required string message_type = 4; 
+ required sfixed64 retried_count = 5; 
+ required string reason = 6; 
+ repeated KeyValuePair properties = 7;
+ repeated KeyValuePair headers = 8; 
+ required string transport_name = 9;
+ required string routing_key = 10;
+ optional string target_message_handler = 11;
+ extensions 100 to 120; 
+}
+
+message MessageUnhandled {
+ required EnterpriseEvent root_event = 1;
+ required bytes message = 2; 
+ required string message_type = 3; 
+ required sfixed64 retried_count = 4; 
+ required string reason = 5; 
+ repeated KeyValuePair properties = 6;
+ repeated KeyValuePair headers = 7; 
+ required string transport_name = 8;
+ required string routing_key = 9;
+ optional string target_message_handler = 10;
+ extensions 100 to 120; 
+}
+
+// sub messages
+
+message GelfLog {
+  required string version = 1;  
+  required string host = 2; 
+  required string short_message = 3; 
+  optional string full_message = 4; 
+  required double timestamp = 5; 
+  optional sfixed32 level = 6 [default = 1]; 
+  optional string facility = 7 [default = "GELF"]; 
+  optional sfixed32 line = 8 [default = 0]; 
+  optional string file = 9; 
+  extensions 100 to 120;
+}
+
+message KeyValuePair {
+  required string key = 1;
+  required string value = 2;
+  extensions 100 to 120;
+}

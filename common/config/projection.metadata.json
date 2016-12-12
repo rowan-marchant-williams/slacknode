@@ -1,0 +1,268 @@
+{
+  "messages": [
+    {
+      "name": "i2OWater.Anapos.Governance.EnterpriseEvents.Projection.ProjectionChanged",
+      "constants": [
+        {
+          "path": "root_event.instruction.type",
+          "value": "145fe49a-7e6f-471a-b6c5-2e8855a46c44"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.Projection.ProjectionChanged"
+        }    
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.BuildProjectionsFromResourceChangesCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "14bcc55f-4564-4333-b1c4-d6628b68d0e3"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.Projection.BuildProjectionsFromResourceChangesCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.BuildProjectionsFromAlarmUpdatesCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "f6e913ad-0b98-4fbb-97f7-4f651385aa6c"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.Projection.BuildProjectionsFromAlarmUpdatesCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.BuildProjectionsFromDeletedAlarmsCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "454c1531-50ec-49cd-a78c-49eb9f6667b6"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.Projection.BuildProjectionsFromDeletedAlarmsCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.BuildProjectionsCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "d0b8cd6d-3d88-4852-8d8f-fc3a3244f69b"
+        }
+      ],
+      "metadata": [
+        {
+          "name": "routingKey",
+          "value": "Anapos.Projection.BuildProjectionsCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.DeleteProjectionsCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "142399a8-35d3-4d8d-bdfe-99d4b680a9e1"
+        }
+      ],
+      "metadata": [
+        {
+          "name": "routingKey",
+          "value": "Anapos.Projection.DeleteProjectionsCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.RebuildAllProjectionsCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "ee115d5a-c8b4-4267-8039-2cdcd1005da0"
+        }
+      ],
+      "metadata": [
+        {
+          "name": "routingKey",
+          "value": "Anapos.Projection.RebuildAllProjectionsCommand"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.Projection.UpdateProjectionsForResourceCommand",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "ee1a1b75-df2a-4419-a3ee-d20c7deb32f0"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.Projection.UpdateProjectionsForResourceCommand"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchAreaAlarmSummary",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"4ed76536-6445-48c8-840e-2b7855667f47"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchLocationAlarms",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"ceeba372-9832-4213-bf17-7cb3434c41c3"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchAssetAlarms",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"4ff5e0b3-bd27-46af-81c6-45b088067833"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchAreaDashboard",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"66bd0cda-cc3e-4279-a5c3-324133695eba"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchLocationDashboard",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"13fd1e3f-a8f5-4835-95a6-198c07fc1583"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Requests.FetchAssetDashboard",
+      "constants":[
+        {
+          "path":"root_request.instruction.type",
+          "value":"6fe1ffeb-bf07-465f-8b9d-2c15e88c7d30"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"projection.req"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.AreaAlarmSummaryProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"579762ca-8be2-47dc-922a-95c661afcf3c"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.LocationAlarmsProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"c79c025d-6575-4f2c-9ddb-d8a48e351c57"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.AssetAlarmsProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"6dec87d2-d130-403a-bba7-5c38c77f1453"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.AreaDashboardProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"c4787875-aac1-4637-a8b5-82d09d5221b0"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.LocationDashboardProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"e769af32-7caf-4b50-a088-ea71c5d7f41b"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.Projection.Responses.AssetDashboardProjection",
+      "constants":[
+        {
+          "path":"root_response.instruction.type",
+          "value":"1aa75493-2fbb-4da8-b0e3-3aa9bc411769"
+        }
+      ]
+    }
+  ]
+}

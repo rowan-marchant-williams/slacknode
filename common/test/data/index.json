@@ -1,0 +1,82 @@
+{
+    "view": {
+        "version": "1.0.0",
+        "href": "/viewapp/views/index",
+        "rel": "self",
+        "id": "login",
+        "title": "Anapos - Home",
+        "links": [
+            {
+                "href": "/viewapp/help/index",
+                "rel": "help",
+                "id": "index",
+                "resource_name": "help"
+            },
+            {
+                "href": "/hypermedia",
+                "rel": "hypermedia",
+                "resource_name": "hypermedia"
+            },
+            {
+                "href": "mailto:dev@i2owater.com",
+                "rel": "author",
+                "resource_name": "author"
+            },
+            {
+                "href": "/support",
+                "rel": "support",
+                "resource_name": "support"
+            },
+            {
+                "href": "/viewapp/views/login",
+                "rel": "view",
+                "id": "login",
+                "resource_name": "login"
+            }
+        ],
+        "queries": [            
+        ],
+        "commands": [],
+        "view_models": [
+            {
+                "href": "/viewapp/view-models/index",
+                "rel": "view-model",
+                "id": "index"
+            }
+        ],
+        "data_models" : [],
+        "resources": [
+            {
+                "name": "welcome",
+                "value": "Welcome to Anapos"
+            },
+            {
+                "name": "login",
+                "value": "Login to Anapos"
+            },
+            {
+                "name": "help",
+                "value": "Get Help"
+            },
+            {
+                "name": "hypermedia",
+                "value": "Get Documentation on Hypermedia"
+            },
+            {
+                "name": "author",
+                "value": "Contact Hypermedia Author"
+            },
+            {
+                "name": "support",
+                "value": "Get Support Details"
+            }
+        ],
+        "templates" : [
+            {
+                "href" : "/viewapp/templates/index",
+                "rel": "template",
+                "id": "index"  
+            }
+        ]
+    }    
+}

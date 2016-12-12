@@ -1,0 +1,125 @@
+import "AssetConfiguration.Common.proto";
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetIntegration;
+
+// commands
+
+message AllocateAssetToTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_id = 2;
+  required string asset_owner_tenant_code = 3;
+  extensions 100 to 120;
+}
+
+message DeallocateAssetFromTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_id = 2;
+  required string asset_previous_owner_tenant_code = 3;
+  extensions 100 to 120; 
+}
+
+message DeleteAssetConfigurationsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_id = 2;
+  extensions 100 to 120;
+}
+
+message ProcessAssertLoggedCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_reference = 2; 
+  required string manufacturer = 3; 
+  optional string firmware_version = 4; 
+  required bytes assert_data = 5; 
+  required string assert_data_protocol = 6; 
+  extensions 100 to 120; 
+}
+
+message ProcessDataLoggedCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_reference = 2; 
+  required string manufacturer = 3; 
+  optional string firmware_version = 4; 
+  required bytes log_data = 5; 
+  required string log_data_protocol = 6; 
+  required string log_start = 7; 
+  required string log_end = 8; 
+  extensions 100 to 120; 
+}
+
+message RecordAssetConfigurationCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required i2OWater.Anapos.Governance.AssetConfiguration.Common.AssetConfiguration configuration = 2; 
+ required string asset_id = 3; 
+ required sfixed64 changed_at = 4; 
+ required string manufacturer = 5; 
+ required string asset_reference = 6; 
+ optional string location_id = 7;
+ optional int32 location_configuration_version = 8;
+ extensions 100 to 120; 
+}
+
+message RegisterAssetCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string asset_id = 2;
+  required string asset_reference = 3;
+  required string asset_manufacturer = 4;
+  required string asset_owner_tenant_code = 5;
+  extensions 100 to 120;
+}
+
+// req / resp
+
+message ScheduleAssetFirmwareUpgradeRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string asset_reference = 2; 
+  required string manufacturer = 3; 
+  required string filename = 4; 
+  required sfixed64 activate_at = 5; 
+  extensions 100 to 120; 
+}
+
+message DeviceInfoReleaseRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string filename = 2;
+  required bytes binary_data = 3;
+  required uint32 crc = 4;
+  required string installer_filename = 5;
+  extensions 100 to 120;
+}
+
+message GetDeviceReportRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ extensions 100 to 120;
+}
+
+message GetDeviceReportResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated DeviceReport device_reports = 2;
+ extensions 100 to 120;
+}
+
+// sub messages //
+
+message DeviceReport {
+ required string asset_reference = 1;
+ required string current_firmware_version = 2;
+ required string scheduled_firmware_filename = 3;
+ required sfixed64 when_scheduled_firmware_activation = 4;
+ repeated DataGap data_gaps = 5;
+ repeated LogGap log_gaps = 6;
+ extensions 100 to 120;
+}
+
+message DataGap {
+ required sfixed64 when_start = 1;
+ required sfixed64 when_end = 2;
+ extensions 100 to 120;
+}
+
+message LogGap {
+ required uint32 min_index = 1;
+ required uint32 max_index = 2;
+ extensions 100 to 120;
+}

@@ -1,0 +1,32 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Projection.Responses;
+
+message AreaAlarmSummaryProjection {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string area_id = 2; 
+  required string data_model = 3;   
+  extensions 100 to 120; 
+}; 
+
+message LocationAlarmsProjection {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string location_id = 2; 
+  required string data_model = 3;   
+  extensions 100 to 120; 
+}; 
+
+message AssetAlarmsProjection {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string asset_id = 2; 
+  required string data_model = 3;   
+  extensions 100 to 120; 
+}; 
+
+message AreaDashboardProjection {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string area_id = 2; 
+  required string data_model = 3;   
+  extensions 100 to 120; 
+};

@@ -1,0 +1,106 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.AssetIntegration;
+
+message AssetAssertLogged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  optional string firmware_version = 3; 
+  required bytes assert_data = 4; 
+  required string assert_data_format = 5; 
+  extensions 100 to 120; 
+}
+
+message ConfigurationSentToAsset {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string configuration_id = 2; 
+  required string asset_id = 3; 
+  required sfixed64 when_synchronized = 4;  
+  optional string previous_configuration_reference = 5;
+  optional string location_id = 6;
+  optional int32 location_configuration_version = 7;
+  optional bool is_emulated_asset = 8;
+  extensions 100 to 120; 
+}
+
+message AssetDataLogged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  optional string firmware_version = 3; 
+  required bytes log_data = 4; 
+  required string log_data_format = 5; 
+  optional string asset_reference = 6;   
+  extensions 100 to 120; 
+}
+
+message AssetRequestedConfiguration {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string asset_reference = 3; 
+  required string manufacturer = 4; 
+  optional string current_configuration_reference = 5; 
+  optional sfixed64 asset_current_timestamp = 6; 
+  optional string firmware_version = 7; 
+  optional string reset_reason = 8; 
+  optional bool is_emulated_asset = 9;
+  extensions 100 to 120; 
+}
+
+message UnknownAssetRequestedConfiguration {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_reference = 2; 
+  required string manufacturer = 3; 
+  optional string current_configuration_reference = 4; 
+  optional sfixed64 asset_current_timestamp = 5; 
+  optional string firmware_version = 6; 
+  optional string reset_reason = 7; 
+  extensions 100 to 120; 
+}
+
+// Proteus
+
+message MessageReceivedFromUnknownAsset {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_reference = 2;
+  required string message_type = 3;
+  extensions 100 to 120;
+}
+
+message MessageReceivedFromUnallocatedAsset {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_reference = 2;
+  required string message_type = 3;
+  extensions 100 to 120;
+}
+
+message AssetFailedToReadLogData {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required string asset_reference = 3;
+  required string manufacturer = 4;
+  extensions 100 to 120;
+}
+
+message AssetFirmwareUpgradeScheduled {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string filename = 3; 
+  required sfixed64 activate_at = 4; 
+  extensions 100 to 120; 
+}
+
+message AssetFirmwareIdentified {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string software_version = 3;
+  extensions 100 to 120; 
+}
+
+message ConfigurationReceivedFromAsset {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required string configuration_id = 3;
+  required bytes configuration = 4;
+  required string product_family = 5;
+  extensions 100 to 120;
+}

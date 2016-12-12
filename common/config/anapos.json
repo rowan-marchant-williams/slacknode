@@ -1,0 +1,162 @@
+{
+    "container": {
+        "web_assets_port": 4000,
+        "downloadsLocation": "/var/lib/anapos/cdn/"
+    },
+    "amqp": {
+        "ttl": 20000
+    },
+    "logging": {
+        "handleExceptions": true,
+        "tenantCode": "i2OGB",
+        "logFile": "anapos.log",
+        "level": "debug",
+        "colorize": true,
+        "maxsize": 102400,
+        "maxFiles": 10,
+        "timestamp": true,
+        "paperTrail": {
+            "host": "logs3.papertrailapp.com",
+            "port": "39066",
+            "enabled": false,
+            "level": "warning",
+            "inlineMeta": true
+        }
+    },
+    "proxy": {
+        "web_assets_port": 8001,
+        "locales": {
+            "availableLanguages": ["en", "es", "es-mx", "es-xl", "fr", "ga", "pt"],
+            "variants": [
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "text/html",
+                    "charset": "utf-8",
+                    "asset": "login"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "text/html",
+                    "charset": "utf-8",
+                    "asset": "container"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "es",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "es-mx",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "es-xl",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "fr",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "ga",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "pt",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "text/html",
+                    "charset": "utf-8",
+                    "asset": "templates"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "application/javascript",
+                    "charset": "utf-8",
+                    "asset": "view-models"
+                }
+            ]
+        }
+    },
+    "cache": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "retry_delay": 1000,
+        "retry_backoff": 1.7
+    },
+    "i2O_gateway": {
+        "web_assets_port": 4002,
+        "tenantCode": "i2OGB",
+        "temp_file_path": "/tmp",
+        "redirectionToONet": {
+            "enabled": true,
+            "hostToRedirect": "i2owater.dyndns.org"
+        }
+    },
+    "cassandra": {
+        "port": "9160",
+        "connectionTimeout": 10000,
+        "stringCharacterFilterRegExp": "[^-+_. 0-9A-Za-z]",
+        "identifierCharacterFilterRegExp": "[^-+_. 0-9A-Za-z]",
+        "lastFailedNodeFileName": "cassandra-last-failed-node.log"
+    },
+    "view": {
+        "web_assets_port": 4001
+    },
+    "query": {
+        "web_assets_port": 4003
+    },
+    "request": {
+        "web_assets_port": 4004,
+        "ttl": 20000
+    },
+    "domain": "i2owater.com",
+    "branding": [{
+        "name": "itron",
+        "hostname": "i2owater.com",
+        "subdomainSuffix": "-itron"
+    }],
+    "useHttps": true,
+    "useStrictTransportSecurity": true
+}

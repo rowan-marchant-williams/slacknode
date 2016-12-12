@@ -1,0 +1,69 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.XPlatDataImport;
+
+// req /resp
+
+message GetXplatWaterCompaniesRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  extensions 100 to 120;
+}
+
+message GetXplatWaterCompaniesResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  repeated string water_commpanies = 2;
+  extensions 100 to 120;
+}
+
+message GetAreasForXplatWaterCompanyRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string water_commpany_name = 2;
+  extensions 100 to 120;
+}
+
+message GetAreasForXplatWaterCompanyResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  repeated Area areas = 2;
+  extensions 100 to 120;
+}
+
+message SwitchDevicesFromXplatToAnaposRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated string serial_numbers = 2;
+  extensions 100 to 120;
+}
+
+// sub messages
+
+message Area {
+  required string reference = 1;
+  required string name = 2;
+  required sfixed64 when_associated = 3;
+  repeated Location locations = 4;
+  extensions 100 to 120; 
+}
+
+message Location {
+  required string name = 1;
+  required string address = 2;
+  required string location_type = 3;
+  required sfixed64 when_associated = 4;
+  optional AssetAssociation asset_association = 5;
+  required int32 xplat_id = 6;
+  required string timezone = 7;
+  repeated DeviceDeployment device_deployments = 8;
+  extensions 100 to 120; 
+}
+
+message AssetAssociation {
+  required string serial_number = 1;
+  required sfixed64 when_associated = 2;
+  optional string owner_tenant_code = 3;
+  extensions 100 to 120; 
+}
+
+message DeviceDeployment {
+  required sfixed64 when_started = 1;
+  required sfixed64 when_ended = 2;
+  extensions 100 to 120; 
+}

@@ -1,0 +1,92 @@
+{
+    "clock": {
+        "port": 5050,
+        "tock": 1000
+    },
+    "container": {
+        "web_assets_port": 4000
+    },
+    "amqp": {
+        "host": "192.168.0.137",
+        "port": 5672,
+        "login": "anapos",
+        "password": "anapos",
+        "vhost": null,
+        "exchange": "anapos.topic"
+    },
+    "logging": {
+        "handleExceptions": true,
+        "tenantCode": "i2OGB",
+        "logFile": "anapos.log",
+        "level": "debug",
+        "colorize": true
+    },
+    "proxy": {
+        "web_assets_port": 8001,
+        "locales": {
+            "variants": [
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "application/json",
+                    "charset": "utf-8",
+                    "asset": "views"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "text/html",
+                    "charset": "utf-8",
+                    "asset": "templates"
+                },
+                {
+                    "method": "GET",
+                    "language": "en",
+                    "quality": 1.0,
+                    "type": "application/javascript",
+                    "charset": "utf-8",
+                    "asset": "view-models"
+                }
+            ]
+        },
+        "router": {
+            "localhost/viewapp": "localhost:4001",
+            "localhost/": "localhost:4000",
+            "localhost/queryapp": "localhost:4002",
+            "localhost/assetapp": "localhost:4003"
+        }
+    },
+    "cache": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "retry_delay": 1000,
+        "retry_backoff": 1.7
+    },
+    "i2O_gateway": {
+        "web_assets_port": 4002,
+        "tenantCode": "i2OGB",
+        "temp_file_path": "/tmp"
+    },
+    "security": {
+        "master_salt": "9C21A75EB96840F4A61F867077B216BF",
+        "hash_algorithm": "sha512",
+        "digest": "base64"
+    },
+    "cassandra": {
+        "hosts": ["192.168.0.235"],
+        "keyspace": null
+    },
+    "postgresql": {
+        "host": "192.168.0.135",
+        "port": 5432,
+        "ssl": false,
+        "user": "anapos",
+        "password": "@n@p05",
+        "machine_name": null
+    },
+    "view": {
+        "web_assets_port": 4001
+    }
+}

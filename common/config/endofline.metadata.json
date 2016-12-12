@@ -1,0 +1,19 @@
+{
+  "messages":[
+    {
+      "name":"i2OWater.Anapos.Governance.EnterpriseEvents.EndOfLine.DevicePassedEndOfLine",
+      "constants":[
+        {
+          "path":"root_event.instruction.type",
+          "value":"f7247a5f-6aad-497c-b8d3-86c1706e1a27"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.DevicePassedEndOfLine.EndOfLine"
+        }
+      ]
+    }
+  ]
+}

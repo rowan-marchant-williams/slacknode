@@ -1,0 +1,79 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.NetworkDataInterpretation;
+
+message CurveFailureInterpreted {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3; 
+ extensions 100 to 120; 
+}
+
+message NetworkMeasurementsInterpretedForAsset {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string physical_channel = 3; 
+ repeated FloatMeasurement measurements = 4; 
+ extensions 100 to 120; 
+}
+
+message HighFlowInterpreted {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3; 
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message HighPressureInterpreted {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3; 
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message LowFlowInterpreted {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3; 
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message LowPressureInterpreted {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3; 
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message NetworkMeasurementsInterpretedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2; 
+ required string location_timezone = 3; 
+ required string logical_channel = 4; 
+ required sfixed64 when_started = 5; 
+ required sfixed64 when_ended = 6; 
+ repeated FloatMeasurement measurements = 7; 
+ required string unit_of_measurement = 8;
+ extensions 100 to 120; 
+}
+
+// sub messages //
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  optional float measurement_sum_of_squares = 3;
+  optional float measurement_min = 4;
+  optional float measurement_max = 5;
+  optional sfixed64 when_measured_first = 6;
+  optional sfixed64 when_measured_last = 7;
+  optional sfixed64 when_measured_min = 8;
+  optional sfixed64 when_measured_max = 9;
+  optional uint32 invalid_sample_count = 10 [default = 0];
+  optional uint32 sample_count = 11;
+  extensions 100 to 120; 
+}

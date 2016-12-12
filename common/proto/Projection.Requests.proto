@@ -1,0 +1,31 @@
+import "Governance.proto";
+import "Alarm.Service.proto";
+
+package i2OWater.Anapos.Governance.Projection.Requests;
+
+// requests
+
+message FetchAreaAlarmSummary {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string area_id = 2;  
+  extensions 100 to 120; 
+}
+
+message FetchLocationAlarms {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string area_id = 2;
+  required string location_id = 3;  
+  extensions 100 to 120; 
+}
+
+message FetchAssetAlarms {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string asset_id = 2;  
+  extensions 100 to 120; 
+}
+
+message FetchAreaDashboard {
+  required i2OWater.Anapos.Governance.Request root_request = 1; 
+  required string area_id = 2;  
+  extensions 100 to 120; 
+}

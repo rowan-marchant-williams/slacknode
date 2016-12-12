@@ -1,0 +1,50 @@
+import "Governance.proto";
+import "Alarm.Service.proto";
+
+package i2OWater.Anapos.Governance.Projection;
+
+// commands
+
+message BuildProjectionsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  repeated i2OWater.Anapos.Governance.StateChange state_changes = 2;  
+  extensions 100 to 120; 
+}
+
+message BuildProjectionsFromResourceChangesCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  repeated i2OWater.Anapos.Governance.ResourceChange resource_changes = 2;  
+  extensions 100 to 120; 
+}
+
+message BuildProjectionsFromAlarmUpdatesCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  repeated i2OWater.Anapos.Governance.Alarm.Service.AlarmUpdate alarm_updates = 2;
+  extensions 100 to 120;
+}
+
+message BuildProjectionsFromDeletedAlarmsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  repeated string deleted_alarm_ids = 2;
+  extensions 100 to 120;
+}
+
+message DeleteProjectionsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  repeated string document_ids = 2; 
+  extensions 100 to 120; 
+}
+
+message RebuildAllProjectionsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  optional string resource_type_id = 2; 
+  optional fixed32 batch_size = 3 [default = 1000]; 
+  extensions 100 to 120; 
+}
+
+message UpdateProjectionsForResourceCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string resource_type_id = 2;
+  required string resource_id = 3;
+  extensions 100 to 120; 
+}

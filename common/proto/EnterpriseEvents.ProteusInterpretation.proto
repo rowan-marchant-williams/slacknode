@@ -1,0 +1,36 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.ProteusInterpretation;
+
+message LoggedDataValidated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string device_id = 2;
+  required string asset_reference = 3;
+  required string firmware_version = 4;
+  required bytes log_data = 5;
+  required LogIndexRange log_index_range = 6;
+  required int32 read_message_count = 7;
+  required sfixed64 when_earliest_data_logged = 8;
+  required sfixed64 when_latest_data_logged = 9;
+  repeated CorruptLogIndexRange corrupt_log_index_ranges = 10;
+  repeated InvalidLogMessage invalid_log_messages = 11;
+  extensions 100 to 120;
+}
+
+message InvalidLogMessage { 
+  required uint32 log_index = 1;
+  required string reason = 2;
+  extensions 100 to 120;
+}
+
+message LogIndexRange {
+  required uint32 min_index = 1;
+  required uint32 max_index = 2;
+  extensions 100 to 120;
+}
+
+message CorruptLogIndexRange {
+  required LogIndexRange log_index_range = 1;
+  required string reason = 2;
+  extensions 100 to 120;
+}

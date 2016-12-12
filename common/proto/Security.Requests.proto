@@ -1,0 +1,47 @@
+import "Governance.proto";
+import "Common.proto";
+import "Security.Common.proto";
+
+package i2OWater.Anapos.Governance.Security.Requests;
+
+message ChangePassword {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  optional UserAccountIdentity account = 2;
+  optional string existing_password = 3; 
+  required string new_password = 4;
+  required string account_tenant_short_name = 5;
+  optional string token = 6;
+  required string ip_address = 7;
+  required string locale = 8;
+  optional string brand = 9;
+  extensions 100 to 120; 
+} 
+
+message LogIn {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_tenant_short_name = 2; 
+  required string password = 3; 
+  required i2OWater.Anapos.Governance.Security.Common.UserStats user_stats = 4; 
+  optional int32 accepted_terms_and_conditions_version = 5;
+  extensions 100 to 120; 
+}
+
+message LogOut {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string session_token = 2; 
+  extensions 100 to 120; 
+}; 
+
+message ValidateSession {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string session_token = 2; 
+  extensions 100 to 120; 
+}; 
+
+// Sub-messages
+
+message UserAccountIdentity {
+  required string username = 1; 
+  required string tenant_code = 2; 
+  extensions 100 to 120; 
+}

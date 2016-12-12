@@ -1,0 +1,35 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Alarm.Requests;
+
+message AcknowledgeAlarm {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string alarm_id = 2;
+  extensions 100 to 120; 
+}
+
+message AddCommentToAlarm {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string alarm_id = 2;
+  required string text = 3;
+  extensions 100 to 120; 
+}
+
+message MaskAlarm {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string alarm_id = 2;
+  extensions 100 to 120; 
+}
+
+message UnacknowledgeAlarm {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string alarm_id = 2;
+  extensions 100 to 120; 
+}
+
+message UnmaskAlarm {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string alarm_id = 2;
+  extensions 100 to 120; 
+}

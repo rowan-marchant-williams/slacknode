@@ -1,0 +1,64 @@
+{
+  "messages":[
+    {
+      "name": "i2OWater.Anapos.Governance.EnterpriseEvents.SystemMonitoring.Logged",
+      "constants": [
+        {
+          "path": "root_event.instruction.type",
+          "value": "e8cf7cea-3cf7-498f-a9e0-528293554d29"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.SystemMonitoring.Logged"
+        }    
+      ]
+    },  
+    {
+      "name": "i2OWater.Anapos.Governance.EnterpriseEvents.SystemMonitoring.MessageCrashed",
+      "constants": [
+        {
+          "path": "root_event.instruction.type",
+          "value": "6006a5c5-6fc5-4f90-97cf-39f5dc4e7ab3"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.SystemMonitoring.MessageCrashed"
+        }    
+      ]
+    },        
+    {
+      "name": "i2OWater.Anapos.Governance.EnterpriseEvents.SystemMonitoring.MessageQuarantined",
+      "constants": [
+        {
+          "path": "root_event.instruction.type",
+          "value": "d943bb2a-77ab-4e63-86c2-d00f9c4093e5"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.SystemMonitoring.MessageQuarantined"
+        }    
+      ]
+    },    
+    {
+      "name": "i2OWater.Anapos.Governance.EnterpriseEvents.SystemMonitoring.MessageUnhandled",
+      "constants": [
+        {
+          "path": "root_event.instruction.type",
+          "value": "475cdb27-883b-4036-bb7b-541647c4b8ec"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.SystemMonitoring.MessageUnhandled"
+        }    
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+import "Governance.proto";
+import "Common.proto";
+import "Asset.Common.proto";
+
+package i2OWater.Anapos.Governance.Asset.Responses;
+
+message AreaActivated {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  extensions 100 to 120; 
+}
+
+message AreaDeactivated {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  extensions 100 to 120; 
+}
+
+message AreaDisassociatedFromArea {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message AreaEdited {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+}; 
+
+message AreaMade {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ optional string area_id = 2; 
+ extensions 100 to 120; 
+}; 
+
+message AreaTransferredBetweenAreas {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message AssetAssociatedWithLocation {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+}; 
+
+message AssetDisassociatedFromLocation {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+}; 
+
+message AssetUninstalled {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}
+
+message LocationActivated {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  extensions 100 to 120; 
+}
+
+message LocationAssociatedWithArea {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message LocationDeactivated {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  extensions 100 to 120; 
+}
+
+message LocationDisassociatedFromArea {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+} 
+
+message LocationEdited {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+}; 
+
+message LocationMade {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ optional string location_id = 2; 
+ extensions 100 to 120; 
+}; 

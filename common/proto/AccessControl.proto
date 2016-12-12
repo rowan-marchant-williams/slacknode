@@ -1,0 +1,146 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AccessControl;
+
+// commands
+
+message AddTenantDefaultRolePoliciesCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ extensions 100 to 120; 
+}
+
+message CompensateForCreateUserAccountCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string create_user_name = 2;
+ required string create_user_tenant_code = 3;
+ extensions 100 to 120; 
+}
+
+message CreatePolicyForNewUserCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required User user = 2; 
+ extensions 100 to 120; 
+}
+
+message RegisterTenantCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string register_tenant_code = 2; 
+ required string register_tenant_short_name = 3; 
+ extensions 100 to 120; 
+}
+
+message UpdateSessionEndTimeCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string session_token = 2;
+ required sfixed64 session_ends_at = 3;
+ required sfixed64 session_ended = 4;
+ extensions 100 to 120;
+}
+
+// req / resp
+
+message RegisterUserAccountRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required User user = 2; 
+  required string account_tenant_short_name = 3;
+  optional string password = 4; 
+  optional string locale = 5;
+  extensions 100 to 120;
+} 
+
+message ChangeUserRoleRequest{
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_username = 2; 
+  required string account_tenant_short_name = 3;
+  required string account_user_role = 4;
+  extensions 100 to 120;
+}
+
+message ResetPasswordRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_email = 2; 
+  required string account_tenant_short_name = 3;
+  required string ip_address = 4;  
+  required string locale = 5;
+  optional string brand = 6;
+  extensions 100 to 120; 
+}
+
+message GetUserReportRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  extensions 100 to 120; 
+}
+
+message GetUserReportResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated UserReport user_reports = 2;
+ extensions 100 to 120; 
+}
+
+message DeactivateUserAccountRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_username = 2; 
+  required string account_tenant_short_name = 3;
+  extensions 100 to 120; 
+}
+
+message ActivateUserAccountRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_username = 2; 
+  required string account_tenant_short_name = 3;
+  extensions 100 to 120; 
+}
+
+message ChangeUserEmailAddressRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string account_username = 2; 
+  required string account_tenant_short_name = 3;
+  required string account_user_email_address = 4;
+  extensions 100 to 120;
+}
+
+// sub messages
+
+message Session {
+  required string token = 1; 
+  required sfixed64 started = 2; 
+  required sfixed64 ends_at = 3; 
+  optional sfixed64 ended = 4; 
+  optional string existing_token = 5; 
+  required string anti_csrf_token = 6; 
+  extensions 100 to 120; 
+}; 
+
+message UserStats {
+  required string ip_address = 1; 
+  optional string location = 2; 
+  optional string browser = 3; 
+  optional string browser_resolution = 4; 
+  optional string os_type = 5; 
+  extensions 100 to 120; 
+}; 
+
+message User {
+  required string username = 1; 
+  required string tenant_code = 2; 
+  required string first_name = 3; 
+  required string last_name = 4; 
+  required string email = 5; 
+  optional string office_phone = 6; 
+  optional string mobile_phone = 7; 
+  required string role = 8; 
+  extensions 100 to 120; 
+}; 
+
+message UserReport {
+  required string username = 1; 
+  required string first_name = 2;
+  required string last_name = 3;
+  required string role = 4;
+  required string email = 5;
+  required bool is_locked = 6;
+  required sfixed64 last_session_started = 7;
+  required bool is_active = 8;
+  extensions 100 to 120;
+};

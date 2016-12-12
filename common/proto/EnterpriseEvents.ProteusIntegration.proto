@@ -1,0 +1,47 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.ProteusIntegration;
+
+message DataLogged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string device_id = 2;
+  required string asset_reference = 3;
+  required string firmware_version = 4;
+  required bytes log_data = 5;
+  required LogIndexRange index_range = 6;
+  extensions 100 to 120;
+}
+
+message LogDataOverwritten {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string device_id = 2;
+  required string asset_reference = 3;
+  required string firmware_version = 4;
+  required LogIndexRange index_range = 5;
+  extensions 100 to 120; 
+}
+
+message LogGapsExpired {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string device_id = 2;
+  required string asset_reference = 3;
+  required string firmware_version = 4;
+  required bytes log_data = 5;
+  required LogIndexRange log_data_index_range = 6;  
+  repeated ExpiredIndexRange expired_log_index_ranges = 7;
+  extensions 100 to 120;
+}
+
+// sub-messages
+
+message LogIndexRange {
+  required uint32 min_index = 1;
+  required uint32 max_index = 2;
+  extensions 100 to 120;
+}
+
+message ExpiredIndexRange {
+  required LogIndexRange log_index_range = 1;
+  required string reason = 2;
+  extensions 100 to 120;
+}

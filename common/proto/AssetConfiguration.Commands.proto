@@ -1,0 +1,125 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetConfiguration.Commands;
+
+message AssociateLocationConfigurationWithArea {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2;
+  required string area_id = 3;
+  required string location_type = 4;
+  extensions 100 to 120; 
+}
+
+message ConfigureAssetFromTenantDefaults {
+  required i2OWater.Anapos.Governance.Command root_command = 1;  
+  required string serial_number = 2;
+  required string device_type_id = 3;
+  required string part_number = 4;
+  required string build = 5;
+  required string manufacturer = 6;
+  extensions 100 to 120; 
+}
+
+message CreateAssetConfigurationForTenant {
+  required i2OWater.Anapos.Governance.Command root_command = 1;  
+  required sfixed64 allocated_date = 2; 
+  required string allocated_tenant_code = 3;
+  required string device_type_id = 4;
+  extensions 100 to 120; 
+}
+
+message CreateDeviceTypeConfiguration {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string device_type_id = 2;
+  required string part_number = 3;
+  required string version_number = 4;
+  required string build = 5;
+  required string manufacturer = 6;
+  required string configuration_protocol = 7;
+  extensions 100 to 120; 
+}
+
+message CreateLocationConfiguration {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2;  
+  required string location_name = 3;
+  required string location_address = 4;
+  required string location_timezone = 5;
+  required string location_reference = 6;
+  extensions 100 to 120; 
+}
+
+message DisassociateLocationConfigurationFromArea {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2;
+  required string area_id = 3;
+  required sfixed64 disassociate_date = 4;
+  extensions 100 to 120; 
+}
+
+message UpdateLocationName {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string name = 2;
+  required string reference = 3;
+  extensions 100 to 120; 
+}
+
+message UpdateLocationAddress {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string address = 2;
+  required string timezone = 3;
+  extensions 100 to 120; 
+}
+
+message UpdateLocationType {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  repeated LocationArea areas = 2;
+  extensions 100 to 120; 
+}
+
+message RegisterDevice {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string serial_number = 2;
+  required string device_type_id = 3;
+  required string part_number = 4;
+  required string version_number = 5;
+  required string build = 6;
+  required string manufacturer = 7;
+  required string configuration_protocol = 8;
+  required sfixed64 created_date = 9;  
+  extensions 100 to 120; 
+}
+
+message TransferAssetConfigurationToLocation {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string new_location_id = 2;
+  required string asset_id = 3;
+  required sfixed64 associated_date = 4;
+  extensions 100 to 120; 
+}
+
+message TransferAssetConfigurationToWarehouse {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string old_location_id = 2;
+  required string asset_id = 3;
+  required sfixed64 disassociated_date = 4;
+  extensions 100 to 120; 
+}
+
+message TransferLocationConfigurationToArea {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string location_id = 2;
+  required string old_area_id = 3;
+  required string new_area_id = 4;
+  required string new_location_type = 5;
+  extensions 100 to 120; 
+}
+
+//sub-messages
+
+message LocationArea {
+  required string area_id = 1;
+  required string location_type = 2;
+  extensions 100 to 120; 
+}

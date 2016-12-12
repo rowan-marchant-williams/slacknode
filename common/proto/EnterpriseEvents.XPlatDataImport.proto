@@ -1,0 +1,31 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.XPlatDataImport;
+
+message HistoricLocationDataImported {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string location_id = 2;
+  required sfixed64 when_finished = 3;
+  extensions 100 to 120; 
+}
+
+message HistoricAssetDataImported {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required sfixed64 when_finished = 3;
+  extensions 100 to 120;
+}
+
+message AssetShadowingStarted {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required sfixed64 when_started = 3;
+  extensions 100 to 120;
+}
+
+message AssetShadowingFinished {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2;
+  required sfixed64 when_finished = 3;
+  extensions 100 to 120;
+}

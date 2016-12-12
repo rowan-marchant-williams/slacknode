@@ -1,0 +1,137 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.AssetDataManagement;
+
+// commands //
+
+message AssociateAssetWithLocationCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Asset asset = 2;
+ extensions 100 to 120; 
+}
+
+message DisassociateAssetFromLocationCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Asset asset = 2;
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message ProcessCurveFailureCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessAssetResetCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ optional uint32 last_reset_cause = 4;
+ optional uint32 reset_counter = 5;
+ optional uint32 last_fault_program_counter = 6;
+ optional uint32 last_fault_subroutine_call_return_address = 7;
+ extensions 100 to 120; 
+}
+
+message ProcessFilterBlockedCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessHitClosedEndStopCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessHitOpenEndStopCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessLowBatteryCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+  extensions 100 to 120; 
+}
+
+message ProcessManualOverrideCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessMotorFaultCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessOutOfMemoryCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message ProcessStatusAlarmCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ extensions 100 to 120; 
+}
+
+message UpdateGapDataCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 started = 3; 
+ required sfixed64 ended = 4; 
+ required bool passed_validation = 5; 
+ extensions 100 to 120; 
+}
+
+message CreateDataGapCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_from = 3; 
+ required sfixed64 when_to = 4; 
+ extensions 100 to 120; 
+}
+
+// sub messages //
+
+message Asset {
+  required string asset_id = 1; 
+  optional AssetLocation location = 2; 
+  extensions 100 to 120; 
+}
+
+message AssetLocation {
+  required string location_id = 1; 
+  required sfixed64 when_associated = 2; 
+  extensions 100 to 120; 
+} 
+
+message MotorEvent {
+  required string motor_event_type = 1;
+  required sfixed64 when_logged = 2;
+  required sint32 slot_count = 3;
+  optional ControlLoopTargetChange control_loop_target_change = 4;
+ extensions 100 to 120; 
+}
+
+message ControlLoopTargetChange {
+  required sint32 current_angle = 1;
+  required sint32 target_angle = 2;
+ extensions 100 to 120; 
+}

@@ -1,0 +1,40 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.PressureOptimisation;
+
+message AutomaticFlowDpCurveGeneratedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string inlet_location_id = 2;
+ required sfixed64 when_generated = 3; 
+ repeated CurveEntry curve = 4;
+ optional string critical_point_location_id = 5;
+ extensions 100 to 120; 
+}
+
+message AutomaticFlowDpCurveRejectedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string inlet_location_id = 2;
+ optional sfixed64 when_generated = 3; 
+ repeated CurveEntry curve = 4;
+ optional string critical_point_location_id = 5;
+ extensions 100 to 120; 
+}
+
+message SelectedOptimisationLocationsChangedForArea {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string area_id = 2;
+  required string selected_inlet_id = 3;
+  required sfixed64 when_inlet_selected = 4;
+  required string selected_critical_point_id = 5;
+  required sfixed64 when_critical_point_selected = 6;
+  extensions 100 to 120;
+}
+
+// sub-messages
+
+message CurveEntry {
+ required float flow = 1;
+ required float mean_dp = 2;
+ required float dp_variance = 3;
+ extensions 100 to 120;
+}

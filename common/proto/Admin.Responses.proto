@@ -1,0 +1,12 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Admin.Responses;
+
+message ExecuteResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  required string user = 2;
+  required string command = 3;
+  required string execution_id = 4;
+  extensions 100 to 120;
+}

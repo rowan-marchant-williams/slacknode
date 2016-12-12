@@ -1,0 +1,34 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EcosystemManagement;
+
+// commands
+
+message QuarantineMessageCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string transport_id = 2;
+  required string target_message_handler = 3;
+  required string message_type = 4;
+  required string reason = 5;
+  repeated KeyValuePair reason_properties = 6;
+  required bytes message = 7;
+  repeated KeyValuePair message_headers = 8;
+  required string routing_key = 9;
+  required sfixed64 retried_count = 10; 
+  required sfixed64 when_first_consumed = 11;
+  required bool service_crashed = 12; 
+  extensions 100 to 120; 
+}
+
+message ReleaseQuarantinedMessageCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  extensions 100 to 120; 
+}
+
+// sub messages
+
+message KeyValuePair {
+  required string key = 1;
+  required string value = 2;
+  extensions 100 to 120;
+}

@@ -1,0 +1,10 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.Projection;
+
+message ProjectionChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string projection_id = 2; 
+  required string projection = 3; 
+  extensions 100 to 120; 
+}

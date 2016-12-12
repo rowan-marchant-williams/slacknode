@@ -1,0 +1,38 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Alarm.Responses;
+
+message AlarmAcknowledged {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+};
+
+message AlarmMasked {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+};
+
+message AlarmUnacknowledged {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+};
+
+message AlarmUnmasked {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ extensions 100 to 120; 
+};
+
+message Comment {
+ required string username = 1;
+ required string when_commented = 2;
+ required string commentary = 3;
+ extensions 100 to 120;
+}
+
+message CommentAddedToAlarm {
+ required i2OWater.Anapos.Governance.Response root_response = 1; 
+ optional string comment_id = 2;
+ required Comment comment = 3;
+ extensions 100 to 120;
+};

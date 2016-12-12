@@ -1,0 +1,16 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.NetworkDataIngestion;
+
+// commands
+
+message IngestCsvFileCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  extensions 100 to 120;
+}
+
+message CleanFileRegistryCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  extensions 100 to 120;
+}

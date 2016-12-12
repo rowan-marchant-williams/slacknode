@@ -1,0 +1,154 @@
+import "Governance.proto";
+import "Common.proto";
+import "Asset.Common.proto";
+
+package i2OWater.Anapos.Governance.Asset.Requests;
+
+message ActivateArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_id = 2;  
+  extensions 100 to 120; 
+}
+
+message ActivateLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;  
+  extensions 100 to 120; 
+}
+
+message AssociateAssetWithLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string asset_id = 2;
+  required string location_id = 3;  
+  required sfixed64 when_associated = 4;  
+  extensions 100 to 120; 
+}
+
+message AssociateLocationWithArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2; 
+  required string area_id = 3; 
+  required string location_type = 4; 
+  required sfixed64 when_associated = 5;  
+  extensions 100 to 120; 
+}
+
+message DeactivateArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_id = 2;  
+  extensions 100 to 120; 
+}
+
+message DeactivateLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;  
+  extensions 100 to 120; 
+}
+
+message DisassociateAreaFromArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_id = 2;  
+  required string parent_area_id = 3; 
+  required sfixed64 when_disassociated = 4;
+  extensions 100 to 120; 
+}
+
+message DisassociateAssetFromLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string asset_id = 2;
+  required string location_id = 3;  
+  required sfixed64 when_disassociated = 4;  
+  extensions 100 to 120; 
+}
+
+message DisassociateLocationFromArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2; 
+  required string area_id = 3;  
+  required sfixed64 when_disassociated = 4;  
+  extensions 100 to 120; 
+}
+
+message EditArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_id = 2; 
+  required string name = 3; 
+  required string reference = 4; 
+  required uint32 level = 5; 
+  required string owner = 6; 
+  optional i2OWater.Anapos.Governance.GeographicCoordinates centrum = 7; 
+  optional Boundary boundary = 8; 
+  extensions 100 to 120; 
+}
+
+message EditLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;
+  required string name = 3;
+  required string reference = 4;
+  required string address = 5;
+  required string address_notes = 6;
+  required i2OWater.Anapos.Governance.GeographicCoordinates position = 7;
+  required string area_id = 8; 
+  required string location_type = 9;
+  repeated MetaData meta_data = 10;
+  extensions 100 to 120; 
+}
+
+message MakeArea {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_name = 2;
+  required string area_reference = 3;
+  required uint32 level = 4;
+  required string parent_area_id = 5;
+  optional i2OWater.Anapos.Governance.GeographicCoordinates centrum = 6;
+  optional Boundary boundary = 7; 
+  optional string owner_username = 8; 
+  required sfixed64 when_associated_with_area = 9;
+  extensions 100 to 120; 
+}
+
+message MakeLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_name = 2;
+  required string location_reference = 3;
+  required i2OWater.Anapos.Governance.GeographicCoordinates location = 4;
+  required string address = 5;
+  required string address_notes = 6;
+  required string area_id = 7; 
+  required string location_type = 8; 
+  optional string timezone = 9; 
+  required sfixed64 when_associated_with_area = 10;  
+  repeated MetaData meta_data = 11;
+  extensions 100 to 120; 
+}
+
+message TransferAreaBetweenAreas {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string area_id = 2;  
+  required string from_parent_area_id = 3; 
+  required string to_parent_area_id = 4; 
+  required sfixed64 when_transferred = 5;  
+  extensions 100 to 120; 
+}
+
+message UninstallAsset {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string asset_id = 2; 
+  required sfixed64 when_uninstalled = 3; 
+  extensions 100 to 120; 
+}
+
+// Sub-messages
+
+message Boundary {
+  required string data_format = 1; 
+  required bytes data = 2; 
+  extensions 100 to 120; 
+}
+
+message MetaData {
+  required string key = 1;
+  required string value = 2;
+  extensions 100 to 120;
+}

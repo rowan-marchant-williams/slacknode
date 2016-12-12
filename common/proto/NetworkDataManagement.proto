@@ -1,0 +1,270 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.NetworkDataManagement;
+
+// commands 
+
+message AssociateAreaWithAreaCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Area parentArea = 2;
+ required Area childArea = 3;
+ extensions 100 to 120; 
+}
+
+message AssociateAssetWithLocationCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Asset asset = 2;
+ required Location location = 3;
+ extensions 100 to 120; 
+}
+
+message AssociateLocationWithAreaCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Location location = 2;
+ required Area area = 3;
+ extensions 100 to 120; 
+}
+
+message ChangeLocationTypeCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Location location = 2;
+ required sfixed64 when_changed = 3;
+ extensions 100 to 120; 
+}
+
+message UpdateLocationTimezoneCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Location location = 2;
+ required sfixed64 when_changed = 3;
+ extensions 100 to 120; 
+}
+
+message DisassociateAreaFromAreaCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Area child_area = 2;
+ required Area parent_area = 3;
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message DisassociateAssetFromLocationCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Asset asset = 2;
+ required Location location = 3;
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message DisassociateLocationFromAreaCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Location location = 2;
+ required Area area = 3;
+ required sfixed64 when_disassociated = 4; 
+ extensions 100 to 120; 
+}
+
+message ProcessHighFlowCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message ProcessHighPressureCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message ProcessLowFlowCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message ProcessLowPressureCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string asset_id = 2; 
+ required sfixed64 when_logged = 3;
+ required string physical_channel = 4; 
+ extensions 100 to 120; 
+}
+
+message TransferAreaBetweenAreasCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Area child_area = 2; 
+ required Area from_parent_area = 3; 
+ required Area to_parent_area = 4;
+ extensions 100 to 120; 
+}
+
+message TransferLocationBetweenAreasCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required Location location = 2;
+ required Area from_area = 3;
+ required Area to_area = 4;
+ extensions 100 to 120; 
+}
+
+message StoreTotalDailyFlowCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string area_id = 2;
+ required sfixed64 start = 3;
+ required sfixed64 end = 4;
+ required string timezone = 5;
+ extensions 100 to 120; 
+}
+
+message StoreNightLineCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required string area_id = 2;
+ required sfixed64 start = 3;
+ required sfixed64 end = 4;
+ required string timezone = 5;
+ extensions 100 to 120; 
+}
+
+message WriteAggregationGapsReportCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required TimestampRange timestamp_range = 2;
+ optional string area_id = 3;
+ optional string location_id = 4;
+ extensions 100 to 120; 
+}
+
+message BuildAssetAggregationsCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required TimestampRange timestamp_range = 2;
+ required string asset_id = 3;
+ required string physical_channel = 4;
+ extensions 100 to 120;
+}
+
+message BuildLocationAggregationsCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required TimestampRange timestamp_range = 2;
+ required string location_id = 3;
+ required string location_timezone = 4;
+ required string asset_id = 5;
+ required string logical_channel = 6;
+ required uint32 channel_number = 7;
+ extensions 100 to 120;
+}
+
+message RebuildAggregationGapsCommand {
+ required i2OWater.Anapos.Governance.Command root_command = 1;
+ required TimestampRange timestamp_range = 2;
+ optional string area_id = 3;
+ optional string location_id = 4;
+ repeated string channels = 5;
+ extensions 100 to 120; 
+}
+
+// requests/responses
+
+message GetLogicalChannelDataRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ required string location_id = 2; 
+ required string logical_channel = 3; 
+ required string units = 4; 
+ required uint32 defined_aggregation_level_ms = 5; 
+ required sfixed64 start_time = 6; 
+ required sfixed64 end_time = 7; 
+ extensions 100 to 120; 
+}
+
+message GetLogicalChannelDataResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated FloatMeasurement measurements = 2; 
+ required MeasurementStats measurement_stats = 3; 
+ extensions 100 to 120; 
+}
+
+// sub messages 
+
+message Area {
+  required string area_id = 1; 
+  optional AreaParent parent_area = 9; 
+  repeated AreaChild child_areas = 10; 
+  repeated AreaLocation locations = 11; 
+  extensions 100 to 120; 
+}
+
+message AreaParent {
+  required string area_id = 1;
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaChild {
+  required string area_id = 1;
+  required sfixed64 when_associated = 2;
+  extensions 100 to 120; 
+} 
+
+message AreaLocation {
+  required string location_id = 1;  
+  required sfixed64 when_associated = 2;
+  required string location_type = 3;
+  extensions 100 to 120; 
+} 
+
+message Asset {
+  required string asset_id = 1; 
+  optional AssetLocation location = 2; 
+  extensions 100 to 120; 
+}
+
+message AssetLocation {
+  required string location_id = 1; 
+  required sfixed64 when_associated = 2; 
+  extensions 100 to 120; 
+} 
+
+message Location {
+  required string location_id = 1; 
+  repeated LocationArea areas = 2; 
+  optional string timezone = 3;
+  extensions 100 to 120; 
+} 
+
+message LocationArea {
+  required string area_id = 1; 
+  required sfixed64 when_associated = 2; 
+  required string location_type = 3; 
+  repeated LocationAsset assets = 4; 
+  extensions 100 to 120; 
+} 
+
+message LocationAsset {
+  required string asset_id = 1; 
+  required sfixed64 when_associated = 2; 
+  extensions 100 to 120; 
+} 
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  extensions 100 to 120; 
+}
+
+message MeasurementStats {
+  required double min_value = 1; 
+  required double max_value = 2; 
+  required double mean_value = 3; 
+  required uint32 count = 4; 
+  required double sum = 5; 
+  required double sum_of_squares = 6; 
+  extensions 100 to 120; 
+}  
+
+message TimestampRange {
+ required sfixed64 when_start = 1;
+ required sfixed64 when_end = 2;
+ extensions 100 to 120;
+}

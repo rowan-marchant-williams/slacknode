@@ -1,0 +1,770 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.AssetConfiguration;
+
+message AssetConfigurationChanged {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required AssetConfiguration configuration = 2; 
+ required string asset_id = 3; 
+ required string manufacturer = 4; 
+ required string asset_reference = 5;
+ optional string location_id = 6;
+ optional int32 location_configuration_version = 7; 
+ extensions 100 to 120; 
+}
+
+message LocationConfigurationChanged {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2; 
+ required int32 location_configuration_version = 3; 
+ required Configuration configuration = 4; 
+ optional string contributory_asset_configuration_id = 5;
+ extensions 100 to 120; 
+}
+
+message ProteusConfigurationFileCreated {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2;
+ required string manufacturer = 3;
+ required string asset_reference = 4;
+ required bytes configuration_file = 5;  
+ required fixed32 configuration_file_crc = 6;
+ optional string location_id = 7;
+ optional int32 location_configuration_version = 8;
+ optional string contributory_asset_configuration_id = 9;
+ extensions 100 to 120;  
+}
+
+message RemoteControlCurveAutomaticallyAcceptedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+message RemoteControlConfigurationChangedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+message RemoteControlMinimumP2DailyReductionAppliedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message ApvControlSpeedSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+message ApvControlSpeedSetForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message BasicRemoteControlConfiguredForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message TimeBasedRemoteControlProfileSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required string profile_id = 3;
+ required RemoteControlConfiguration configuration = 4;
+ extensions 100 to 120;  
+}
+
+// deprecated
+message ManualFlowModulationProfileSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required string profile_id = 3;
+ required RemoteControlConfiguration configuration = 4;
+ extensions 100 to 120;
+}
+
+// deprecated
+message RemoteControlProfileAddedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required string profile_id = 3;
+ required RemoteControlConfiguration configuration = 4;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message RemoteControlProfileDeletedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required string deleted_profile_id = 3;
+ required RemoteControlConfiguration configuration = 4;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message RemoteControlProfileRenamedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required string profile_id = 3;
+ required RemoteControlConfiguration configuration = 4;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message RemoteControlProfileAssignedToWorkingDaysForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120;  
+}
+
+// deprecated
+message RemoteControlProfileAssignedToNonWorkingDaysForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120;  
+}
+
+// deprecated
+message ManualP2CurveSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120;  
+}
+
+message LocationAlarmConfigurationChanged {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required bool inhibit_alarms = 3;
+ repeated LogicalChannelAlarmConfiguration pressure_channel_alarms = 4;
+ repeated LogicalChannelAlarmConfiguration flow_channel_alarms = 5;
+ repeated LogicalChannelAlarmConfiguration temperature_channel_alarms = 6;
+ optional string email_address = 7;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message P2DeadbandSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message P2DeadbandSetForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+message ControlLoopSettingsSetForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+message RemoteControlConfigurationCreatedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+message RemoteControlConfigurationCreatedForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message RemoteControlEnabledForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message RemoteControlDisabledForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+// deprecated
+message ApvPressureRangeSetForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2;
+ required RemoteControlConfiguration configuration = 3;
+ extensions 100 to 120; 
+}
+
+message ApvPressureRangeSetForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+message HeadroomSetForTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required RemoteControlConfiguration configuration = 2;
+ extensions 100 to 120; 
+}
+
+// Sub messages
+
+message AcquisitionConfigurationSection {
+ repeated AcquisitionProfile profiles = 1;
+ required ProfileSelection selected_profiles = 2;
+ extensions 100 to 120;
+}
+
+message AcquisitionProfile {
+ required string profile_id = 1;
+ required string name = 2;
+ repeated ChannelAcquisitionSchedule channel_schedules = 3;
+ extensions 100 to 120;
+}
+
+message ChannelAcquisitionSchedule {
+ required string logical_channel = 1;
+ repeated ScheduledAcquisition acquisitions = 2;
+ extensions 100 to 120;
+}
+
+message ScheduledAcquisition {
+ required uint32 start_hour = 1;
+ required uint32 start_minute = 2;
+ required uint32 repeat_interval_milliseconds = 3;
+ extensions 100 to 120;
+}
+
+message LoggingConfigurationSection {
+ repeated LoggingProfile profiles = 1;
+ required ProfileSelection selected_profiles = 2;
+ extensions 100 to 120;
+}
+
+message LoggingProfile {
+ required string profile_id = 1;
+ required string name = 2;
+ repeated ChannelLoggingSchedule channel_schedules = 3;
+ extensions 100 to 120;
+}
+
+message ChannelLoggingSchedule {
+ required string logical_channel = 1;
+ repeated ScheduledLogging logging = 2;
+ extensions 100 to 120;
+}
+
+message ScheduledLogging {
+ required uint32 start_hour = 1;
+ required uint32 start_minute = 2;
+ required uint32 log_period_milliseconds = 3;
+ required bool log_mean = 4;
+ required bool log_min = 5;
+ required bool log_max = 6;
+ required bool log_sum_of_squares = 7;
+ extensions 100 to 120;
+}
+
+message LocationInformationSection {
+ optional string Name = 1;
+ extensions 100 to 120;
+}
+
+message CompanyInformationSection {
+ optional string Name = 1;
+ extensions 100 to 120;
+}
+
+message AlarmConfigurationSection {
+ required AlarmConfigurationSettings settings = 1;
+ repeated AlarmProfile profiles = 2;
+ required ProfileSelection selected_profiles = 3;
+ extensions 100 to 120; 
+}
+
+message AlarmConfigurationSettings {
+ required bool alarms_enabled = 1;
+ optional string sms_number = 2;
+ optional string sms_name = 3;
+ extensions 100 to 120;
+}
+
+message AlarmProfile {
+ required string profile_id = 1;
+ required string name = 2;
+ repeated ChannelAlarmSchedule channel_schedules = 3;
+ extensions 100 to 120;  
+}
+
+message ChannelAlarmSchedule {
+ required string logical_channel = 1;
+ repeated ScheduledAlarmFilter filters = 2; 
+ extensions 100 to 120;  
+}
+
+message ScheduledAlarmFilter {
+ required uint32 start_hour = 1;
+ required uint32 start_minute = 2;
+ required float low_delta = 3;
+ required float high_delta = 4;
+ required AlarmThreshold low = 5;
+ required AlarmThreshold low_low = 6;
+ required AlarmThreshold high = 7;
+ required AlarmThreshold high_high = 8;
+ required uint32 ring_in_sample_size = 9;
+ optional bool is_night = 10;
+ optional bool is_inactive = 11;
+ extensions 100 to 120;
+}
+
+message AlarmThreshold {
+ required float value = 1;
+ required AlarmTrigger report_via_log = 2;
+ required AlarmTrigger report_via_gprs = 3;
+ required AlarmTrigger report_via_sms = 4;
+ required AlarmTrigger report_via_server = 5; 
+ extensions 100 to 120;  
+}
+
+message AlarmTrigger {
+ required bool trigger_on_assert = 1;
+ required bool trigger_on_deassert = 2;
+ extensions 100 to 120;
+}
+
+message Configuration {  
+ required AlarmConfigurationSection alarms = 1;  
+ required AcquisitionConfigurationSection acquisition = 2; 
+ required CalibrationConfigurationSection calibration = 3; 
+ required DialupConfigurationSection dialup = 4; 
+ required RemoteControlConfigurationSection remote_control = 5;
+ required LoggingConfigurationSection logging = 6;
+ optional LocationInformationSection location_information = 7;
+ optional CompanyInformationSection company_information = 8;
+ extensions 100 to 120; 
+}
+
+message CalibrationConfigurationSection {
+ repeated ChannelCalibration channel_calibrations = 1;
+ extensions 100 to 120; 
+}
+
+message ChannelCalibration {
+ required string channel = 1;
+ optional FloatValue acquisition_offset = 2;
+ optional FloatValue acquisition_scale = 3;
+ extensions 100 to 120; 
+}
+
+message FloatValue {
+ required float value = 1;
+ extensions 100 to 120; 
+}
+
+message DialupConfigurationSection {
+ repeated DialupProfile profiles = 1;
+ required ProfileSelection selected_profiles = 2;
+ extensions 100 to 120;
+}
+
+message DialupProfile {
+ required string profile_id = 1;
+ required string name = 2;
+ repeated ScheduledDialup dialups = 3;
+ extensions 100 to 120;
+}
+
+message ScheduledDialup {
+ required uint32 start_hour = 1;
+ required uint32 start_minute = 2;
+ optional DialupRepeat repeat_dialup = 3;  
+ extensions 100 to 120;
+}
+
+message DialupRepeat {
+ required uint32 interval_minutes = 1; 
+ required uint32 until_hour = 2; 
+ required uint32 until_minute = 3; 
+ extensions 100 to 120;
+}
+
+message ProfileSelection {
+ required string working_days_profile_id = 1;
+ required string non_working_days_profile_id = 2;
+ extensions 100 to 120;
+}
+
+message RemoteControlConfigurationSection {
+ required RemoteControlConfigurationSettings settings = 1;
+ repeated RemoteControlProfile profiles = 2;
+ required ProfileSelection selected_profiles = 3;
+ optional ManualModulation manual_modulation = 4;
+ required AutomaticOptimisation automatic_optimisation = 5;
+ extensions 100 to 120;
+}
+
+message RemoteControlConfigurationSettings {
+ required bool is_control_enabled = 1;
+ required float apv_control_speed = 2;
+ required uint32 apv_pressure_range = 3;
+ required float p2_deadband = 4;
+ extensions 100 to 120;
+}
+
+message ManualModulation {
+ repeated FlowCurveEntry p2_curve = 1;
+ extensions 100 to 120;
+}
+
+message AutomaticOptimisation {
+ required AutomaticOptimisationParameters parameters = 1;
+ required string recalculation_mode = 2;
+ optional FlowDpCurve accepted_flow_dp_curve = 3;
+ extensions 100 to 120;
+}
+
+message FlowDpCurve {
+ required sfixed64 when_generated_by_algorithm = 1;
+ repeated FlowCurveEntry dp_curve = 2;
+ extensions 100 to 120;
+}
+
+message PumpCalibrationRange {
+ required float value_at_4ma = 1;
+ required float value_at_20ma = 2;
+ extensions 100 to 120; 
+}
+
+message RemoteControlConfiguration {
+ required bool is_control_enabled = 1;
+ required float apv_control_speed = 2;
+ required uint32 apv_pressure_range = 3;
+ repeated FlowCurveEntry manual_p2_curve = 5;
+ repeated RemoteControlProfile profiles = 6;
+ optional string working_days_profile_id = 7;
+ optional string non_working_days_profile_id = 8;
+ optional AutomaticOptimisationParameters automatic_optimisation_parameters = 9;
+ optional string automatic_optimisation_recalculation_mode = 10;
+ optional sfixed64 when_generated_accepted_flow_dp_curve = 11;
+ repeated ControlLoopSettings control_loop_settings = 12;
+ required float headroom = 13;
+ required bool is_headroom_enabled = 14;
+ extensions 100 to 120; 
+}
+
+message RemoteControlProfile {
+ required string profile_id = 1;
+ required string name = 2;
+ repeated RemoteControlProfileEntry entries = 3;
+ extensions 100 to 120; 
+}
+
+message RemoteControlProfileEntry {
+ required uint32 start_hour = 1;
+ required uint32 start_minute = 2;
+ required string control_type = 3;
+ required string logical_channel = 4;
+ optional float single_target = 5;
+ optional string control_loop_settings_id = 6;
+ optional float fail_safe_pressure = 7;
+ extensions 100 to 120; 
+}
+
+message FlowCurveEntry {
+ required float flow = 1;
+ required float target = 2;
+ extensions 100 to 120;
+}
+
+message AlarmScheduleEntry {
+  required uint32 start_hour = 1;
+  required uint32 start_minute = 2;
+  required float low = 3;
+  required float low_low = 4;
+  required float low_delta = 5;
+  required float high = 6;
+  required float high_high = 7;
+  required float high_delta = 8;
+  extensions 100 to 120; 
+}
+
+message AlarmThresholdEnablement {
+  required bool is_low_enabled = 1;
+  required bool is_low_low_enabled = 2;
+  required bool is_high_enabled = 3;
+  required bool is_high_high_enabled = 4;
+  extensions 100 to 120; 
+}
+
+message LogicalChannelAlarmConfiguration {
+  required string logical_channel = 1;
+  required AlarmThresholdEnablement gprs_enablement = 2;
+  required AlarmThresholdEnablement sms_enablement = 3;
+  required AlarmThresholdEnablement software_enablement = 4;
+  repeated AlarmScheduleEntry schedule = 5; 
+  optional AlarmThresholdEnablement email_enablement = 6;
+  extensions 100 to 120; 
+}
+
+message AssetConfiguration {
+  required string configuration_id = 1;
+  required Calendar calendar = 2;
+  required Calendar default_calendar = 3;
+  repeated Schedule schedules = 4;
+  repeated AlarmThresholds alarms = 5;
+  repeated LoggingThresholds logging = 6;
+  repeated Control control = 7;
+  repeated Curve curve = 8;
+  required bool modulation_enabled = 9;
+  required bool alarms_enabled = 10;
+  required LocationSettings location_settings = 11;
+  required SmsSettings sms_settings = 12;
+  required BluetoothSettings bluetooth_settings = 13;
+  required MotorSettings motor_settings = 14;
+  required GsmSettings gsm_settings = 15;
+  required CalibrationSettings calibration_settings = 16;
+  optional GprsAccessPoint gprs_access_point = 17;
+  optional ApvSettings apv_settings = 18;
+  extensions 100 to 120; 
+}
+
+message ApvSettings {
+  required bool apv_enabled = 1;
+  required uint32 apv_pressure_range = 2;
+  extensions 100 to 120;
+}
+
+message GprsAccessPoint {
+  required string access_point_name = 1;
+  optional string username = 2;
+  optional string password = 3;
+  extensions 100 to 120;
+}
+
+message AutomaticOptimisationParameters {
+  required float reliability = 1;
+  required float p2_min = 2;
+  required bool apply_p2_min = 3;
+  required float p2_max = 4;
+  required bool apply_p2_max = 5;
+  required float fail_safe_pressure = 6;
+  required bool apply_fail_safe_pressure = 7;
+  optional bool apply_daily_reduction_of_p2_min = 8;
+  optional float daily_reduction_current_p2_min = 9;
+  optional float daily_reduction_step_for_p2_min = 10;
+  optional bool daily_reduction_of_p2_min_applies_on_working_days_only = 11;
+  extensions 100 to 120;
+}
+
+message Calendar {
+  repeated CalendarEntry entries = 1;
+  extensions 100 to 120; 
+}
+
+message CalendarEntry {
+  required sfixed64 effective_date = 1;
+  required string schedule_reference = 2;
+  required uint32 read_order = 3;
+  extensions 100 to 120; 
+}
+
+message Schedule {
+  required string schedule_reference = 1;
+  repeated ScheduleEntry entries = 2;
+  extensions 100 to 120; 
+}
+
+message ScheduleEntry {
+  required sfixed64 effective_time = 1;
+  required bool dialup = 2;
+  required float target_p2 = 3;
+  required float target_p3 = 4;
+  optional string alarm_reference = 5;
+  optional string control_reference = 6;
+  optional string curve_reference = 7;
+  optional string logging_reference = 8;
+  extensions 100 to 120; 
+}
+
+message AlarmThresholds {
+  required string alarm_reference = 1;
+  required ContinuousAlarmEntry p1_min = 2;
+  required ContinuousAlarmEntry p1_max = 3;
+  required ContinuousAlarmEntry p2_min = 4;
+  required ContinuousAlarmEntry p2_max = 5;
+  required ContinuousAlarmEntry p3_max = 6;
+  required ContinuousAlarmEntry f1_min = 7;
+  required ContinuousAlarmEntry f1_max = 8;
+  required ContinuousAlarmEntry f2_min = 9;
+  required ContinuousAlarmEntry f2_max = 10;
+  required ContinuousAlarmEntry battery_min = 11;
+  required DiscreteAlarmEntry manual_override = 12;
+  required DiscreteAlarmEntry motor_fail = 13;
+  required DiscreteAlarmEntry open_end_stop = 14;
+  required DiscreteAlarmEntry close_end_stop = 15;
+  required CurveAlarmEntry fail_curve_alarm = 16;
+  extensions 100 to 120; 
+}
+
+message ContinuousAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float threshold = 3;
+  required float delta = 4;
+  extensions 100 to 120; 
+}
+
+message DiscreteAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float retry_timeout = 3;
+  extensions 100 to 120; 
+}
+
+message CurveAlarmEntry {
+  required bool enabled = 1;
+  required bool dial_up = 2;
+  required float retry_timeout = 3;
+  required float threshold = 4;
+  extensions 100 to 120; 
+}
+
+message LoggingThresholds {
+  required string logging_reference = 1;
+  required Average p1 = 2;
+  required Average p2 = 3;
+  required Average p3 = 4;
+  required Average f1 = 5;
+  required Average f2 = 6;
+  required Average a1 = 7;
+  required Average a2 = 8;
+  required Average battery = 9;
+  required Average ambient = 10;
+  required Average bridge = 11;
+  extensions 100 to 120; 
+}
+
+message Average {
+  required bool enabled = 1;
+  required uint32 acquisition_time = 2;
+  required uint32 logging_time = 3;
+  required uint32 prescale = 4;
+  required uint32 divisor = 5;
+  extensions 100 to 120; 
+}
+
+message Control {
+  required string control_reference = 1;
+  required Average p2_averaging = 2;
+  required Average f1_averaging = 3;
+  required bool motor_settle_valid = 4;
+  required uint32 motor_settle = 5;
+  required bool window_size_valid = 6;
+  required uint32 window_size = 7;
+  required float kp = 8;
+  required float ki = 9;
+  required float kd = 10;
+  required bool headroom_valid = 11;
+  required float headroom = 12;
+  required bool minimum_p2_valid = 13;
+  required float minimum_p2 = 14;
+  extensions 100 to 120; 
+}
+
+message Curve {
+  required string curve_reference = 1;
+  repeated CurveEntry entries = 2;
+  extensions 100 to 120; 
+}
+
+message CurveEntry {
+  required float flow = 1;
+  required float lower_deadband = 2;
+  required float target = 3;
+  required float upper_deadband = 4;
+  extensions 100 to 120; 
+}
+
+message LocationSettings {
+  required string dma_number = 1;
+  required Address location_address = 2;
+  required string timezone = 3;
+  required Address company_address = 4;
+  required string telephone = 5;
+  required string alternate_telephone = 6;
+  required string email_address = 7;
+  required string website = 8;
+  extensions 100 to 120; 
+}
+
+message Address {
+  required string name = 1;
+  required string line0 = 2;
+  required string line1 = 3;
+  required string line2 = 4;
+  required string line3 = 5;
+  extensions 100 to 120; 
+}
+
+message SmsSettings {
+  required string telephone_number = 1; 
+  extensions 100 to 120; 
+}
+
+message BluetoothSettings {
+  required int32 pin_number = 1;
+  extensions 100 to 120; 
+}
+
+message MotorSettings {
+  required int32 motor_speed = 1;
+  extensions 100 to 120; 
+}
+
+message GsmSettings {
+  required int32 retry_attempts = 1;
+  required int32 retry_timeout = 2;
+  extensions 100 to 120; 
+}
+
+message CalibrationSettings {
+  required float elevation = 1;
+  required bool elevation_defined = 2;
+  required float f1_litres_per_pulse = 3;
+  required bool f1_litres_per_pulse_defined = 4;
+  optional PumpCalibrationRange set_point_output = 5;
+  optional bool elevation_overridden_by_migration = 6;
+  optional bool f1_litres_per_pulse_overridden_by_migration = 7;
+  extensions 100 to 120; 
+}
+
+message ControlLoopSettings {
+  required string id = 1;
+  required string name = 2;
+  required uint32 prv_settle_time = 3;
+  required uint32 control_loop_interval = 4;
+  required uint32 damping_factor = 5;
+  required float p2_deadband = 6;
+  extensions 100 to 120;
+}

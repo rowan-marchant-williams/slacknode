@@ -1,0 +1,31 @@
+import "Governance.proto";
+import "Common.proto";
+import "Security.Common.proto";
+
+package i2OWater.Anapos.Governance.Security.Responses;
+
+message LoggedIn {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required string session_token = 2; 
+  optional string existing_session_token = 3; 
+  required string anti_csrf_token = 4; 
+  required sfixed64 when_session_ends = 5;
+  extensions 100 to 120; 
+}; 
+
+message LoggedOut {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}; 
+
+message PasswordChanged {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  extensions 100 to 120; 
+}; 
+
+message SessionValidated {
+  required i2OWater.Anapos.Governance.Response root_response = 1; 
+  required i2OWater.Anapos.Governance.Security.Common.Session session = 2; 
+  extensions 100 to 120; 
+}; 
+

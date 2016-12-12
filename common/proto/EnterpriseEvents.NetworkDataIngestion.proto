@@ -1,0 +1,39 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.NetworkDataIngestion;
+
+message NetworkMeasurementsIngestedForLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string location_id = 2; 
+  required string location_timezone = 3; 
+  required string logical_channel = 4;  
+  required sfixed64 when_started = 5; 
+  required sfixed64 when_ended = 6; 
+  repeated FloatMeasurement measurements = 7;
+  required string unit_of_measurement = 8;
+  required string original_source_uri = 9;
+  extensions 100 to 120; 
+}
+
+message NetworkMeasurementsFailedToBeIngestedForLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string location_id = 2; 
+  required string location_timezone = 3; 
+  required string logical_channel = 4;  
+  required sfixed64 when_started = 5; 
+  required sfixed64 when_ended = 6; 
+  repeated FloatMeasurement measurements = 7;
+  required string unit_of_measurement = 8;
+  required string original_source_uri = 9;
+  required string error = 10;
+  required string file_id = 11;
+  extensions 100 to 120; 
+}
+
+// sub messages //
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  extensions 100 to 120; 
+}

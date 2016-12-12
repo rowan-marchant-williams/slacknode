@@ -1,0 +1,102 @@
+<div id="managealarms"  data-bind="template:{name:'managealarms-template'}"></div>
+
+<div id="managealarms-template" class="hidden" >
+
+    <div id="locationAlarms" >
+
+        <form method="POST">
+            <div data-bind='foreach: groupItem'  class="groupItemGroup">
+                <div class="locationGroup">
+                    <div class="hr"></div>
+                    <span data-bind='text: areaId' class="hidden"></span >
+                    <span data-bind='text: locationType' class="headerSpan"></span>
+                    <span data-bind='text: locationName' class="headerSpan"></span>
+                    <span data-bind='text: locationRef' class="headerSpan"></span>
+
+                    <div data-bind='foreach: channels'>
+
+                        <div  class="channelDiv" >
+                            <div data-bind='text: name' class="alarmType" ></div>
+                            <table>
+                                <thead>
+                                <tr><th class="thresholdTitleInput"></th><th>LL</th><th>L</th><th>H</th><th>HH</th></tr>
+                                </thead>
+                                <tbody data-bind='template: { name: "alarmBehavioursTemplate", foreach: alarmBehaviours}'>
+                                </tbody>
+                            </table>
+                            <table>
+                                <tbody data-bind='template: { name: "scheduleRowTemplate", foreach: scheduleEntries}'></tbody>
+                            </table>
+                            <input type="button" class="btn primary" data-bind="click: $root.add" name="Add" value="Add">
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+
+                    <div class="inhibitAlarmsOuter">
+                        <input type="checkbox" data-bind="checked: inhibitAlarms" class="inhibitAlarms" data-claim-types="role" data-claim-values="tenant-admin">
+                        &nbsp;&nbsp;Inhibit Alarms</div>
+
+                    <div class="clear"></div>
+                    <div class="hr"></div>
+                    SMS:<span data-bind="text: smsNumber" class="leftgap"></span >
+
+                </div><!-- /locationGroup -->
+            </div> <!-- /groupItemGroup -->
+
+            <div class="clear"></div>
+            <button type="button" class="btn" data-bind="click: $root.saveAll" >Save</button>
+            <div id="alarm-message-container" class="ui-widget hidden-block">
+                <div id="state" data-bind="attr: { 'class' : saveMessage.type }">
+                    <div class="text-align-center">
+                        <span style="float: left; margin-right: .3em;" data-bind="attr: { 'class' : saveMessage.icon }"></span>
+                        <strong>Alert:</strong>
+                        <p class="message" data-bind="html:saveMessage.text()"></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/html" id="alarmBehavioursTemplate">
+        <tr data-claim-types="role" data-claim-values="tenant-admin">
+            <td class="thresholdTitle" >
+                <span class="thresholdTitle" data-bind="text: res"></span>
+            </td>
+            <td class="inputValueWidth">
+                <input type="checkbox" class="alarmLevelLL alarmBehaviourCheckBox" data-bind="checked: alarmOnLL">
+            </td>
+            <td class="inputValueWidth">
+                <input type="checkbox"  class="alarmLevelL alarmBehaviourCheckBox" data-bind="checked: alarmOnL">
+            </td>
+            <td class="inputValueWidth">
+                <input type="checkbox"  class="alarmLevelH alarmBehaviourCheckBox" data-bind="checked: alarmOnH" class="alarmOnH">
+            </td>
+            <td class="inputValueWidth">
+                <input type="checkbox"  class="alarmLevelHH alarmBehaviourCheckBox" data-bind="checked: alarmOnHH" class="alarmOnHH">
+            </td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="scheduleRowTemplate">
+        <tr data-bind="css: { error: !isValid() }">
+            <td>
+                <input class="thresholdTitleInput" data-bind='value: time, valueUpdate: "afterkeydown"'/>
+                <span data-bind='visible: time.hasError, text: time.validationMessage'> </span>
+            </td>
+            <td class="inputValueWidth">
+                <input class="thresholdValue" data-bind="value: lowLow, uniqueName: true, valueUpdate: 'afterkeydown'" type="text" >
+            </td>
+            <td class="inputValueWidth">
+                <input class="thresholdValue" data-bind="value: low, uniqueName: true, valueUpdate: 'afterkeydown'" type="text">
+            </td>
+            <td class="inputValueWidth">
+                <input class="thresholdValue"  data-bind="value: high, uniqueName: true, valueUpdate: 'afterkeydown'" type="text">
+            </td>
+            <td class="inputValueWidth">
+                <input class="thresholdValue"  data-bind="value: highHigh, uniqueName: true, valueUpdate: 'afterkeydown'" type="text">
+
+            </td>
+            <td><a  href="#" class="btn danger" data-bind="visible: $parent.scheduleEntries().length &gt; 1, click: function() { $root.remove($data, $parent) }">Delete</a></td>
+        </tr>
+    </script>
+</div>

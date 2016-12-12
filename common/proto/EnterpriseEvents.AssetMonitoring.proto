@@ -1,0 +1,117 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.AssetMonitoring;
+
+message P1P2PrvFaultDetectorSettingsForLocationChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required P1P2PrvFaultDetectorSettings settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message P1P2PrvFaultDetectorSettingsForTenantChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;  
+  required P1P2PrvFaultDetectorSettings settings = 2;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettingsForLocationChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required P2FlowPrvFaultDetectorSettings settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettingsForTenantChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;  
+  required P2FlowPrvFaultDetectorSettings settings = 2;
+  extensions 100 to 120; 
+}
+
+message LevelOfServiceSettingsForLocationChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required double target_pressure = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message LevelOfServiceSettingsForTenantChanged {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required double target_pressure = 2;
+  extensions 100 to 120; 
+}
+
+message P1P2PrvFaultDetectorSettingsForLocationCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;  
+  required P1P2PrvFaultDetectorSettings settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message P1P2PrvFaultDetectorSettingsForTenantCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required P1P2PrvFaultDetectorSettings settings = 2;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettingsForLocationCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;  
+  required P2FlowPrvFaultDetectorSettings settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettingsForTenantCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required P2FlowPrvFaultDetectorSettings settings = 2;
+  extensions 100 to 120; 
+}
+
+message LevelOfServiceSettingsForLocationCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required double target_pressure = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message LevelOfServiceSettingsForTenantCreated {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required double target_pressure = 2;
+  extensions 100 to 120; 
+}
+
+message PrvFaultAlarmConditionTriggered {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required string alarm_id = 2;
+  required string asset_id = 3;
+  required string location_id = 4;
+  required string location_type = 5;
+  required string severity = 6;
+  required sfixed64 when_triggered = 7;
+  extensions 100 to 120; 
+}
+
+message PrvFaultDetectionForLocationEnabled {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+message PrvFaultDetectionForLocationDisabled {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required string location_id = 2;
+  extensions 100 to 120; 
+}
+
+// sub-messages //
+
+message P1P2PrvFaultDetectorSettings {
+  required double target_minimum_p1_p2_delta = 1;
+  extensions 100 to 120; 
+}
+
+message P2FlowPrvFaultDetectorSettings {
+  required double target_maximum_p2_range = 1;
+  required double target_maximum_p2_volatility = 2;
+  extensions 100 to 120; 
+}

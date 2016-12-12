@@ -1,0 +1,32 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.Alarm.Service;
+
+message AlarmsUpdated {
+  required Instruction instruction = 1;
+  repeated AlarmUpdate alarm_changes = 2; 
+  extensions 100 to 120;
+}
+
+message AlarmsDeleted {
+  required Instruction instruction = 1;
+  repeated string deleted_alarm_ids = 2;
+  extensions 100 to 120;
+}
+
+// sub messages
+
+message AlarmUpdate {
+  required string alarm_id = 1;
+  required int32 alarm_version = 2;
+  optional string location_id = 3;
+  optional string asset_id = 4;  
+  required string code = 5;
+  required string severity = 6;
+  required sfixed64 when_started = 7; 
+  required sfixed64 when_ended = 8;
+  required bool is_acknowledged = 9;
+  required bool is_masked = 10; 
+  extensions 100 to 120;
+}

@@ -1,0 +1,22 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.EndOfLine;
+
+message DevicePassedEndOfLine {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Device device = 2;
+ required sfixed64 when_passed = 3; 
+ extensions 100 to 120; 
+}
+
+// sub messages
+
+message Device {
+ required string serial_number = 1; 
+ required string part_number = 2; 
+ required string version_number = 3; 
+ required sfixed64 when_built = 4; 
+ required string firmware_version = 5; 
+ required string hardware_version = 6; 
+ extensions 100 to 120; 
+}

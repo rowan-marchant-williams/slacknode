@@ -1,0 +1,228 @@
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.DeviceManagement;
+
+// commands //
+
+message InstallDeviceCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required sfixed64 when_installed = 2;
+  extensions 100 to 120; 
+}
+
+message ModifyDeviceTypePressureChannelsCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string part_number = 2;
+  required string version_number = 3;
+  repeated PressureChannel pressure_channels = 4; 
+  extensions 100 to 120; 
+}
+
+message RegisterChannelMappingCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required ChannelMapping channel_mapping = 2; 
+  extensions 100 to 120;  
+}
+
+message RegisterDeviceCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string serial_number = 2;
+  required string part_number = 3;
+  required string version_number = 4;
+  required string firmware_version = 5;
+  required string hardware_version = 6;
+  optional sfixed64 build_date = 7;  
+  optional sfixed64 passed_date = 8; 
+  extensions 100 to 120; 
+}
+
+message RegisterDeviceTypeCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required DeviceType device_type = 2; 
+  extensions 100 to 120; 
+}
+
+message RegisterTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required string tenant_tenant_code = 2;
+  repeated string external_references = 3;
+  required string short_name = 4;
+  extensions 100 to 120;
+}
+
+message ReturnDeviceToi2OCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string tenant_reference = 2; 
+  required string serial_number = 3;
+  required sfixed64 when_returned = 4;  
+  extensions 100 to 120; 
+}
+
+message AllocateDeviceToTenantCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string target_tenant_code = 2; 
+  required string serial_number = 3; 
+  repeated Battery batteries = 4;
+  optional SimCard sim_card = 5; 
+  extensions 100 to 120; 
+}
+
+message FinalizeDeviceTypeProductFamilyCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1; 
+  required string part_number = 2;
+  optional string version_number = 3;
+  required string product_family = 4;
+  extensions 100 to 120; 
+}
+
+// req /resp
+
+message VerifyDeviceTypeIdentityRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ repeated DeviceTypeIdentity device_type_identity = 2;
+ extensions 100 to 120;
+}
+
+message VerifyDeviceTypeIdentityResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated DeviceTypeIdentity invalid_device_type_identity = 2;
+ extensions 100 to 120;
+}
+
+message VerifyDevicesCanBeAllocatedRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated string serial_numbers = 2;
+  extensions 100 to 120;
+}
+
+message VerifyDevicesCanBeAllocatedResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated string unregistered_serial_numbers = 2;
+  repeated AllocatedDevice allocated_devices = 3;
+  extensions 100 to 120;
+}
+
+message VerifyDeviceSerialNumbersRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated string serial_numbers = 2;
+  extensions 100 to 120;
+}
+
+message VerifyDeviceSerialNumbersResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  repeated string invalid_serial_numbers = 2;
+  extensions 100 to 120;
+}
+
+message GetDeviceReportRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ extensions 100 to 120;
+}
+
+message GetDeviceReportResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ repeated DeviceReport device_reports = 2;
+ extensions 100 to 120;
+}
+
+message IdentifyDeviceRequest {
+ required i2OWater.Anapos.Governance.Request root_request = 1;
+ required string serial_number = 2;
+ extensions 100 to 120;
+}
+
+message IdentifyDeviceResponse {
+ required i2OWater.Anapos.Governance.Response root_response = 1;
+ required string device_id = 2;
+ extensions 100 to 120;
+}
+
+// sub messages //
+
+message Battery {
+  required string serial_number = 1;
+  optional sfixed64 build_date = 2;
+  optional sfixed64 expiry_date = 3;
+  required string model = 4;  
+  extensions 100 to 120; 
+}
+
+message ChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+}
+
+message ChannelMapping {
+  required string part_number = 1; 
+  required string location_type = 2; 
+  repeated ChannelMap pressure_channels = 3;
+  repeated ChannelMap flow_channels = 4;
+  repeated ChannelMap temperature_channels = 5;
+  optional ChannelMap set_point_pressure_channel = 6;  
+  extensions 100 to 120; 
+}
+
+message DeviceType {
+  required string device_type_id = 1;
+  required string part_number = 2;
+  required string version_number = 3;
+  required string build = 4; 
+  repeated PressureChannel pressure_channels = 5; 
+  repeated FlowChannel flow_channels = 6; 
+  repeated TemperatureChannel temperature_channels = 7; 
+  optional bool has_control_output = 8; 
+  optional string modem_type = 9; 
+  optional string antenna_type = 10; 
+  optional string power_source = 11; 
+  required string device_classification = 12; 
+  required string manufacturer = 13; 
+  required string product_family = 14; 
+  extensions 100 to 120; 
+}
+
+message FlowChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+}
+
+message PressureChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+}
+
+message SimCard {
+  required string imsi = 1;
+  required string carrier = 2;
+  extensions 100 to 120; 
+}
+
+message TemperatureChannel {
+  required uint32 channel_number = 1;
+  required string focus = 2; 
+  extensions 100 to 120; 
+}
+
+message DeviceTypeIdentity {
+  required string part_number = 1;
+  optional string version_number = 2;
+  extensions 100 to 120; 
+}
+
+message AllocatedDevice {
+  required string serial_number = 1;
+  required string owner_tenant_code = 2;
+  extensions 100 to 120;
+}
+
+message DeviceReport {
+  required string serial_number = 1;
+  required string part_number = 2;
+  required string version_number = 3;
+  required sfixed64 when_passed_end_of_line = 4;
+  extensions 100 to 120;
+}

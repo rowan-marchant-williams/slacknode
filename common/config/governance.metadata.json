@@ -1,0 +1,112 @@
+{
+  "messages": [
+    {
+      "name": "i2OWater.Anapos.Governance.ResourceSaved",
+      "constants": [
+        {
+          "path": "instruction.type",
+          "value": "25fdae2b-64c5-4e9e-82a5-a92000f8068b"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.ResourceSaved"
+        }
+      ]
+    },      
+    {
+      "name": "i2OWater.Anapos.Governance.ResourcesChanged",
+      "constants": [
+        {
+          "path": "instruction.type",
+          "value": "e33a6f87-8a59-49f1-955a-2b629683d6ee"
+        }
+      ],
+      "metadata": [
+        {
+          "name": "routingKey",
+          "value": "Anapos.ResourcesChanged"
+        }
+      ]
+    },   
+    {
+      "name": "i2OWater.Anapos.Governance.StateChanged",
+      "constants": [
+        {
+          "path": "instruction.type",
+          "value": "1469615b-6594-4b5b-970b-2ec1fce524d4"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.StateChanged"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.StandardResponse",
+      "constants": [
+        {
+          "path": "root_response.instruction.type",
+          "value": "9c611357-f5b9-498d-b01b-813fe40c4f30"
+        }
+      ]
+    },           
+    {
+      "name": "i2OWater.Anapos.Governance.FailureResponse",
+      "constants": [
+        {
+          "path": "root_response.instruction.type",
+          "value": "37ed889b-0a16-4646-8cc7-ebe62e37c53d"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.MessageMonitored",
+      "constants": [
+        {
+          "path": "instruction.type",
+          "value": "25455144-bedf-47e8-9530-533ae00a41c9"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.MessageMonitored"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.BeginRecordFlow",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "883e914d-518b-4f1b-b113-0ae76ee45126"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.BeginRecordFlow"
+        }
+      ]
+    },
+    {
+      "name": "i2OWater.Anapos.Governance.EndRecordFlow",
+      "constants": [
+        {
+          "path": "root_command.instruction.type",
+          "value": "9babaf7e-14b2-44f4-ab1f-c6b35aa78b41"
+        }
+      ],
+      "metadata": [
+        {
+          "name":"routingKey",
+          "value": "Anapos.EndRecordFlow"
+        }
+      ]
+    }     
+  ]
+}

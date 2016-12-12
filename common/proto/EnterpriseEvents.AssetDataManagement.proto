@@ -1,0 +1,204 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.AssetDataManagement;
+
+message DataGapsIdentified {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+  required string asset_id = 2; 
+  required sfixed64 when_last_data_received = 3; 
+  repeated DataGap gaps = 4; 
+  extensions 100 to 120; 
+}
+
+message BatteryVoltageMeasurementsAnalysedAtLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  optional string location_id = 3; 
+  required string physical_channel = 4; 
+  repeated FloatMeasurement measurements = 5; 
+  required MeasurementStats voltage_stats = 6; 
+  extensions 100 to 120; 
+}
+
+message GsmSignalStrengthAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required string modem_type = 4;
+ repeated CellMonitoringEvent cell_monitoring_events = 5;
+ extensions 100 to 120; 
+}
+
+// Deprecated
+message MotorEventStreamAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ repeated MotorEvent motor_events = 4;
+ extensions 100 to 120; 
+}
+
+message MotorPositionAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ repeated MotorPosition motor_positions = 4;
+ extensions 100 to 120; 
+}
+
+// Deprecated
+message BatterySwitchAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string battery_type = 5; 
+ extensions 100 to 120; 
+}
+
+message CurveFailureAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message AssetResetAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ optional uint32 last_reset_cause = 5;
+ optional uint32 reset_counter = 6;
+ optional uint32 last_fault_program_counter = 7;
+ optional uint32 last_fault_subroutine_call_return_address = 8;
+ extensions 100 to 120; 
+}
+
+message FilterBlockedAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message HitClosedEndStopAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message HitOpenEndStopAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3;
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message LowBatteryAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message ManualOverrideAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message MotorFaultAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message OutOfMemoryAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+message PowerSourceSwitchAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string power_source = 5; 
+ extensions 100 to 120; 
+}
+
+message StatusAlarmAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ extensions 100 to 120; 
+}
+
+// sub messages //
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  extensions 100 to 120; 
+}
+
+message CellMonitoringEvent {
+  required sfixed64 when_logged = 1; 
+  required int32 signal_strength = 2;
+  required string carrier = 3;
+  required string raw_data = 4; 
+  extensions 100 to 120; 
+}
+
+message MeasurementStats {
+  required double min_value = 1; 
+  required double max_value = 2; 
+  required double mean_value = 3; 
+  required uint32 count = 4; 
+  required double sum = 5; 
+  required double sum_of_squares = 6; 
+  extensions 100 to 120; 
+}
+
+// Deprecated
+message MotorEvent {
+  required string motor_event_type = 1;
+  required sfixed64 when_logged = 2;
+  required sint32 slot_count = 3;
+  optional ControlLoopTargetChange control_loop_target_change = 4;
+  extensions 100 to 120; 
+}
+
+message MotorPosition {
+  required sfixed64 when_logged = 1;
+  required sint32 slot_count = 2;
+  extensions 100 to 120; 
+}
+
+message DataGap {
+  required sfixed64 when_started = 1; 
+  required sfixed64 when_ended = 2; 
+  extensions 100 to 120; 
+}
+
+// Deprecated
+message ControlLoopTargetChange {
+  required sint32 current_angle = 1;
+  required sint32 target_angle = 2;
+  extensions 100 to 120; 
+}

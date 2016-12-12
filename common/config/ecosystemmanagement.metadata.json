@@ -1,0 +1,34 @@
+{
+  "messages":[
+    {
+      "name":"i2OWater.Anapos.Governance.EcosystemManagement.QuarantineMessageCommand",
+      "constants":[
+        {
+          "path":"root_command.instruction.type",
+          "value":"fafe006b-52a3-430e-b344-2097d9d80adf"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.EcosystemManagement.QuarantineMessageCommand"
+        }
+      ]
+    },
+    {
+      "name":"i2OWater.Anapos.Governance.EcosystemManagement.ReleaseQuarantinedMessageCommand",
+      "constants":[
+        {
+          "path":"root_command.instruction.type",
+          "value":"8e65e697-7124-4b6c-92fc-f964cd5e5584"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.EcosystemManagement.ReleaseQuarantinedMessageCommand"
+        }
+      ]
+    }
+  ]
+}

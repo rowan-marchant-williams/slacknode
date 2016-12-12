@@ -1,0 +1,174 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.NetworkDataManagement;
+
+message PressureMeasurementsAnalysedAtLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string location_id = 3; 
+  required ChannelMap pressure_channel_map = 4;
+  repeated FloatMeasurement measurements = 5; 
+  required MeasurementStats pressure_stats = 6; 
+  required string area_id = 7; 
+  required string location_type = 8; 
+  extensions 100 to 120; 
+}
+
+message FlowMeasurementsAnalysedAtLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string location_id = 3; 
+  required ChannelMap flow_channel_map = 4;
+  repeated FloatMeasurement measurements = 5; 
+  required MeasurementStats flow_stats = 6; 
+  required string area_id = 7; 
+  required string location_type = 8; 
+  extensions 100 to 120; 
+}
+
+message TemperatureMeasurementsAnalysedAtLocation {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required string asset_id = 2; 
+  required string location_id = 3; 
+  required ChannelMap temperature_channel_map = 4;
+  repeated FloatMeasurement measurements = 5; 
+  required MeasurementStats temperature_stats = 6; 
+  required string area_id = 7; 
+  required string location_type = 8; 
+  extensions 100 to 120; 
+}
+
+message HighFlowAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string physical_channel = 5; 
+ extensions 100 to 120; 
+}
+
+message HighPressureAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string physical_channel = 5; 
+ extensions 100 to 120; 
+}
+
+message LowFlowAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string physical_channel = 5; 
+ extensions 100 to 120; 
+}
+
+message LowPressureAnalysedAtLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string location_id = 3; 
+ required sfixed64 when_logged = 4;
+ required string physical_channel = 5;  
+ extensions 100 to 120; 
+}
+
+message DataQualityAssessedForAsset {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string asset_id = 2; 
+ required string physical_channel = 3; 
+ repeated QualityAssessedFloatMeasurement measurements = 4;
+ extensions 100 to 120; 
+}
+
+message DataQualityAssessedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2; 
+ required string logical_channel = 3; 
+ repeated QualityAssessedFloatMeasurement measurements = 4;
+ extensions 100 to 120; 
+}
+
+message DataGivenNetworkContext {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2; 
+ required string logical_channel = 3;
+ required string area_id = 4;
+ required string location_type = 5;
+ repeated QualityAssessedFloatMeasurement measurements = 6;
+ extensions 100 to 120; 
+}
+
+message DataQuantizedForLocation {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string location_id = 2; 
+ required string logical_channel = 3;
+ required string area_id = 4;
+ required string location_type = 5;
+ repeated QualityAssessedFloatMeasurement measurements = 6;
+ required sfixed64 quantization_period = 7;
+ extensions 100 to 120; 
+}
+
+message DataTimeSychronisedForArea {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required string area_id = 2;
+ repeated SynchronisedMeasurement measurements = 3;
+ extensions 100 to 120; 
+}
+
+// sub messages //
+
+message FloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  extensions 100 to 120; 
+}
+
+message QualityAssessedFloatMeasurement {
+  required sfixed64 when_measured = 1; 
+  required float measurement = 2; 
+  required Quality quality = 3;
+  extensions 100 to 120; 
+}
+
+message SynchronisedMeasurement {
+  required sfixed64 when_measured = 1;
+  repeated LocationChannelMeasurement measurements = 2;
+  extensions 100 to 120; 
+}
+
+message LocationChannelMeasurement {
+  required string location_id = 1;
+  required string location_type = 2;
+  required string logical_channel = 3;
+  required float measurement = 4;
+  required Quality quality = 5;
+  extensions 100 to 120; 
+}
+
+message Quality {
+  required string validity = 1;
+  required string current_source = 2;
+  required string normal_source = 3;
+  required string normal_value = 4;
+  extensions 100 to 120;
+}
+
+message MeasurementStats {
+  required double min_value = 1; 
+  required double max_value = 2; 
+  required double mean_value = 3; 
+  required uint32 count = 4; 
+  required double sum = 5; 
+  required double sum_of_squares = 6; 
+  extensions 100 to 120; 
+}
+
+message ChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+}

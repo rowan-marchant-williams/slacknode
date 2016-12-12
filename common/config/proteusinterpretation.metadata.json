@@ -1,0 +1,19 @@
+{
+  "messages":[
+    {
+      "name":"i2OWater.Anapos.Governance.EnterpriseEvents.ProteusInterpretation.LoggedDataValidated",
+      "constants":[
+        {
+          "path":"root_event.instruction.type",
+          "value":"b2baa002-a679-4566-b3d8-2d1521ff40f8"
+        }
+      ],
+      "metadata":[
+        {
+          "name":"routingKey",
+          "value":"Anapos.ProteusInterpretation.LoggedDataValidated"
+        }
+      ]
+    }
+  ]
+}

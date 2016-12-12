@@ -1,0 +1,252 @@
+import "AssetConfiguration.Common.proto";
+import "Governance.proto";
+import "Common.proto";
+
+package i2OWater.Anapos.Governance.AssetConfiguration.Requests;
+
+message EditAlarmSchedules {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated i2OWater.Anapos.Governance.AssetConfiguration.Common.LocationAlarmSchedules schedules = 2;
+  extensions 100 to 120; 
+}
+
+message EditAlarmSchedulesForTenant {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required bool inhibit_alarms = 2; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule p1_schedule = 3; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule p2_schedule = 4; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule p3_schedule = 5; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule azp_schedule = 6;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule flow_schedule = 7;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.ContinuousAlarmSchedule battery_schedule = 8;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.DiscreteAlarmSchedule manual_override_schedule = 9;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.DiscreteAlarmSchedule motor_fail_schedule = 10;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.DiscreteAlarmSchedule open_end_stop_schedule = 11;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.DiscreteAlarmSchedule close_end_stop_schedule = 12;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.CurveAlarmSchedule fail_curve_alarm_schedule = 13;
+  extensions 100 to 120; 
+}
+
+message EditBluetoothSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.BluetoothSettings bluetooth_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditBluetoothSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.BluetoothSettings bluetooth_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditCalendar {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Calendar calendar = 2;
+  extensions 100 to 120; 
+}
+
+message EditCalendarForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Calendar calendar = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditCalibrationSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.CalibrationSettings calibration_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditCalibrationSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.CalibrationSettings calibration_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message SetPumpCalibration {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string location_id = 2;
+  required float set_point_output_value_at_4ma = 3;
+  required float set_point_output_value_at_20ma = 4;
+  extensions 100 to 120; 
+}
+
+message EditDialupSchedule {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.DialupSchedule schedule = 2;
+  extensions 100 to 120; 
+}
+
+message EditDialupScheduleForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.DialupSchedule schedule = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditGsmSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.GsmSettings gsm_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditGsmSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.GsmSettings gsm_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditLocationSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LocationSettings location_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditLocationSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LocationSettings location_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditLoggingSchedules {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated i2OWater.Anapos.Governance.AssetConfiguration.Common.LocationLoggingSchedules schedules = 2;
+  extensions 100 to 120; 
+}
+
+message EditLoggingSchedulesForTenant {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required bool inhibit_logging = 2; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule p1_schedule = 3; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule p2_schedule = 4; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule p3_schedule = 5; 
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule azp_schedule = 6;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule pcs_schedule = 7;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule flow_schedule = 8;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule a1_schedule = 9;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule a2_schedule = 10;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule battery_schedule = 11;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule bridge_schedule = 12;
+  optional i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingSchedule ambient_schedule = 13;
+  extensions 100 to 120;
+}
+
+message EditLoggingThresholds {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingThresholds logging_thresholds = 2;
+  extensions 100 to 120; 
+}
+
+message EditLoggingThresholdsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingThresholds logging_thresholds = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditMotorSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.MotorSettings motor_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditMotorSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.MotorSettings motor_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditSchedule {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Schedule schedule = 2;
+  extensions 100 to 120; 
+}
+
+message EditScheduleForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Schedule schedule = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditSmsSettings {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.SmsSettings sms_settings = 2;
+  extensions 100 to 120; 
+}
+
+message EditSmsSettingsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.SmsSettings sms_settings = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message MakeAlarmThresholds {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.AlarmThresholds alarm_thresholds = 2;
+  extensions 100 to 120; 
+}
+
+message MakeAlarmThresholdsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.AlarmThresholds alarm_thresholds = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message MakeCalendar {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Calendar calendar = 2;
+  extensions 100 to 120; 
+}
+
+message MakeCalendarForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.Calendar calendar = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message MakeLoggingThresholds {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingThresholds logging_thresholds = 2;
+  extensions 100 to 120; 
+}
+
+message MakeLoggingThresholdsForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required i2OWater.Anapos.Governance.AssetConfiguration.Common.LoggingThresholds logging_thresholds = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message MakeSchedule {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated i2OWater.Anapos.Governance.AssetConfiguration.Common.ScheduleEntry schedule_entries = 2;
+  extensions 100 to 120; 
+}
+
+message MakeScheduleForLocation {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  repeated i2OWater.Anapos.Governance.AssetConfiguration.Common.ScheduleEntry schedule_entries = 2;
+  required string location_id = 3;
+  extensions 100 to 120; 
+}
+
+message EditControlLoopSettingsForTenant {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string control_loop_settings_id = 2;
+  required string name = 3;
+  required uint32 prv_settle_time = 4;
+  required uint32 control_loop_interval = 5;
+  required uint32 damping_factor = 6;
+  required float p2_deadband = 7;
+  extensions 100 to 120;
+}

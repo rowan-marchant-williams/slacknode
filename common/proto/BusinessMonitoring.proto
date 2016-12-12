@@ -1,0 +1,56 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.BusinessMonitoring;
+
+// commands
+
+message BeginEventReplayCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  repeated HandlerMessageTypeIds handler_message_type_ids = 2;
+  required int32 first_day_of_replay = 3; 
+  required int32 last_day_of_replay = 4; 
+  extensions 100 to 120; 
+}
+
+message ReplayDayCommand {
+  required i2OWater.Anapos.Governance.Command root_command = 1;
+  required int32 day_of_replay = 2; 
+  extensions 100 to 120;  
+}
+
+// request/responses //
+
+message GetDeviceLogDataRequest {
+  required i2OWater.Anapos.Governance.Request root_request = 1;
+  required string asset_tenant_code = 2;
+  required string device_serial_number = 3;
+  required sfixed64 log_data_from = 4;
+  required sfixed64 log_data_to = 5;
+  required string log_data_validity = 6;
+  extensions 100 to 120; 
+}
+
+message GetDeviceLogDataResponse {
+  required i2OWater.Anapos.Governance.Response root_response = 1;
+  required string device_serial_number = 2; 
+  repeated DeviceLogData data_logs = 3;
+  extensions 100 to 120; 
+}
+
+// sub messages
+
+message HandlerMessageTypeIds {
+  required string handler_id = 1;
+  repeated string message_type_ids = 2;
+  extensions 100 to 120;   
+}
+
+message DeviceLogData {
+    required string log_data_format = 1;
+    required sfixed64 log_started_when = 2;
+    required sfixed64 log_ended_when = 3;
+    required string firmware_version = 4;
+    required bool is_valid = 5;
+    required bytes log_data = 6;
+    extensions 100 to 120; 
+}

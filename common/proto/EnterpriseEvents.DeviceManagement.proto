@@ -1,0 +1,146 @@
+import "Governance.proto";
+
+package i2OWater.Anapos.Governance.EnterpriseEvents.DeviceManagement;
+
+message ChannelMappingRegistered {
+  required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+  required ChannelMapping channel_mapping = 2;
+  extensions 100 to 120; 
+}
+
+message DeviceAllocatedToTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Device device = 2;  
+ extensions 100 to 120; 
+}
+
+message DeviceInstalled {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Device device = 2; 
+ required sfixed64 when_installed = 3;
+ extensions 100 to 120; 
+}
+
+message DeviceRegistered {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1; 
+ required Device device = 2;
+ required DeviceType device_type = 3;
+ extensions 100 to 120; 
+}
+
+message DeviceReturnedFromTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Device device = 2;
+ required string returned_from_tenant_code = 3; 
+ extensions 100 to 120; 
+}
+
+// Deprecated in favour of DeviceAllocatedToTenant
+message DeviceReturnedToTenant {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required Device device = 2; 
+ extensions 100 to 120; 
+}
+
+message DeviceTypeModified {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required DeviceType device_type = 2;
+ extensions 100 to 120;  
+}
+
+message DeviceTypeRegistered {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required DeviceType device_type = 2;
+ extensions 100 to 120;  
+}
+
+message DeviceTypeProductFamilyFinalized {
+ required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
+ required DeviceType device_type = 2;
+ extensions 100 to 120;
+}
+
+// sub messages //
+
+message Battery {
+  required string serial_number = 1;
+  optional sfixed64 when_built = 2;
+  optional sfixed64 when_expires = 3;
+  required string model = 4;  
+  extensions 100 to 120; 
+}
+
+message ChannelMap {
+  required uint32 channel_number = 1;
+  required string logical_channel = 2; 
+  required string units = 3; 
+  extensions 100 to 120; 
+} 
+
+message ChannelMapping {
+  required string device_type_id = 1;
+  required string location_type = 2; 
+  repeated ChannelMap pressure_channels = 3;
+  repeated ChannelMap flow_channels = 4;
+  repeated ChannelMap temperature_channels = 5;
+  optional ChannelMap set_point_pressure_channel = 6;
+  extensions 100 to 120; 
+}
+
+message Device {
+  required string device_id = 1; 
+  required string serial_number = 2; 
+  required string device_type_id = 3; 
+  required sfixed64 when_built = 4; 
+  required string firmware_version = 5; 
+  required string hardware_version = 6; 
+  required string owner_tenant_code = 7;
+  optional sfixed64 when_last_upgraded = 8; 
+  optional sfixed64 when_last_refurbished = 9;  
+  repeated Battery batteries = 10;
+  optional SimCard sim_card = 11;
+  optional sfixed64 when_passed_end_of_line = 12; 
+  extensions 100 to 120; 
+}
+
+message DeviceType {
+  required string device_type_id = 1;
+  required string part_number = 2;
+  required string version_number = 3;
+  required string build = 4; 
+  repeated PressureChannel pressure_channels = 5; 
+  repeated FlowChannel flow_channels = 6; 
+  repeated TemperatureChannel temperature_channels = 7; 
+  optional bool has_control_output = 8; 
+  optional string modem_type = 9; 
+  optional string antenna_type = 10; 
+  optional string power_source = 11; 
+  required string device_classification = 12; 
+  required string manufacturer = 13; 
+  optional string product_family = 14;
+  extensions 100 to 120; 
+}
+
+message FlowChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message PressureChannel {
+  required uint32 channel_number = 1;
+  required string range = 2; 
+  extensions 100 to 120; 
+} 
+
+message SimCard {
+  required string imsi = 1;
+  required string carrier = 2;
+  extensions 100 to 120; 
+}
+
+message TemperatureChannel {
+  required uint32 channel_number = 1;
+  required string focus = 2; 
+  extensions 100 to 120; 
+} 
