@@ -18,19 +18,11 @@ var Source = 'Slack App';
 var configSettings = config('anapos');
 configSettings     = helpers.myConfig(configSettings);  // Substitute any $machine$ settings on DEV
 
-var _logger = (function configureLogging() {
-    var loggerOptions = configSettings.logging || {
-        tenantCode: 'i2OGB',
-        logFile: 'anapos.log',
-        level: 'debug',
-        colorize: true
-    };
-    loggerOptions.supportId = uuid.v1();
-    loggerOptions.source    = Source;
-    loggerOptions.cfg       = configSettings;
-
-    return new Logger(loggerOptions);
-})();
+var _logger = {
+	log: function(lvl, msg, dtl) {
+		console.log(lvl + msg + dtl);
+	}
+};
 
 var cacheClient = redis.createClient(configSettings.cache.port, configSettings.cache.host);
 cacheClient.retry_delay = configSettings.cache.retry_delay;
