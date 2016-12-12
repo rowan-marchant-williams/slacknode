@@ -14,13 +14,21 @@ var und = require('underscore');
 var Source = 'Slack App';
 
 var configSettings = config('anapos');
-configSettings     = helpers.myConfig(configSettings);  // Substitute any $machine$ settings on DEV
+configSettings     = helpers.myConfig(configSettings);
 
-var _logger = {
-	log: function(lvl, msg, dtl) {
-		console.log(lvl + msg + dtl);
-	}
-};
+var _logger = (function configureLogging() {
+    var loggerOptions = configSettings.logging || {
+        tenantCode: 'i2OGB',
+        logFile: 'anapos.log',
+        level: 'debug',
+        colorize: true
+    };
+    loggerOptions.supportId = uuid.v1();
+    loggerOptions.source    = Source;
+    loggerOptions.cfg       = configSettings;
+
+    return new Logger(loggerOptions);
+})();
 
 var resourcing = new Resourcing(configSettings);
 
