@@ -64,8 +64,8 @@ restServer.use(function (req, res, next) {
     //Slack validates by sending an initial request containing a challenge. The http endpoint
     //must respond with the challenge.
     if(req.body.challenge) {
-        res.setHeader('content-type','application/json')
-        res.end({"challenge": req.body.challenge});
+        res.setHeader("content-type","application/json")
+        res.send(200, {"challenge": req.body.challenge});
         return;
     }
 
