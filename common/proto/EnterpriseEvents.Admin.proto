@@ -6,12 +6,13 @@ package i2OWater.Anapos.Governance.EnterpriseEvents.Admin;
 message ExecutionInConsoleComplete {
   required i2OWater.Anapos.Governance.EnterpriseEvent root_event = 1;
   required string execution_id = 2;
-  required string user = 3;
-  required string command = 4;
-  required string standard_output = 5;
-  required string warning_output = 6;
-  required string error_output = 7;
-  repeated string file_input_names = 8;
-  repeated i2OWater.Anapos.Governance.Common.Pair file_output = 9;
+  required string external_username = 3;
+  required string external_user_id = 4;
+  required string command = 5;
+  required string standard_output = 6;
+  required string warning_output = 7;
+  required string error_output = 8;
+  repeated string file_input_names = 9;
+  repeated i2OWater.Anapos.Governance.Common.Pair file_output = 10;
   extensions 100 to 120; 
 }

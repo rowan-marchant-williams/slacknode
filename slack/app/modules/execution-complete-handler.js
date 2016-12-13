@@ -8,9 +8,6 @@ var util    = require('util');
 var ProtoBuf = require('protobufjs');
 var Readable = require('stream').Readable;
 var slackWebApiClient = require('@slack/client').WebClient;
-var https = require('https');
-var querystring = require('querystring');
-var url = require('url');
 
 ProtoBuf.convertFieldsToCamelCase = true;
 
@@ -81,7 +78,7 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
                                 {"title": "Ouput Files", "value": outputFiles, "short": false},
                                 {"title": "SupportId", "value": executionComplete.rootEvent.instruction.supportId, "short": false}
                             ],
-                            "footer": util.format("Executed in Admin Console on behalf of %s", executionComplete.user),
+                            "footer": util.format("Executed in Admin Console on behalf of %s", executionComplete.externalUsername),
                             "ts": Math.round(executionComplete.rootEvent.instruction.created.toNumber()/1000)
                         }
                     ];
@@ -103,7 +100,7 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
                         }
                     }
 
-                    var slackChannel = executionComplete.user;
+                    var slackChannel = executionComplete.externalUserId;
 
                     slackWebClient.chat.postMessage(slackChannel, null, responseOptions, function (err, res) {
                         logSlackResponse(err, res, "message");

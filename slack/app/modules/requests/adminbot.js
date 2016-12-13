@@ -6,11 +6,9 @@ var AmqpRequester = require(common + 'amqp/requester');
 var helpers = require(common + 'utils/helpers');
 var uuid = require('node-uuid');
 var util = require('util');
-var async = require('async');
 var fs = require('fs');
 var und = require('underscore');
 var config  = require('konphyg')(common + 'config');
-var slackWebApiClient = require('@slack/client').WebClient;
 var https = require('https');
 var url = require('url');
 var AdmZip = require('adm-zip');
@@ -24,7 +22,7 @@ function AdminBotRequest(config) {
     that._goodResponseTypeId = that._myGoodResponse.getMessageTypeId();
     that._myFailureResponse = new Request('i2OWater.Anapos.Governance.FailureResponse');
     that._failureResponseTypeId = that._myFailureResponse.getMessageTypeId();
-    
+
     return that;
 }
 
@@ -38,14 +36,15 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
     that._instruction.ttl = that._config.request.ttl || TEN_SECONDS;
 
     var slackEvent = req.body.event;
-	var username = res.header("x-username");
+    var username = res.header("x-username");
 
     var runSerialize = function(commandText, fileInput) {
         var adminRequest = {
             rootRequest: {
                 instruction: that._instruction
             },
-            user: username,
+            external_username: username,
+            external_user_id: slackEvent.channel,
             command: commandText,
             fileInput: fileInput
         };
@@ -111,7 +110,7 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
 
     var attachmentHandlerMap = [
         {key:"text/plain; charset=utf-8", handler: handlePlainTextContent},
-		{key:"text/html; charset=utf-8", handler: handlePlainTextContent},
+        {key:"text/html; charset=utf-8", handler: handlePlainTextContent},
         {key:"application/zip", handler: handleZipContent}
     ];
 

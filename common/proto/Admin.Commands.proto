@@ -5,7 +5,8 @@ package i2OWater.Anapos.Governance.Admin.Commands;
 
 message ExecuteInConsole {
   required i2OWater.Anapos.Governance.Command root_command = 1;
-  required string user = 3;
+  required string external_username = 2;
+  required string external_user_id = 3;
   required string command = 4;
   repeated i2OWater.Anapos.Governance.Common.Pair file_input = 5;
   extensions 100 to 120;
