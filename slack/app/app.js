@@ -84,7 +84,10 @@ restServer.use(function(req, res, next){
 });
 
 restServer.use(function(req, res, next){
-    _logger.log('info', "Received request: " + JSON.stringify(req.body));
+    if(!process.env.NODE_ENV || process.env.NODE_ENV === "DEVELOPMENT") {
+        _logger.log('info', "Received request: " + JSON.stringify(req.body));
+    }
+
     return next();
 });
 
@@ -124,14 +127,26 @@ restServer.use(function (req, res, next) {
             {id: "U37E5LNS3", name: "rowanwilliams999"}
         ];
 
-        var userTriggeringEvent = req.body.event.user || (req.body.event.message ? req.body.event.message.user : null);
-        if (!userTriggeringEvent) {
+        var userIdLocations = [
+            {prop: req.body.event.user,     selector: function() {return req.body.event.user}},
+            {prop: req.body.event.message,  selector: function() {return req.body.event.message.user}},
+            {prop: req.body.event.comment,  selector: function() {return req.body.event.comment.user}}
+        ];
+
+        var userIdSelector = und.filter(userIdLocations, function(x){return x.prop})[0];
+        if(!userIdSelector) {
+            res.send(HTTP_OK);
+            return;
+        }
+
+        var userId = userIdSelector.selector();
+        if (!userId) {
             res.send(HTTP_OK);
             return;
         }
 
         var authorizedEntry = und.filter(authorizedUsers, function (x) {
-            return x.id === userTriggeringEvent;
+            return x.id === userId;
         })[0];
 
         if (!authorizedEntry) {
@@ -142,7 +157,7 @@ restServer.use(function (req, res, next) {
         res.header('x-username', authorizedEntry.name);
 
         return next();
-	};
+    };
 
     ensureUserIsAuthorized(req, res, next);
 });
