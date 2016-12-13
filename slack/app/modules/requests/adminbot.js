@@ -144,7 +144,12 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
     };
 
     var processTextMessageEvent = function(evt) {
-        serializeAndContinue(evt.text, []);
+        if(evt.text) {
+            serializeAndContinue(evt.text, []);
+        }
+        else if(evt.message && evt.message.text) {
+            serializeAndContinue(evt.message.text, []);
+        }
     };
 
     if(isFileShareEvent(slackEvent)) {
