@@ -71,7 +71,6 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
         });
         r.on('end', function() {
             var fileInput = fileContent ? [{key: fileName, value: fileContent}] : [];
-            var serialized = runSerialize(commandText, fileInput);
             serializeAndContinue(commandText, fileInput);
         });
     };
@@ -110,7 +109,6 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
 
     var attachmentHandlerMap = [
         {key:"text/plain; charset=utf-8", handler: handlePlainTextContent},
-        {key:"text/html; charset=utf-8", handler: handlePlainTextContent},
         {key:"application/zip", handler: handleZipContent}
     ];
 
@@ -119,16 +117,27 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
         var commandText = commentToUse ? commentToUse.comment : "No command found with file";
         var fileName = evt.file.name;
 
-        var slackToken =  process.env.SLACK_BOT_TOKEN || '';
-        var privateDownloadUrl = url.parse(evt.file.url_private);
+        var buildGetOptions = function(token, fileUrl) {
+            var parsedFileUrl = url.parse(fileUrl);
+            var getOptions = {
+                host: parsedFileUrl.host,
+                path: parsedFileUrl.path,
+                headers: {Authorization: util.format("Bearer %s", slackToken)}
+            };
 
-        var getOptions = {
-            host: privateDownloadUrl.host,
-            path: privateDownloadUrl.path,
-            headers: {Authorization: "Bearer " + slackToken}
+            return getOptions;
         };
 
-        https.get(getOptions, function(response) {
+        var slackToken =  process.env.SLACK_BOT_TOKEN || '';
+        var fileGetOptions = buildGetOptions(slackToken, evt.file.url_private);
+
+        var getFileResponseHandler = function(response) {
+            if(response.headers["location"]) {
+                var redirectedGetOptions = buildGetOptions(slackToken, response.headers["location"]);
+                https.get(redirectedGetOptions, getFileResponseHandler);
+                return;
+            }
+
             if(!response.headers["content-type"]) {
                 handleUnknownContent(response);
                 return;
@@ -140,7 +149,9 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
             var handler = forContentType ? forContentType.handler : handleUnknownContent;
 
             handler(commandText, fileName, response);
-        });
+        };
+
+        https.get(fileGetOptions, getFileResponseHandler);
     };
 
     var processTextMessageEvent = function(evt) {
