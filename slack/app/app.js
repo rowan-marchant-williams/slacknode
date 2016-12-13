@@ -117,12 +117,16 @@ restServer.use(function (req, res, next) {
             return;
         }
 
-        var authorizeEntry = und.filter(authorizedUsers, function(x){return x.id === req.body.event.user;})[0];
+        var authorizedEntry = und.filter(authorizedUsers, function (x) {
+            return x.id === req.body.event.user;
+        })[0];
 
-        if(!authorizeEntry) {
+        if (!authorizedEntry) {
             res.send(HTTP_OK);
             return;
         }
+
+        res.header('x-username', authorizedEntry.name);
 
         return next();
     };

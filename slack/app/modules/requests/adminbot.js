@@ -30,7 +30,7 @@ function AdminBotRequest(config) {
 
 AdminBotRequest.prototype = new Request('i2OWater.Anapos.Governance.Admin.Requests.ExecuteRequest');
 
-AdminBotRequest.prototype.serialize = function (body, req, onSerialized) {
+AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
     var that = this;
     that._buildInstruction(body, req);
     that._readSchema();
@@ -38,13 +38,14 @@ AdminBotRequest.prototype.serialize = function (body, req, onSerialized) {
     that._instruction.ttl = that._config.request.ttl || TEN_SECONDS;
 
     var slackEvent = req.body.event;
+	var username = res.header("x-username");
 
     var runSerialize = function(commandText, fileInput) {
         var adminRequest = {
             rootRequest: {
                 instruction: that._instruction
             },
-            user: slackEvent.channel,
+            user: username,
             command: commandText,
             fileInput: fileInput
         };
@@ -110,6 +111,7 @@ AdminBotRequest.prototype.serialize = function (body, req, onSerialized) {
 
     var attachmentHandlerMap = [
         {key:"text/plain; charset=utf-8", handler: handlePlainTextContent},
+		{key:"text/html; charset=utf-8", handler: handlePlainTextContent},
         {key:"application/zip", handler: handleZipContent}
     ];
 
@@ -209,7 +211,7 @@ AdminBotRequest.prototype.execute = function (req, res, cb) {
         requester.send(sendOptions, serialized);
     };
 
-    that.serialize(req.body, req, onSerialized);
+    that.serialize(req.body, req, res, onSerialized);
 };
 
 module.exports = AdminBotRequest;
