@@ -60,8 +60,12 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
     }
 
     var isFileShareEvent = function(evt) {
-        var sharedFileSubType = "file_share";
-        return slackEvent.subtype && slackEvent.subtype === sharedFileSubType && slackEvent.file && slackEvent.file.url_private;
+        var handledFileEvents = ["file_share", "file_comment"];
+
+        return evt.subtype
+            && und.contains(handledFileEvents, evt.subtype)
+            && evt.file
+            && evt.file.url_private;
     }
 
     var handlePlainTextContent = function(commandText, fileName, r) {
@@ -230,4 +234,3 @@ AdminBotRequest.prototype.execute = function (req, res, cb) {
 };
 
 module.exports = AdminBotRequest;
-
