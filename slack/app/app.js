@@ -117,18 +117,21 @@ restServer.use(function (req, res, next) {
 
 restServer.use(function (req, res, next) {
     var ensureUserIsAuthorized = function (req, res, next) {
+        var HTTP_OK = 200;
+
         var authorizedUsers = [
             {id: "U3CRV4XBP", name: "rowanhwilliams"},
             {id: "U37E5LNS3", name: "rowanwilliams999"}
         ];
 
-        if (!req.body.event.user) {
+        var userTriggeringEvent = req.body.event.user || (req.body.event.message ? req.body.event.message.user : null);
+        if (!userTriggeringEvent) {
             res.send(HTTP_OK);
             return;
         }
 
         var authorizedEntry = und.filter(authorizedUsers, function (x) {
-            return x.id === req.body.event.user;
+            return x.id === userTriggeringEvent;
         })[0];
 
         if (!authorizedEntry) {
@@ -139,7 +142,7 @@ restServer.use(function (req, res, next) {
         res.header('x-username', authorizedEntry.name);
 
         return next();
-    };
+	};
 
     ensureUserIsAuthorized(req, res, next);
 });
