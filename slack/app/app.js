@@ -14,18 +14,18 @@ var und = require('underscore');
 var Source = 'Slack App';
 
 var configSettings = config('anapos');
-configSettings     = helpers.myConfig(configSettings);
+configSettings = helpers.myConfig(configSettings);  // Substitute any $machine$ settings on DEV
 
 var _logger = (function configureLogging() {
     var loggerOptions = configSettings.logging || {
-        tenantCode: 'i2OGB',
-        logFile: 'anapos.log',
-        level: 'debug',
-        colorize: true
-    };
+            tenantCode: 'i2OGB',
+            logFile: 'anapos.log',
+            level: 'debug',
+            colorize: true
+        };
     loggerOptions.supportId = uuid.v1();
-    loggerOptions.source    = Source;
-    loggerOptions.cfg       = configSettings;
+    loggerOptions.source = Source;
+    loggerOptions.cfg = configSettings;
 
     return new Logger(loggerOptions);
 })();
@@ -56,7 +56,7 @@ restServer.on('clientError', function (err) {
 var requestEngine = new RequestEngine(restServer, _logger);
 
 restServer.use(restify.queryParser());
-restServer.use(restify.bodyParser({ mapParams: false })); // It's important to include this before any custom async middleware (https://github.com/mcavage/node-restify/issues/287)
+restServer.use(restify.bodyParser({mapParams: false})); // It's important to include this before any custom async middleware (https://github.com/mcavage/node-restify/issues/287)
 
 restServer.use(function (req, res, next) {
     //required for initial slack configuration:
@@ -72,29 +72,39 @@ restServer.use(function (req, res, next) {
     return next();
 });
 
+restServer.use(function(req, res, next){
+    var slackToken = process.env.SLACK_VERIFICATION_TOKEN;
+
+    if (!slackToken || !req.body.token || slackToken !== req.body.token) {
+        res.send(HTTP_NOTFOUND);
+        return;
+    }
+
+    return next();
+});
+
+restServer.use(function(req, res, next){
+    _logger.log('info', "Received request: " + JSON.stringify(req.body));
+    return next();
+});
+
 restServer.use(function (req, res, next) {
-    var ensureRequestIsValid = function(req, res, next) {
+    var ensureRequestIsValid = function (req, res, next) {
         var HTTP_NOTFOUND = 404;
         var HTTP_OK = 200;
-        var slackToken =  process.env.SLACK_VERIFICATION_TOKEN;
 
-        var shouldHandle = function(evt) {
+        var shouldHandle = function (evt) {
             var handledEventType = "message";
             return (evt.type === handledEventType && !evt.bot_id);
         }
 
-        if(!slackToken || !req.body.token || slackToken !== req.body.token) {
-            res.send(HTTP_NOTFOUND);
-            return;
-        }
-
-        if(!req.body.event || !req.body.event.type || !req.body.event.channel) {
+        if (!req.body.event || !req.body.event.type || !req.body.event.channel) {
             res.send(HTTP_NOTFOUND);
             return;
         }
 
         //no action required for message types that are not handled, just return HTTP_OK
-        if(!shouldHandle(req.body.event)) {
+        if (!shouldHandle(req.body.event)) {
             res.send(HTTP_OK);
             return;
         }
@@ -106,13 +116,13 @@ restServer.use(function (req, res, next) {
 });
 
 restServer.use(function (req, res, next) {
-    var ensureUserIsAuthorized = function(req, res, next) {
+    var ensureUserIsAuthorized = function (req, res, next) {
         var authorizedUsers = [
             {id: "U3CRV4XBP", name: "rowanhwilliams"},
             {id: "U37E5LNS3", name: "rowanwilliams999"}
         ];
 
-        if(!req.body.event.user) {
+        if (!req.body.event.user) {
             res.send(HTTP_OK);
             return;
         }
