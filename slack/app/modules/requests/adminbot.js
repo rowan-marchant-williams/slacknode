@@ -43,8 +43,8 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
             rootRequest: {
                 instruction: that._instruction
             },
-            external_username: username,
-            external_user_id: slackEvent.channel,
+            externalUsername: username,
+            externalUserId: slackEvent.channel,
             command: commandText,
             fileInput: fileInput
         };
