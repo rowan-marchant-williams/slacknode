@@ -1,0 +1,45 @@
+{
+  "bots":
+  [
+    {
+      "requestedResource": "supportbot",
+      "settings":
+      {
+        "authorizedUsers":
+        [
+          {"id": "U3CRV4XBP", "name": "rowanhwilliams"},
+          {"id": "U37E5LNS3", "name": "rowanwilliams999"}
+        ],
+        "slackAuditChannel": {"id": "C3FJXGV9R", "name": "supportaudit"},
+        "defaultFileAttachmentCommand": "run /file:%s",
+        "serviceEventSubscription":
+        {
+          "topic": "Anapos.Support.ExecutionInConsoleComplete",
+          "subscriberQueueName": "support.ee",
+          "schemaNamespace": "i2OWater.Anapos.Governance.EnterpriseEvents.Support.ExecutionInConsoleComplete",
+          "protobufFilename": "proto/EnterpriseEvents.Support.proto"
+        }
+      }
+    },
+    {
+      "requestedResource": "adminbot",
+      "settings":
+      {
+        "authorizedUsers":
+        [
+          {"id": "U3CRV4XBP", "name": "rowanhwilliams"},
+          {"id": "U37E5LNS3", "name": "rowanwilliams999"}
+        ],
+        "slackAuditChannel": {"id": "C3F0Z4W65", "name": "adminaudit"},
+        "defaultFileAttachmentCommand": "run /file:%s",
+        "serviceEventSubscription":
+        {
+          "topic": "Anapos.Admin.ExecutionInConsoleComplete",
+          "subscriberQueueName": "admin.ee",
+          "schemaNamespace": "i2OWater.Anapos.Governance.EnterpriseEvents.Admin.ExecutionInConsoleComplete",
+          "protobufFilename": "proto/EnterpriseEvents.Admin.proto"
+        }
+      }
+    }
+  ]
+}

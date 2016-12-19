@@ -6,8 +6,9 @@ var util = require('util');
 var restify = require(common + 'node_modules/restify');
 var async = require('async');
 var fs = require('fs');
+var und = require('underscore');
 
-function ServiceRequestEngine(logger) {
+function ServiceRequestEngine(logger, slackSettings) {
 
     var Source = 'Service Request Engine';
     var HTTP_BAD_REQUEST = 400;
@@ -16,6 +17,7 @@ function ServiceRequestEngine(logger) {
 
     var that = this;
     that._logger = logger;
+    that._slackSettings = slackSettings;
 
     var _makeRequest = function (req, res, callback) {
         var _onChangeMade = function (err, result) {
@@ -40,7 +42,7 @@ function ServiceRequestEngine(logger) {
 
             var serviceRequest;
             if (req.params) {
-                // for the moment we need to look up the serviceRequest using [1]
+                // we need to look up the serviceRequest using [1]
                 // 1 is actual a property of the params object.
                 // this is important as params is not an array so we cant test the .length
                 // property and we cannot group the regex results into a named group
@@ -54,7 +56,8 @@ function ServiceRequestEngine(logger) {
             }
 
             if (serviceRequest) {
-                var requestFileName = __dirname + '/requests/' + serviceRequest + '.js';
+                var requestFileName = __dirname + '/bots/' + serviceRequest + '.js';
+                var requestedResource = serviceRequest;
                 var _onFileStatObtained = function (err, stats) {
                     if (err) {
                         if ('ENOENT' === err.code) {
@@ -67,8 +70,11 @@ function ServiceRequestEngine(logger) {
                         }
                     }
                     if (stats.isFile()) {
+                        var botSettings        = und.filter(that._slackSettings.bots, function(bot){
+                            return bot.requestedResource === requestedResource;
+                        })[0];
                         var RequestModule      = require(requestFileName);
-                        var serviceRequest     = new RequestModule(_getConfig());
+                        var serviceRequest     = new RequestModule(_getConfig(), botSettings.settings);
                         var _onRequestExecuted = function (err, status, result) {
                             if (err) {
                                 cb(err);

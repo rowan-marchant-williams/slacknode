@@ -14,7 +14,22 @@ var und = require('underscore');
 var Source = 'Slack App';
 
 var configSettings = config('anapos');
+var slackSettings = config('slack');
+
 configSettings = helpers.myConfig(configSettings);  // Substitute any $machine$ settings on DEV
+
+slackSettings.bots.forEach(function (bot) {
+
+    //get the bot token and place into settings
+    var tokenEnvVariableName = util.format('SLACK_TOKEN_%s', bot.requestedResource.toUpperCase());
+    var token = process.env[tokenEnvVariableName];
+
+    if(!token) {
+        throw Error(util.format('No slackbot token found for %s. Expecting env variable named: %s', bot.requestedResource, tokenEnvVariableName));
+    }
+
+    bot.settings.slackToken = token;
+});
 
 var _logger = (function configureLogging() {
     var loggerOptions = configSettings.logging || {
@@ -53,19 +68,20 @@ restServer.on('clientError', function (err) {
     _logger.log('error', msg, err);
 });
 
-var requestEngine = new RequestEngine(restServer, _logger);
+var requestEngine = new RequestEngine(restServer, _logger, configSettings, slackSettings);
 
 restServer.use(restify.queryParser());
 restServer.use(restify.bodyParser({mapParams: false})); // It's important to include this before any custom async middleware (https://github.com/mcavage/node-restify/issues/287)
 
 restServer.use(function (req, res, next) {
+    var HTTP_OK = 200;
     //required for initial slack configuration:
     //slack validates urls setup for use with its events api
     //Slack validates by sending an initial request containing a challenge. The http endpoint
     //must respond with the challenge.
     if(req.body.challenge) {
         res.setHeader("content-type","application/json")
-        res.send(200, {"challenge": req.body.challenge});
+        res.send(HTTP_OK, {"challenge": req.body.challenge});
         return;
     }
 
@@ -73,6 +89,7 @@ restServer.use(function (req, res, next) {
 });
 
 restServer.use(function(req, res, next){
+    var HTTP_NOTFOUND = 404;
     var slackToken = process.env.SLACK_VERIFICATION_TOKEN;
 
     if (!slackToken || !req.body.token || slackToken !== req.body.token) {
@@ -122,10 +139,30 @@ restServer.use(function (req, res, next) {
     var ensureUserIsAuthorized = function (req, res, next) {
         var HTTP_OK = 200;
 
-        var authorizedUsers = [
-            {id: "U3CRV4XBP", name: "rowanhwilliams"},
-            {id: "U37E5LNS3", name: "rowanwilliams999"}
-        ];
+        var serviceRequest;
+        if (req.params) {
+            if (req.params[1]) {
+                serviceRequest = req.params[1];
+            } else if (req.params[0]) {
+                serviceRequest = req.params[0];
+            }
+        }
+
+        var botConfig = und.filter(slackSettings.bots, function(x) {
+            return x.requestedResource === serviceRequest;
+        })[0];
+
+        if(!botConfig) {
+            res.send(HTTP_OK);
+            return;
+        }
+
+        var authorizedUsers = botConfig.settings.authorizedUsers;
+
+        if(!authorizedUsers) {
+            res.send(HTTP_OK);
+            return;
+        }
 
         var userIdLocations = [
             {prop: req.body.event.user,     selector: function() {return req.body.event.user}},
@@ -173,10 +210,10 @@ restServer.use(function (req, res, next) {
 
 restServer.use(restify.gzipResponse());
 
-// Slack adminbot endpoint
-restServer.post(/\/requests\/(adminbot)/, requestEngine.sendRequest);
+restServer.post(/\/bots\/(supportbot)/, requestEngine.sendRequest);
+restServer.post(/\/bots\/(adminbot)/, requestEngine.sendRequest);
 
-var port = process.env.port || 1337;
+var port = configSettings.slack.web_assets_port;
 restServer.listen(port, function () {
     var msg = util.format('%s:Listening on port %d', Source, port);
     _logger.log('info', msg);

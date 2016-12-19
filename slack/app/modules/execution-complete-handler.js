@@ -6,24 +6,26 @@ var fs = require('fs');
 var und = require('underscore');
 var util    = require('util');
 var ProtoBuf = require('protobufjs');
-var Readable = require('stream').Readable;
 var slackWebApiClient = require('@slack/client').WebClient;
+var AdmZip = require('adm-zip');
+var FormData = require('form-data');
 
 ProtoBuf.convertFieldsToCamelCase = true;
 
-function ExecutionCompleteHandler(subscriber, logger, config) {
+function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
 
-    var SCHEMA_NAMESPACE = 'i2OWater.Anapos.Governance.EnterpriseEvents.Admin.ExecutionInConsoleComplete';
-    var PROTOBUF_PROTO_FILENAME = 'proto/EnterpriseEvents.Admin.proto';
-    var HTTP_SERVICE_UNAVAILABLE = 503;
-    var protoFile = common + PROTOBUF_PROTO_FILENAME;
+    var eventSubscriptionSettings = botSettings.serviceEventSubscription;
+    var schemaNamespace = eventSubscriptionSettings.schemaNamespace;
+    var protobufFilename = eventSubscriptionSettings.protobufFilename;
+    var protoFile = common + protobufFilename;
     var that = this;
 
     that._logger = logger;
     that._subscriber = subscriber;
     that._config = config;
+    that._botSettings = botSettings;
 
-    var slackToken =  process.env.SLACK_BOT_TOKEN || '';
+    var slackToken =  that._botSettings.slackToken;
     var slackWebClient = new slackWebApiClient(slackToken);
 
     var _onProtoFileRead = function (err, builder) {
@@ -31,7 +33,7 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
             throw err;
         }
 
-        var eventSchema = builder.build(SCHEMA_NAMESPACE);
+        var eventSchema = builder.build(schemaNamespace);
 
         var _handler = function (schema) {
             return function _onEEReceived(event) {
@@ -55,18 +57,23 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
                     return {"Title": "Console Response:", "StatusLabel": "Success", "Color": "good", "Text": messageContent};
                 }
 
-                that._logger.log('info', 'Received event of type: ' + SCHEMA_NAMESPACE);
+                that._logger.log('info', 'Received event of type: ' + schemaNamespace);
                 try {
                     var executionComplete = schema.decode(event.body);
                     var slackMessage = buildMessage(executionComplete);
-                    var inputFiles = executionComplete.fileInputNames.length > 0
+                    var inputFilesLabel = executionComplete.fileInputNames.length > 0
                                         ? executionComplete.fileInputNames.join("\r\n")
                                         : "[None]";
                     var outputFiles = executionComplete.fileOutput.length > 0
-                                        ? und.pluck(executionComplete.fileOutput, 'key').join("\r\n")
-                                        : "[None]";
-                    var attachments = [
-                        {
+                                        ? und.pluck(executionComplete.fileOutput, 'key')
+                                        : [];
+
+                    var zipOutputFilename = "commandOutput.zip";
+                    var outputFilesLabel = outputFiles.length > 1
+                                        ? util.format("%s containing:\r\n - %s", zipOutputFilename, outputFiles.join("\r\n - "))
+                                        : (outputFiles.length == 1) ? outputFiles[0] : "[None]";
+
+                    var attachments = [{
                             "fallback": slackMessage.Text,
                             "title": slackMessage.Title,
                             "text": slackMessage.Text,
@@ -74,14 +81,13 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
                             "fields": [
                                 {"title": "Command", "value": executionComplete.command, "short": true},
                                 {"title": "Status", "value": slackMessage.StatusLabel, "short": true},
-                                {"title": "Input Files", "value": inputFiles, "short": false},
-                                {"title": "Ouput Files", "value": outputFiles, "short": false},
+                                {"title": "Input Files", "value": inputFilesLabel, "short": false},
+                                {"title": "Ouput Files", "value": outputFilesLabel, "short": false},
                                 {"title": "SupportId", "value": executionComplete.rootEvent.instruction.supportId, "short": false}
                             ],
                             "footer": util.format("Executed in Admin Console on behalf of %s", executionComplete.externalUsername),
                             "ts": Math.round(executionComplete.rootEvent.instruction.created.toNumber()/1000)
-                        }
-                    ];
+                    }];
 
                     var responseOptions = {
                         "attachments": attachments
@@ -98,25 +104,76 @@ function ExecutionCompleteHandler(subscriber, logger, config) {
                                 that._logger.log('error', "Error sending " + messageType , res);
                             }
                         }
+                    };
+
+                    var channelsToPostTo = [executionComplete.externalUserId];
+
+                    if(that._botSettings.slackAuditChannel && that._botSettings.slackAuditChannel.id) {
+                        channelsToPostTo.push(that._botSettings.slackAuditChannel.id);
                     }
 
-                    var slackChannel = executionComplete.externalUserId;
+                    var getFileAttachment = function() {
+                        if(executionComplete.fileOutput.length === 0) {
+                            return null;
+                        }
+                        else if(executionComplete.fileOutput.length === 1) {
+                            var singleFile = executionComplete.fileOutput[0];
+                            return {name: singleFile.key, buffer: new Buffer(singleFile.value)};
+                        }
 
-                    slackWebClient.chat.postMessage(slackChannel, null, responseOptions, function (err, res) {
-                        logSlackResponse(err, res, "message");
-
+                        var zip = new AdmZip();
                         executionComplete.fileOutput.forEach(function(outputFile) {
-                            var fileOpts = {
-                                content: outputFile.value,
-                                filename: outputFile.key,
-                                channels: slackChannel,
-                                initial_comment: util.format("Output from command: %s", executionComplete.command)
-                            };
+                            zip.addFile(outputFile.key, outputFile.value, outputFile.key);
+                        });
+                        return {name: zipOutputFilename, buffer: zip.toBuffer()};
+                    };
 
-                            var title = util.format("Output attachment: %s", outputFile.key);
-                            slackWebClient.files.upload(title, fileOpts, function (err, res) {
-                                logSlackResponse(err, res, "attachment");
-                            });
+                    channelsToPostTo.forEach(function(slackChannel) {
+                        slackWebClient.chat.postMessage(slackChannel, null, responseOptions, function (err, res) {
+                            logSlackResponse(err, res, "message");
+
+                            var attachment = getFileAttachment();
+
+                            if(attachment) {
+
+                                //slack file upload accepts a straight post request containing a content param for plain text
+                                //attachments, or a multipart/form-data request for binary attachments. The multipart/form-data method
+                                //will also work for plain text attachments.
+                                //The slack node client does not work with binary attachments using a multipart/form-data post,
+                                //therefore, constructing the form-data post without using the slack node client.
+
+                                var form = new FormData();
+                                form.append('channels', slackChannel);
+                                form.append('initial_comment', util.format("Output from command: %s", executionComplete.command));
+                                form.append('filename', attachment.name);
+                                form.append('file', attachment.buffer, {
+                                    filename: attachment.name,
+                                    contentType: 'application/x-zip-compressed'
+                                });
+
+                                //when using multipart http post requests to slack, slack will only
+                                //accept the request if the token is included as a url param, it will
+                                //not accept an Authorization header, therefore include the token as
+                                //a url param
+                                var uploadPath = util.format('/api/files.upload?token=%s', slackToken);
+
+                                form.submit({
+                                        protocol: 'https:',
+                                        host: 'slack.com',
+                                        path: uploadPath
+                                    },
+                                    function(err, res){
+                                        var responseContent = '';
+                                        res.on('data', function(d) {
+                                            responseContent += d;
+                                        });
+                                        res.on('end', function() {
+                                            var parsed = JSON.parse(responseContent);
+                                            logSlackResponse(err, parsed, "attachment");
+                                        });
+                                    }
+                                );
+                            };
                         });
                     });
 

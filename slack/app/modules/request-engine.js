@@ -11,33 +11,38 @@ var ServiceRequestEngine = require('./service-request-engine');
 var ExecutionCompleteHandler = require('./execution-complete-handler');
 var AmqpSubscriber = require(common + 'amqp/subscriber');
 
-function RequestEngine(server, logger) {
+function RequestEngine(server, logger, config, slackSettings) {
 
     var ROUTING_TYPE = 'topic';
-    var TOPIC = 'Anapos.Admin.ExecutionInConsoleComplete';
-    var SUBSCRIBER_Q_NAME = 'admin.ee';
-    var HTTP_NOT_MODIFIED = 304;
-
     var that = this;
     that._logger = logger;
-    var config = helpers.getConfig();
-    config = helpers.myConfig(config);
 
-    var eeQueueName = SUBSCRIBER_Q_NAME + '.' + os.hostname();
-    var opts = {
-        durable: true,
-        autoDelete: false,
-        qName: eeQueueName,
-        topic: TOPIC,
-        routingType: ROUTING_TYPE
-    };
+    that._serviceRequestEngine = new ServiceRequestEngine(that._logger, slackSettings);
 
-    that._adminExecutionCompleteSubscriber = new AmqpSubscriber(config, that._logger, opts);
-    that._serviceRequestEngine = new ServiceRequestEngine(that._logger);
-    that._executionCompleteHandler = new ExecutionCompleteHandler(that._adminExecutionCompleteSubscriber, that._logger, config);
+    that._enterpriseEventHandlers = [];
+
+    slackSettings.bots.forEach(function (bot) {
+        var subscriptionSettings = bot.settings.serviceEventSubscription;
+
+        var subscriptionQueue = subscriptionSettings.subscriberQueueName + '.' + os.hostname();
+
+        var subscriptionOptions = {
+            durable: true,
+            autoDelete: false,
+            qName: subscriptionQueue,
+            topic: subscriptionSettings.topic,
+            routingType: ROUTING_TYPE
+        }
+
+        var subscriber = new AmqpSubscriber(config, that._logger, subscriptionOptions);
+        var handler = new ExecutionCompleteHandler(subscriber, that._logger, config, bot.settings);
+        that._enterpriseEventHandlers.push(handler);
+    });
 
     function _onServerClosed() {
-        that._executionCompleteHandler.destroy();
+        that._enterpriseEventHandlers.forEach(function(handler){
+            handler.destroy();
+        })
     }
 
     server.on('close', _onServerClosed);
