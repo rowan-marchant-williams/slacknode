@@ -213,7 +213,12 @@ restServer.use(restify.gzipResponse());
 restServer.post(/\/bots\/(supportbot)/, requestEngine.sendRequest);
 restServer.post(/\/bots\/(adminbot)/, requestEngine.sendRequest);
 
-var port = configSettings.slack.web_assets_port;
+restServer.get('/slack', function(req, res, next){
+	res.send('hello');
+	return next();
+});
+
+var port = process.env.port || 1337;
 restServer.listen(port, function () {
     var msg = util.format('%s:Listening on port %d', Source, port);
     _logger.log('info', msg);
