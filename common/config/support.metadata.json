@@ -1,62 +1,62 @@
 {
     "messages": [
         {
-            "name":"i2OWater.Anapos.Governance.Admin.Requests.ExecuteRequest",
+            "name":"i2OWater.Anapos.Governance.Support.Requests.ExecuteRequest",
             "constants":[
                 {
                     "path":"root_request.instruction.type",
-                    "value":"d2a766dd-7180-4b37-99e7-286e5e129a7e"
+                    "value":"cc2bfc6d-fa69-49f1-8148-21b16c9cb63c"
                 }
             ],
             "metadata":[
                 {
                     "name":"routingKey",
-                    "value":"admin.req"
+                    "value":"support.req"
                 }
             ]
         },
         {
-            "name":"i2OWater.Anapos.Governance.Admin.Responses.ExecuteResponse",
+            "name":"i2OWater.Anapos.Governance.Support.Responses.ExecuteResponse",
             "constants":[
                 {
                     "path":"root_response.instruction.type",
-                    "value":"41eaca8c-71f1-49a5-8ab1-60853c36ced3"
+                    "value":"2f38a901-49f9-4480-b571-9dafc23dfc84"
                 }
             ],
             "metadata":[
                 {
                     "name":"routingKey",
-                    "value":"admin.resp"
+                    "value":"support.resp"
                 }
             ]
         },
         {
-            "name": "i2OWater.Anapos.Governance.Admin.Commands.ExecuteInConsole",
+            "name": "i2OWater.Anapos.Governance.Support.Commands.ExecuteInConsole",
             "constants": [
                 {
                     "path": "root_command.instruction.type",
-                    "value": "f0dd1edf-c1bb-44cf-91b9-a24a289fa10a"
+                    "value": "e66b4265-a624-403b-8d7f-9c498daec3f6"
                 }
             ],
             "metadata": [
                 {
                     "name": "routingKey",
-                    "value": "Anapos.Admin.ExecuteInConsole"
+                    "value": "Anapos.Support.ExecuteInConsole"
                 }
             ]
         }, 
         {
-            "name":"i2OWater.Anapos.Governance.EnterpriseEvents.Admin.ExecutionInConsoleComplete",
+            "name":"i2OWater.Anapos.Governance.EnterpriseEvents.Support.ExecutionInConsoleComplete",
             "constants": [
                 {
                     "path":"root_event.instruction.type",
-                    "value":"69ecb579-543c-4ba6-aa57-dbc6f35e5868"
+                    "value":"9726f9da-e625-43ca-8974-45dee3e0f154"
                 }
             ],
             "metadata":[
                 {
                     "name":"routingKey",
-                    "value":"Anapos.Admin.ExecutionInConsoleComplete"
+                    "value":"Anapos.Support.ExecutionInConsoleComplete"
                 }
             ]
         }
