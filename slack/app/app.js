@@ -213,12 +213,6 @@ restServer.use(restify.gzipResponse());
 restServer.post(/\/bots\/(supportbot)/, requestEngine.sendRequest);
 restServer.post(/\/bots\/(adminbot)/, requestEngine.sendRequest);
 
-restServer.get('/slack', function(req, res, next){
-	res.setHeader("content-type","application/json")
-	res.send(HTTP_OK, {"ok": true});
-	return;
-});
-
 var port = process.env.port || 1337;
 restServer.listen(port, function () {
     var msg = util.format('%s:Listening on port %d', Source, port);
