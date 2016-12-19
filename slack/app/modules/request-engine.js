@@ -52,9 +52,7 @@ function RequestEngine(server, logger, config, slackSettings) {
             req.header('x-support-id', uuid.v1());
         }
 		
-		that._logger.log('info', 'amqp.host: ' + config.amqp.host);
-
-        that._serviceRequestEngine.makeServiceRequest(req, res, next);
+		that._serviceRequestEngine.makeServiceRequest(req, res, next);
     };
 
     that.sendRequest = _requestSender;
