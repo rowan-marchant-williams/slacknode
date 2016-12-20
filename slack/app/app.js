@@ -21,13 +21,19 @@ configSettings = helpers.myConfig(configSettings);  // Substitute any $machine$ 
 slackSettings.bots.forEach(function (bot) {
 
     //get the bot token and place into settings
+    var verificationEnvVariableName = util.format('SLACK_VERIFICATION_%s', bot.requestedResource.toUpperCase());
+    var verification = process.env[verificationEnvVariableName];
+    if(!verification) {
+        throw Error(util.format('No slackbot verification token found for %s. Expecting env variable named: %s', bot.requestedResource, verificationEnvVariableName));
+    }
+
     var tokenEnvVariableName = util.format('SLACK_TOKEN_%s', bot.requestedResource.toUpperCase());
     var token = process.env[tokenEnvVariableName];
-
     if(!token) {
         throw Error(util.format('No slackbot token found for %s. Expecting env variable named: %s', bot.requestedResource, tokenEnvVariableName));
     }
 
+    bot.settings.slackVerification = verification;
     bot.settings.slackToken = token;
 });
 
@@ -80,7 +86,7 @@ restServer.use(function (req, res, next) {
     //Slack validates by sending an initial request containing a challenge. The http endpoint
     //must respond with the challenge.
     if(req.body.challenge) {
-        res.setHeader("content-type","application/json")
+        res.setHeader("content-type","application/json");
         res.send(HTTP_OK, {"challenge": req.body.challenge});
         return;
     }
@@ -88,9 +94,39 @@ restServer.use(function (req, res, next) {
     return next();
 });
 
+
+var getRequestedResource = function(req) {
+    var requestedResource;
+    if (req.params) {
+        if (req.params[1]) {
+            requestedResource = req.params[1];
+        } else if (req.params[0]) {
+            requestedResource = req.params[0];
+        }
+    }
+    return requestedResource;
+};
+
+var botConfigForRequest = function(req) {
+    var requestedResource = getRequestedResource(req);
+
+    var botConfig = und.filter(slackSettings.bots, function(x) {
+        return x.requestedResource === requestedResource;
+    })[0];
+
+    return botConfig;
+}
+
 restServer.use(function(req, res, next){
     var HTTP_NOTFOUND = 404;
-    var slackToken = process.env.SLACK_VERIFICATION_TOKEN;
+    var botConfig = botConfigForRequest(req);
+
+    if(!botConfig) {
+        res.send(HTTP_NOTFOUND);
+        return;
+    }
+
+    var slackToken = botConfig.settings.slackVerification;
 
     if (!slackToken || !req.body.token || slackToken !== req.body.token) {
         res.send(HTTP_NOTFOUND);
@@ -139,18 +175,7 @@ restServer.use(function (req, res, next) {
     var ensureUserIsAuthorized = function (req, res, next) {
         var HTTP_OK = 200;
 
-        var serviceRequest;
-        if (req.params) {
-            if (req.params[1]) {
-                serviceRequest = req.params[1];
-            } else if (req.params[0]) {
-                serviceRequest = req.params[0];
-            }
-        }
-
-        var botConfig = und.filter(slackSettings.bots, function(x) {
-            return x.requestedResource === serviceRequest;
-        })[0];
+        var botConfig = botConfigForRequest(req);
 
         if(!botConfig) {
             res.send(HTTP_OK);
