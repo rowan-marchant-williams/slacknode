@@ -10,9 +10,10 @@ function SlackEventAcknowledger() {
 
             if (err === 'request timeout') {
                 cb(null, HTTP_SERVICE_UNAVAILABLE, { failureReason: 'Request Timeout', supportId: responseOptions.supportId });
-            } else {
-                cb(err);
+                return;
             }
+
+            cb(err);
         });
 
         requester.on('data', function (data, msg) {

@@ -46,6 +46,14 @@ function SlackEventMapper(botSettings) {
                 dataLen += chunk.length;
             });
             r.on('end', function() {
+                var getFilename = function(entryName) {
+                    var indexOfLastSlash = entryName.lastIndexOf("/");
+                    var filename = indexOfLastSlash > -1
+                        ? entryName.substr(indexOfLastSlash + 1)
+                        : entryName;
+                    return filename;
+                };
+
                 var buf = new Buffer(dataLen);
 
                 for (var i = 0, len = data.length, pos = 0; i < len; i++) {
@@ -58,9 +66,7 @@ function SlackEventMapper(botSettings) {
                 var fileInput = [];
 
                 for (var i = 0; i < zipEntries.length; i++) {
-                    var name = zipEntries[i].entryName;
-                    var indexOfLastSlash = name.lastIndexOf("/");
-                    var filename = indexOfLastSlash > -1 ? name.substr(indexOfLastSlash + 1) : name;
+                    var filename = getFilename(zipEntries[i].entryName);
 
                     var content = zip.readAsText(zipEntries[i]);
                     if(content) {
@@ -80,15 +86,15 @@ function SlackEventMapper(botSettings) {
             {key:"application/zip", handler: handleZipContent}
         ];
 
+        var getDefaultCommand = function(file) {
+            if(that._botSettings.defaultFileAttachmentCommand){
+                return util.format(that._botSettings.defaultFileAttachmentCommand, file);
+            }
+            return "-";
+        };
+
         var processFileShareEvent = function(evt) {
             var getCommand = function(fileName) {
-                var getDefaultCommand = function(file) {
-                  if(that._botSettings.defaultFileAttachmentCommand){
-                      return util.format(that._botSettings.defaultFileAttachmentCommand, file);
-                  }
-                  return "-";
-                };
-
                 var userEnteredCommand = evt.comment || evt.file.initial_comment;
                 var command = userEnteredCommand ? userEnteredCommand.comment : getDefaultCommand(fileName);
                 return command;
@@ -145,10 +151,10 @@ function SlackEventMapper(botSettings) {
 
         if(isFileShareEvent(slackEvent)) {
             processFileShareEvent(slackEvent);
+            return;
         }
-        else {
-            processTextMessageEvent(slackEvent);
-        }
+
+        processTextMessageEvent(slackEvent);
     };
 
     that.toSerializedMessage = _toSerializedMessage;
