@@ -68,14 +68,17 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                             : [];
 
                         var fileLabels = fileList.length > 1
-                            ? util.format("%s containing:\r\n - %s", zipFileName, fileLabels.join("\r\n - "))
+                            ? util.format("%s containing:\r\n - %s", zipFileName, fileList.join("\r\n - "))
                             : (fileList.length == 1) ? fileList[0] : "[None]";
 
                         return fileLabels;
                     };
 
-                    var inputFilesLabel = buildFileNamesFor("commandInput.zip", executionComplete.fileInput);
-                    var outputFilesLabel = buildFileNamesFor("commandOutput.zip", executionComplete.fileOutput);
+                    var zipInputFilename = "commandInput.zip";
+                    var zipOutputFilename = "commandOutput.zip";
+
+                    var inputFilesLabel = buildFileNamesFor(zipInputFilename, executionComplete.fileInput);
+                    var outputFilesLabel = buildFileNamesFor(zipOutputFilename, executionComplete.fileOutput);
 
                     var attachments = [{
                             "fallback": slackMessage.Text,
@@ -116,7 +119,7 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                         channelsToPostTo.push(that._botSettings.slackAuditChannel.id);
                     }
 
-                    var getFileAttachment = function(files) {
+                    var getFileAttachment = function(zipFileName, files) {
                         if(files.length === 0) {
                             return null;
                         }
@@ -129,11 +132,11 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                         files.forEach(function(outputFile) {
                             zip.addFile(outputFile.key, outputFile.value, outputFile.key);
                         });
-                        return {name: zipOutputFilename, buffer: zip.toBuffer()};
+                        return {name: zipFileName, buffer: zip.toBuffer()};
                     };
 
-                    var sendAttachment = function(files) {
-                        var attachment = getFileAttachment(files);
+                    var sendAttachment = function(zipFileName, files, slackChannel) {
+                        var attachment = getFileAttachment(zipFileName, files);
 
                         if(attachment) {
 
@@ -145,7 +148,6 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
 
                             var form = new FormData();
                             form.append('channels', slackChannel);
-                            form.append('initial_comment', util.format("Output from command: %s", executionComplete.command));
                             form.append('filename', attachment.name);
                             form.append('file', attachment.buffer, {
                                 filename: attachment.name,
@@ -181,8 +183,8 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                         slackWebClient.chat.postMessage(slackChannel, null, responseOptions, function (err, res) {
                             logSlackResponse(err, res, "message");
 
-                            sendAttachment(executionComplete.fileOutput);
-                            sendAttachment(executionComplete.fileInput);
+                            sendAttachment(zipInputFilename, executionComplete.fileInput, slackChannel);
+                            sendAttachment(zipOutputFilename, executionComplete.fileOutput, slackChannel);
                         });
                     });
 
