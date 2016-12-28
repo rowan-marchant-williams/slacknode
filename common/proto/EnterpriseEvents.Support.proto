@@ -12,7 +12,7 @@ message ExecutionInConsoleComplete {
   required string standard_output = 6;
   required string warning_output = 7;
   required string error_output = 8;
-  repeated string file_input_names = 9;
+  repeated i2OWater.Anapos.Governance.Common.Pair file_input = 9;
   repeated i2OWater.Anapos.Governance.Common.Pair file_output = 10;
   extensions 100 to 120; 
 }
