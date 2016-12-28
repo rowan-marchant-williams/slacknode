@@ -61,17 +61,21 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                 try {
                     var executionComplete = schema.decode(event.body);
                     var slackMessage = buildMessage(executionComplete);
-                    var inputFilesLabel = executionComplete.fileInputNames.length > 0
-                                        ? executionComplete.fileInputNames.join("\r\n")
-                                        : "[None]";
-                    var outputFiles = executionComplete.fileOutput.length > 0
-                                        ? und.pluck(executionComplete.fileOutput, 'key')
-                                        : [];
 
-                    var zipOutputFilename = "commandOutput.zip";
-                    var outputFilesLabel = outputFiles.length > 1
-                                        ? util.format("%s containing:\r\n - %s", zipOutputFilename, outputFiles.join("\r\n - "))
-                                        : (outputFiles.length == 1) ? outputFiles[0] : "[None]";
+                    var buildFileNamesFor = function(zipFileName, fileArr) {
+                        var fileList = fileArr.length > 0
+                            ? und.pluck(fileArr, 'key')
+                            : [];
+
+                        var fileLabels = fileList.length > 1
+                            ? util.format("%s containing:\r\n - %s", zipFileName, fileLabels.join("\r\n - "))
+                            : (fileList.length == 1) ? fileList[0] : "[None]";
+
+                        return fileLabels;
+                    };
+
+                    var inputFilesLabel = buildFileNamesFor("commandInput.zip", executionComplete.fileInput);
+                    var outputFilesLabel = buildFileNamesFor("commandOutput.zip", executionComplete.fileOutput);
 
                     var attachments = [{
                             "fallback": slackMessage.Text,
@@ -112,68 +116,73 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                         channelsToPostTo.push(that._botSettings.slackAuditChannel.id);
                     }
 
-                    var getFileAttachment = function() {
-                        if(executionComplete.fileOutput.length === 0) {
+                    var getFileAttachment = function(files) {
+                        if(files.length === 0) {
                             return null;
                         }
-                        else if(executionComplete.fileOutput.length === 1) {
-                            var singleFile = executionComplete.fileOutput[0];
+                        else if(files.length === 1) {
+                            var singleFile = files[0];
                             return {name: singleFile.key, buffer: new Buffer(singleFile.value)};
                         }
 
                         var zip = new AdmZip();
-                        executionComplete.fileOutput.forEach(function(outputFile) {
+                        files.forEach(function(outputFile) {
                             zip.addFile(outputFile.key, outputFile.value, outputFile.key);
                         });
                         return {name: zipOutputFilename, buffer: zip.toBuffer()};
+                    };
+
+                    var sendAttachment = function(files) {
+                        var attachment = getFileAttachment(files);
+
+                        if(attachment) {
+
+                            //slack file upload accepts a straight post request containing a content param for plain text
+                            //attachments, or a multipart/form-data request for binary attachments. The multipart/form-data method
+                            //will also work for plain text attachments.
+                            //The slack node client does not work with binary attachments using a multipart/form-data post,
+                            //therefore, constructing the form-data post without using the slack node client.
+
+                            var form = new FormData();
+                            form.append('channels', slackChannel);
+                            form.append('initial_comment', util.format("Output from command: %s", executionComplete.command));
+                            form.append('filename', attachment.name);
+                            form.append('file', attachment.buffer, {
+                                filename: attachment.name,
+                                contentType: (files.length > 1 ? 'application/x-zip-compressed' : 'text/plain')
+                            });
+
+                            //when using multipart http post requests to slack, slack will only
+                            //accept the request if the token is included as a url param, it will
+                            //not accept an Authorization header, therefore include the token as
+                            //a url param
+                            var uploadPath = util.format('/api/files.upload?token=%s', slackToken);
+
+                            form.submit({
+                                    protocol: 'https:',
+                                    host: 'slack.com',
+                                    path: uploadPath
+                                },
+                                function(err, res){
+                                    var responseContent = '';
+                                    res.on('data', function(d) {
+                                        responseContent += d;
+                                    });
+                                    res.on('end', function() {
+                                        var parsed = JSON.parse(responseContent);
+                                        logSlackResponse(err, parsed, "attachment");
+                                    });
+                                }
+                            );
+                        };
                     };
 
                     channelsToPostTo.forEach(function(slackChannel) {
                         slackWebClient.chat.postMessage(slackChannel, null, responseOptions, function (err, res) {
                             logSlackResponse(err, res, "message");
 
-                            var attachment = getFileAttachment();
-
-                            if(attachment) {
-
-                                //slack file upload accepts a straight post request containing a content param for plain text
-                                //attachments, or a multipart/form-data request for binary attachments. The multipart/form-data method
-                                //will also work for plain text attachments.
-                                //The slack node client does not work with binary attachments using a multipart/form-data post,
-                                //therefore, constructing the form-data post without using the slack node client.
-
-                                var form = new FormData();
-                                form.append('channels', slackChannel);
-                                form.append('initial_comment', util.format("Output from command: %s", executionComplete.command));
-                                form.append('filename', attachment.name);
-                                form.append('file', attachment.buffer, {
-                                    filename: attachment.name,
-                                    contentType: 'application/x-zip-compressed'
-                                });
-
-                                //when using multipart http post requests to slack, slack will only
-                                //accept the request if the token is included as a url param, it will
-                                //not accept an Authorization header, therefore include the token as
-                                //a url param
-                                var uploadPath = util.format('/api/files.upload?token=%s', slackToken);
-
-                                form.submit({
-                                        protocol: 'https:',
-                                        host: 'slack.com',
-                                        path: uploadPath
-                                    },
-                                    function(err, res){
-                                        var responseContent = '';
-                                        res.on('data', function(d) {
-                                            responseContent += d;
-                                        });
-                                        res.on('end', function() {
-                                            var parsed = JSON.parse(responseContent);
-                                            logSlackResponse(err, parsed, "attachment");
-                                        });
-                                    }
-                                );
-                            };
+                            sendAttachment(executionComplete.fileOutput);
+                            sendAttachment(executionComplete.fileInput);
                         });
                     });
 
