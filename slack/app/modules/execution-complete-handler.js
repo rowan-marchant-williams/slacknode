@@ -148,6 +148,7 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
 
                             var form = new FormData();
                             form.append('channels', slackChannel);
+                            form.append('initial_comment', util.format("command: %s | user: %s | supportId: %s", executionComplete.command, executionComplete.externalUsername, executionComplete.rootEvent.instruction.supportId));
                             form.append('filename', attachment.name);
                             form.append('file', attachment.buffer, {
                                 filename: attachment.name,
