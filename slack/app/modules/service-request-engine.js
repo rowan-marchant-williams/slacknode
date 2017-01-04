@@ -88,9 +88,8 @@ function ServiceRequestEngine(logger, slackSettings) {
                                 }));
                             }
                         };
-                        serviceRequest.execute(req, res, function(err, status, result){});
-						_onRequestExecuted(null, HTTP_OK);
-                    } else {
+                        serviceRequest.execute(req, res, _onRequestExecuted);
+					} else {
                         msg = util.format('%s:Found Request Javascript File but it was not a File! %s', Source, requestFileName);
                         that._logger.log('error', msg, function logError() {
                             cb(err);
