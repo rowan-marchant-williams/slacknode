@@ -24,7 +24,7 @@ function RequestEngine(server, logger, config, slackSettings) {
     slackSettings.bots.forEach(function (bot) {
         var subscriptionSettings = bot.settings.serviceEventSubscription;
 
-        var subscriptionQueue = subscriptionSettings.subscriberQueueName + '.' + os.hostname();
+        var subscriptionQueue = subscriptionSettings.subscriberQueueName;
 
         var subscriptionOptions = {
             durable: true,

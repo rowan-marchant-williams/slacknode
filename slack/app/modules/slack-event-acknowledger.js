@@ -40,12 +40,12 @@ function SlackEventAcknowledger(logger, botSettings) {
 
     var _wireUpAmqpRequester = function(requester, responseOptions, supportId, slackEvent) {
 
-        var buildSlackErrorMessage = function(error, request) {
+        var buildSlackErrorMessage = function(error) {
             return util.format("An error occurred whilst sending the command: %s, SupportId %s", error, supportId);
         };
 
         requester.on('error', function(err) {
-            _sendMessageThroughSlack(buildSlackErrorMessage(err, req), slackEvent.channel);
+            _sendMessageThroughSlack(buildSlackErrorMessage(err), slackEvent.channel);
             that._logger.log('error', err);
         });
 
@@ -61,7 +61,7 @@ function SlackEventAcknowledger(logger, botSettings) {
             } else if (msg.messageId === responseOptions.failureResponseTypeId) {
                 response = responseOptions.myFailureResponse.parse(data);
 
-                _sendMessageThroughSlack(buildSlackErrorMessage(response, req), slackEvent.channel);
+                _sendMessageThroughSlack(buildSlackErrorMessage(response), slackEvent.channel);
 
                 that._logger.log('error', response);
             }
