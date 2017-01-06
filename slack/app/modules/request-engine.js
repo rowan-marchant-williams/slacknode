@@ -34,8 +34,11 @@ function RequestEngine(server, logger, config, slackSettings) {
             routingType: ROUTING_TYPE
         }
 
-        var subscriber = new AmqpSubscriber(config, that._logger, subscriptionOptions);
-        var handler = new ExecutionCompleteHandler(subscriber, that._logger, config, bot.settings);
+        var subscriberMsg = util.format('Creating subscriber for queue %s', subscriptionQueue);
+		that._logger.log('info', subscriberMsg);
+		var subscriber = new AmqpSubscriber(config, that._logger, subscriptionOptions);
+        
+		var handler = new ExecutionCompleteHandler(subscriber, that._logger, config, bot.settings);
         that._enterpriseEventHandlers.push(handler);
     });
 
@@ -51,8 +54,13 @@ function RequestEngine(server, logger, config, slackSettings) {
         if (!req.header('x-support-id')) {
             req.header('x-support-id', uuid.v1());
         }
-		
-		that._serviceRequestEngine.makeServiceRequest(req, res, next);
+
+        res.send(200);	    //return to slack immediately, due to it having an aggressive timeout / retry policy
+        next();
+
+        process.nextTick(function(){
+            that._serviceRequestEngine.makeServiceRequest(req, res);
+        });
     };
 
     that.sendRequest = _requestSender;

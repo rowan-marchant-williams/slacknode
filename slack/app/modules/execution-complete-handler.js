@@ -32,6 +32,9 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
         if (err) {
             throw err;
         }
+		
+		var handlerMsg = util.format('Building handler for schemaNamespace %s', schemaNamespace);
+		that._logger.log('info', handlerMsg);
 
         var eventSchema = builder.build(schemaNamespace);
 

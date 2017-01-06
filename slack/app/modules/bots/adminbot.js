@@ -13,10 +13,11 @@ var SlackEventAcknowledger = require('../slack-event-acknowledger');
 
 var TEN_SECONDS = 10 * 1000; // Anapos uses Milliseconds
 
-function AdminBotRequest(config, botSettings) {
+function AdminBotRequest(config, botSettings, logger) {
     var that = this;
     that._config = config;
     that._botSettings = botSettings;
+    that._logger = logger;
     that._myGoodResponse = new Request('i2OWater.Anapos.Governance.Admin.Responses.ExecuteResponse');
     that._goodResponseTypeId = that._myGoodResponse.getMessageTypeId();
     that._myFailureResponse = new Request('i2OWater.Anapos.Governance.FailureResponse');
@@ -54,13 +55,13 @@ AdminBotRequest.prototype.serialize = function (body, req, res, onSerialized) {
     };
 
     var slackEventMapper = new SlackEventMapper(that._botSettings);
-    slackEventMapper.toSerializedMessage(slackEvent, runSerialize, onSerialized);
+    slackEventMapper.toSerializedMessage(slackEvent, that._instruction.supportId, runSerialize, onSerialized);
 };
 
-AdminBotRequest.prototype.execute = function (req, res, cb) {
+AdminBotRequest.prototype.execute = function (req, res) {
     var that = this;
 
-    var onSerialized = function(serialized) {
+    var onSerialized = function(serialized, slackEvent, commandText, supportId) {
         var sendOptions = {
             exchange: '/',
             headers: {
@@ -71,7 +72,7 @@ AdminBotRequest.prototype.execute = function (req, res, cb) {
 
         var requester = new AmqpRequester(that._config);
 
-        var slackEventAcknowledger = new SlackEventAcknowledger();
+        var slackEventAcknowledger = new SlackEventAcknowledger(that._logger, that._botSettings);
 
         var responseOptions = {
             supportId: that._instruction.supportId,
@@ -81,9 +82,11 @@ AdminBotRequest.prototype.execute = function (req, res, cb) {
             myFailureResponse: that._myFailureResponse
         };
 
-        slackEventAcknowledger.wireUpAmqpRequester(requester, responseOptions, res, cb);
+        slackEventAcknowledger.wireUpAmqpRequester(requester, responseOptions, supportId, slackEvent);
 
         requester.send(sendOptions, serialized);
+
+        slackEventAcknowledger.sendInProgressToSlackUser(supportId, slackEvent, commandText);
     };
 
     that.serialize(req.body, req, res, onSerialized);

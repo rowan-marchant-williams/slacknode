@@ -11,11 +11,11 @@ function SlackEventMapper(botSettings) {
 
     that._botSettings = botSettings;
 
-    var _toSerializedMessage = function(slackEvent, doSerialize, onSerialized) {
+    var _toSerializedMessage = function(slackEvent, supportId, doSerialize, onSerialized) {
 
         var serializeAndContinue = function(commandText, fileInput) {
             var serialized = doSerialize(commandText, fileInput);
-            onSerialized(serialized);
+            onSerialized(serialized, slackEvent, commandText, supportId);
         };
 
         var isFileShareEvent = function(evt) {
@@ -46,14 +46,6 @@ function SlackEventMapper(botSettings) {
                 dataLen += chunk.length;
             });
             r.on('end', function() {
-                var getFilename = function(entryName) {
-                    var indexOfLastSlash = entryName.lastIndexOf("/");
-                    var filename = indexOfLastSlash > -1
-                        ? entryName.substr(indexOfLastSlash + 1)
-                        : entryName;
-                    return filename;
-                };
-
                 var buf = new Buffer(dataLen);
 
                 for (var i = 0, len = data.length, pos = 0; i < len; i++) {

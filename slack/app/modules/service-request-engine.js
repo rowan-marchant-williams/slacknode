@@ -19,16 +19,10 @@ function ServiceRequestEngine(logger, slackSettings) {
     that._logger = logger;
     that._slackSettings = slackSettings;
 
-    var _makeRequest = function (req, res, callback) {
+    var _makeRequest = function (req, res) {
         var _onChangeMade = function (err, result) {
             if (err) {
-                callback(err, result);
-            } else {
-                var changeResult = {
-                    requestId : req.getId(),
-                    result : result
-                };
-                callback(null, changeResult);
+                that._logger.log('error', err);
             }
         };
         var _execute = function (req, res, cb) {
@@ -74,29 +68,15 @@ function ServiceRequestEngine(logger, slackSettings) {
                             return bot.requestedResource === requestedResource;
                         })[0];
                         var RequestModule      = require(requestFileName);
-                        var serviceRequest     = new RequestModule(_getConfig(), botSettings.settings);
-                        var _onRequestExecuted = function (err, status, result) {
-                            if (err) {
-                                cb(err);
-                            } else if (HTTP_OK === status) {
-                                cb(null, HTTP_OK);
-                            } else {
-                                cb(new restify.RestError({
-                                    statusCode: status,
-                                    restCode: null,
-                                    message: result
-                                }));
-                            }
-                        };
-                        serviceRequest.execute(req, res, _onRequestExecuted);
-					} else {
+                        var serviceRequest     = new RequestModule(_getConfig(), botSettings.settings, that._logger);
+                        serviceRequest.execute(req, res);
+                    } else {
                         msg = util.format('%s:Found Request Javascript File but it was not a File! %s', Source, requestFileName);
                         that._logger.log('error', msg, function logError() {
                             cb(err);
                         });
                     }
                 };
-
                 fs.stat(requestFileName, _onFileStatObtained);
             } else {
                 msg = util.format('%s:Did not get passed the Request', Source);
@@ -110,6 +90,7 @@ function ServiceRequestEngine(logger, slackSettings) {
                 });
             }
         };
+
         _execute(req, res, _onChangeMade);
     };
 
