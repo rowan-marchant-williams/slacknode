@@ -42,11 +42,20 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
             return function _onEEReceived(event) {
 
                 var buildMessage = function(executionCompleteEvent) {
-                    var items = [
-                        executionCompleteEvent.errorOutput,
-                        executionCompleteEvent.warningOutput,
-                        executionCompleteEvent.standardOutput
-                    ];
+                    var items = [];
+
+                    if(executionCompleteEvent.errorOutput) {
+                        items.push(util.format('Error(s):\r\n%s', executionCompleteEvent.errorOutput))
+                    }
+
+                    if(executionCompleteEvent.warningOutput) {
+                        items.push(util.format('Warning(s):\r\n%s', executionCompleteEvent.warningOutput))
+                    }
+
+                    if(executionCompleteEvent.standardOutput) {
+                        items.push(util.format('All output:\r\n%s', executionCompleteEvent.standardOutput))
+                    }
+
                     var withContent = und.filter(items, function(item) {return item;});
                     var messageContent = withContent.join("\r\n") + "\r\n-----------------------------------------\r\n";
 
@@ -89,9 +98,7 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                             "text": slackMessage.Text,
                             "color": slackMessage.Color,
                             "fields": [
-                                {"title": "Command", "value": executionComplete.command, "short": true},
-                                {"title": "Status", "value": slackMessage.StatusLabel, "short": true},
-                                {"title": "Input Files", "value": inputFilesLabel, "short": false},
+                                {"title": "Command", "value": executionComplete.command, "short": false},
                                 {"title": "Ouput Files", "value": outputFilesLabel, "short": false},
                                 {"title": "SupportId", "value": executionComplete.rootEvent.instruction.supportId, "short": false}
                             ],
