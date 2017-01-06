@@ -10,6 +10,7 @@ var fs = require('fs');
 var config  = require('konphyg')(common + 'config');
 var SlackEventMapper = require('../slack-event-mapper');
 var SlackEventAcknowledger = require('../slack-event-acknowledger');
+var md5 = require('md5');
 
 var TEN_SECONDS = 10 * 1000; // Anapos uses Milliseconds
 
@@ -37,6 +38,7 @@ SupportBotRequest.prototype.serialize = function (body, req, res, onSerialized) 
 
     var slackEvent = req.body.event;
     var username = res.header("x-username");
+    var fingerprint = md5(JSON.stringify(slackEvent));
 
     var runSerialize = function(commandText, fileInput) {
         var adminRequest = {
@@ -46,6 +48,7 @@ SupportBotRequest.prototype.serialize = function (body, req, res, onSerialized) 
             externalUsername: username,
             externalUserId: slackEvent.channel,
             command: commandText,
+            fingerprint: fingerprint,
             fileInput: fileInput
         };
 
