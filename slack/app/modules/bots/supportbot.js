@@ -69,7 +69,7 @@ SupportBotRequest.prototype.execute = function (req, res) {
 
         var maxMessageSizeInMB = 10;
         if(serialized.length > (maxMessageSizeInMB * 1000000)) {
-            var tooBigMessage = util.format("The requested message is over the permitted %dMB size. Please ensure the message is less than %d in size", maxMessageSizeInMB);
+            var tooBigMessage = util.format("The requested message is over the permitted %dMB size. Please ensure the message is less than %dMB in size", maxMessageSizeInMB, maxMessageSizeInMB);
             slackEventAcknowledger.sendMessageThroughSlack(tooBigMessage, slackEvent.channel);
             return;
         }
