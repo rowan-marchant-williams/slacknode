@@ -65,9 +65,11 @@ AdminBotRequest.prototype.execute = function (req, res) {
     var that = this;
 
     var onSerialized = function(serialized, slackEvent, commandText, supportId) {
-        var maxMessageSize = 10;
-        if(serialized.length > (maxMessageSize * 1000000)) {
-            var tooBigMessage = util.format("The requested message is over the permitted %dMB size. Please ensure the message is less than %d in size", maxMessageSize);
+        var slackEventAcknowledger = new SlackEventAcknowledger(that._logger, that._botSettings);
+
+        var maxMessageSizeInMB = 10;
+        if(serialized.length > (maxMessageSizeInMB * 1000000)) {
+            var tooBigMessage = util.format("The requested message is over the permitted %dMB size. Please ensure the message is less than %d in size", maxMessageSizeInMB);
             slackEventAcknowledger.sendMessageThroughSlack(tooBigMessage, slackEvent.channel);
             return;
         }
@@ -81,8 +83,6 @@ AdminBotRequest.prototype.execute = function (req, res) {
         };
 
         var requester = new AmqpRequester(that._config);
-
-        var slackEventAcknowledger = new SlackEventAcknowledger(that._logger, that._botSettings);
 
         var responseOptions = {
             supportId: that._instruction.supportId,

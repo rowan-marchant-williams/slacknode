@@ -135,13 +135,14 @@ function ExecutionCompleteHandler(subscriber, logger, config, botSettings) {
                         }
                         else if(files.length === 1) {
                             var singleFile = files[0];
-                            return {name: singleFile.key, buffer: singleFile.value.buffer};
+                            return {name: singleFile.key, buffer: singleFile.value.toBuffer()};
                         }
 
                         var zip = new AdmZip();
                         files.forEach(function(outputFile) {
-                            zip.addFile(outputFile.key, outputFile.value.buffer);
+                            zip.addFile(outputFile.key, outputFile.value.toBuffer(), '', parseInt('0644', 16));
                         });
+
                         return {name: zipFileName, buffer: zip.toBuffer()};
                     };
 
