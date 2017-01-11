@@ -34,7 +34,7 @@ function SlackEventMapper(botSettings) {
                 fileContent += d;
             });
             r.on('end', function() {
-                var fileInput = fileContent ? [{key: fileName, value: new Buffer(fileInput)}] : [];
+                var fileInput = fileContent ? [{key: fileName, value: new Buffer(fileContent)}] : [];
                 serializeAndContinue(commandText, fileInput);
             });
         };
