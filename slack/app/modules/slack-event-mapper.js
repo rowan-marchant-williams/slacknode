@@ -5,6 +5,7 @@ var https = require('https');
 var url = require('url');
 var und = require('underscore');
 var AdmZip = require('adm-zip');
+var Buffer = require('buffer').Buffer;
 
 function SlackEventMapper(botSettings) {
     var that = this;
@@ -33,7 +34,7 @@ function SlackEventMapper(botSettings) {
                 fileContent += d;
             });
             r.on('end', function() {
-                var fileInput = fileContent ? [{key: fileName, value: fileContent}] : [];
+                var fileInput = fileContent ? [{key: fileName, value: new Buffer(fileInput)}] : [];
                 serializeAndContinue(commandText, fileInput);
             });
         };
