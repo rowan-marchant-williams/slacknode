@@ -60,7 +60,7 @@ function SlackEventMapper(botSettings) {
                 for (var i = 0; i < zipEntries.length; i++) {
                     var filename = zipEntries[i].entryName;
 
-                    var content = zip.readAsText(zipEntries[i]);
+                    var content = zip.readFile(zipEntries[i]);
                     if(content) {
                         fileInput.push({key: filename, value: content});
                     }

@@ -138,7 +138,7 @@ message FloatMeasurement {
 
 message Pair {
    required string key = 1;
-   required string value = 2;
+   required bytes value = 2;
    extensions 100 to 120; 
 }
 

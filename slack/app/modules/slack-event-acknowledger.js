@@ -75,6 +75,7 @@ function SlackEventAcknowledger(logger, botSettings) {
 
     that.wireUpAmqpRequester = _wireUpAmqpRequester;
     that.sendInProgressToSlackUser = _sendInProgressToSlackUser;
+    that.sendMessageThroughSlack = _sendMessageThroughSlack;
 
     return that;
 }
